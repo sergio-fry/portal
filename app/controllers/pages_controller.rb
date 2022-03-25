@@ -80,7 +80,7 @@ class PagesController < ApplicationController
     end
 
     def authenticate
-      http_basic_authenticate_or_request_with name: ENV.fetch('ADMIN_USERNAME'), password: ENV.fetch('ADMIN_PASSWORD')
+      http_basic_authenticate_or_request_with name: ENV.fetch('ADMIN_USERNAME', 'admin'), password: ENV.fetch('ADMIN_PASSWORD', 'admin')
     end
 
     def signed_in?
