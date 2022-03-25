@@ -10,7 +10,13 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body a="auto">
+    <main class="page-content" aria-label="Content">
+      <div class="w">
+        <%= yield %>
+      </div>
+    </main>
   </body>
+
+
 </html>

@@ -1,0 +1,15 @@
+<%= link_to '..', '/' %>
+
+<p class="post-meta">
+
+  <time datetime="<%= @page.updated_at %>"><%= @page.updated_at %></time>
+  <br />
+  Sergei O. Udalov
+</p>
+<article>
+  <%= render @page %>
+  <br />
+  <br />
+  <br />
+  <%= link_to "Edit this page", edit_page_path(@page) %>
+</article>
