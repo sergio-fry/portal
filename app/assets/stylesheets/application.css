@@ -12,3 +12,8 @@
  *= require 'monospace'
  *= require_self
  */
+
+a.invisible { opacity: 0% !important; color: red }
+a:link, a:visited {
+    color: blue;
+}
