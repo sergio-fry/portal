@@ -26,6 +26,7 @@ class PagesController < ApplicationController
 
   # GET /pages/1/edit
   def edit
+    render layout: "admin"
   end
 
   # POST /pages or /pages.json
