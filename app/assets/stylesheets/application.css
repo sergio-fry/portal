@@ -13,4 +13,4 @@
  *= require_self
  */
 
-a.invisible { opacity: 0% !important; }
+a.invisible { opacity: 0 !important; }
