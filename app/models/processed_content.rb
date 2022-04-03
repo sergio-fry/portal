@@ -19,10 +19,8 @@ class ProcessedContent
     content
   end
 
-  REGEXP = /\[\[[[:alnum:]]+\]\]/
-
   def page_link_tags(content)
-    content.scan(REGEXP).flatten.uniq.map do |markup|
+    PageLinkRegexp.new.scan(content).flatten.uniq.map do |markup|
       PageLink.new(markup, @page)
     end
   end
