@@ -1,0 +1,12 @@
+Dockerfile
+docker-compose.yml
+/.bundle
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-*
+/log/*
+/tmp/*
+/storage/*
+/public/assets
+/config/master.key
+/config/secret.yml

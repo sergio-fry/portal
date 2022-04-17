@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  rails:
+    build: .
+    ports:
+      - 3000:3000
+
+    environment:
+      RAILS_ENV: production
+      SECRET_KEY_BASE: 190f7c326aab4f23627593d190b32618dd1f950bb4b8d51e0cffd06dcdd276d25b87b6edd394d630d702cfcaaf5e675c32a92186c985e0aadc364b0877b84e62
+
+    command: ["rails", "server"]
