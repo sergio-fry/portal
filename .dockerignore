@@ -10,3 +10,4 @@ docker-compose.yml
 /public/assets
 /config/master.key
 /config/secret.yml
+.github
