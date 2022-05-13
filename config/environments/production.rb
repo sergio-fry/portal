@@ -94,4 +94,5 @@ Rails.application.configure do
   ENV.fetch("RAILS_HOSTS", "").split(",").map(&:strip).reject(&:blank?).each do |host|
     config.hosts << host
   end
+  config.hosts << "sergei-udalovs.apps.udalovs.ru"
 end
