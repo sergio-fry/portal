@@ -53,6 +53,6 @@ COPY . /app/
 
 COPY --from=runtime-gems /usr/local/bundle /usr/local/bundle
 COPY --from=dev /usr/share/mime/packages/freedesktop.org.xml /usr/share/mime/packages/
-COPY . /app/
-# COPY --from=dev /app/public/assets /app/public/assets
+# RUN rm -rf /app/public/assets
+COPY --from=dev /app/public/assets /app/public/assets
 
