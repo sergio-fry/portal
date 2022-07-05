@@ -5,8 +5,7 @@ class ProcessedContent
 
   def to_s
     content = @page.content.to_s
-    content = insert_page_links content
-    content
+    insert_page_links content
   end
 
   def insert_page_links(content)
