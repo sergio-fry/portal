@@ -1,10 +1,10 @@
 class PagesController < ApplicationController
   before_action :set_page, only: %i[show edit update destroy]
-  before_action :authenticate, except: %i[show index]
 
   # GET /pages or /pages.json
   def index
     @page = Page.find_or_initialize_by title: ENV.fetch("HOME_TITLE", "home")
+    authorize @page, :show?
 
     if @page.persisted?
       render action: :show
@@ -73,18 +73,11 @@ class PagesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_page
     @page = Page.find_or_initialize_by(title: params[:id])
+    authorize @page
   end
 
   # Only allow a list of trusted parameters through.
   def page_params
     params.require(:page).permit(:title, :content)
-  end
-
-  def authenticate
-    http_basic_authenticate_or_request_with name: ENV.fetch("ADMIN_USERNAME", "admin"), password: ENV.fetch("ADMIN_PASSWORD", "admin")
-  end
-
-  def signed_in?
-    !authenticate.nil?
   end
 end

@@ -14,3 +14,5 @@
  */
 
 a.invisible { opacity: 0 !important; }
+
+a.alert { }

@@ -38,6 +38,7 @@ module Portal
     config.generators do |g|
       g.hidden_namespaces << :test_unit
       g.test_framework :rspec
+      g.factory_bot dir: 'spec/factories'
     end
   end
 end

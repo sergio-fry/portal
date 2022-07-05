@@ -1,27 +1,29 @@
-require 'rails_helper'
+require "rails_helper"
+require "pundit/rspec"
 
 RSpec.describe PagePolicy, type: :policy do
-  let(:user) { User.new }
-
   subject { described_class }
-
-  permissions ".scope" do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+  let(:user) { User.new }
+  let(:guest) { nil }
+  let(:page) { FactoryBot.build :page }
 
   permissions :show? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    it { expect(subject).to permit(user, page) }
+    it { expect(subject).to permit(guest, page) }
   end
-
-  permissions :create? do
-    pending "add some examples to (or delete) #{__FILE__}"
+  permissions :edit? do
+    it { expect(subject).to permit(user, page) }
+    it { expect(subject).not_to permit(guest, page) }
   end
-
-  permissions :update? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
   permissions :destroy? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    it { expect(subject).to permit(user, page) }
+    it { expect(subject).not_to permit(guest, page) }
+  end
+  permissions :update? do
+    it { expect(subject).to permit(user, page) }
+    it { expect(subject).not_to permit(guest, page) }
+  end
+
+  permissions ".scope" do
   end
 end

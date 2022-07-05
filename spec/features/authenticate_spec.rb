@@ -1,15 +1,15 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.feature "Authenticates", type: :feature do
   include Devise::Test::IntegrationHelpers
 
-  let(:user) { User.new }
+  let!(:user) { FactoryBot.create :user, email: "admin@example.com", password: "secret123" }
 
   it "requires auth to edit page" do
-    visit '/pages/main/edit'
+    visit "/pages/main/edit"
 
-    fill_in 'email', with: 'admin@example.com'
-    fill_in 'password', with: 'secret123'
-    click_on 'sign in'
+    fill_in "Email", with: "admin@example.com"
+    fill_in "Password", with: "secret123"
+    click_on "Log in"
   end
 end
