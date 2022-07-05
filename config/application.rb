@@ -34,5 +34,10 @@ module Portal
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.generators do |g|
+      g.hidden_namespaces << :test_unit
+      g.test_framework :rspec
+    end
   end
 end
