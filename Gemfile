@@ -72,3 +72,5 @@ group :test do
   gem "webdrivers"
   gem "rspec-rails"
 end
+
+gem "devise"
