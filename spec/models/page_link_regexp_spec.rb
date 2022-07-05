@@ -1,4 +1,4 @@
-require 'app/models/page_link_regexp'
+require "app/models/page_link_regexp"
 
 RSpec.describe PageLinkRegexp do
   subject(:regexp) { described_class.new }

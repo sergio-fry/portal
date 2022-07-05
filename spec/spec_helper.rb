@@ -1,4 +1,4 @@
-$LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__), '..')))
+$LOAD_PATH.unshift(File.expand_path(File.join(File.dirname(__FILE__), "..")))
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|

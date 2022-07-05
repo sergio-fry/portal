@@ -11,13 +11,11 @@ require "rails"
   "active_job/railtie",
   "action_cable/engine",
   "action_mailbox/engine",
-  "action_text/engine",
+  "action_text/engine"
   # "rails/test_unit/railtie",
 ].each do |railtie|
-  begin
-    require railtie
-  rescue LoadError
-  end
+  require railtie
+rescue LoadError
 end
 
 # Require the gems listed in Gemfile, including any gems
