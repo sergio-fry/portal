@@ -9,4 +9,5 @@ RSpec.describe PageLinkRegexp do
   it { expect(regexp.match("[[page1]]")).to be_truthy }
   it { expect(regexp.match("[[multi_word|Multi Word]]")).to be_truthy }
   it { expect(regexp.match("[[multi-word|Multi Word]]")).to be_truthy }
+  it { expect(regexp.match("[[Multi Word]]")).to be_truthy }
 end
