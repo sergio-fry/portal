@@ -4,7 +4,7 @@ class PageLinkRegexp
   end
 
   def scan(str)
-    str.scan(/\[\[(#{slug_regexp})\|?(#{text_regexp})?\]\]/)
+    str.scan(/(\[\[(#{slug_regexp})\|?(#{text_regexp})?\]\])/).map(&:first)
   end
 
   private
