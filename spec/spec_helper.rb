@@ -54,7 +54,7 @@ RSpec.configure do |config|
   # Use the documentation formatter for detailed output,
   # unless a formatter has already been configured
   # (e.g. via a command-line flag).
-  # config.default_formatter = "doc"
+  config.default_formatter = "doc" if config.files_to_run.one?
   config.fail_fast = true if config.files_to_run.one?
 
   # Print the 10 slowest examples and example groups at the

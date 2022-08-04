@@ -4,7 +4,7 @@ class PageLinkRegexp
   end
 
   def scan(str)
-    str.scan(/\[\[(#{slug_regexp})?\|?#{text_regexp}\]\]/)
+    str.scan(/\[\[(#{slug_regexp})\|?(#{text_regexp})?\]\]/)
   end
 
   private
@@ -18,6 +18,6 @@ class PageLinkRegexp
   end
 
   def regexp
-    /\[\[(#{slug_regexp})?\|?(#{text_regexp})?\]\]/
+    /\[\[(#{slug_regexp})\|?(#{text_regexp})?\]\]/
   end
 end
