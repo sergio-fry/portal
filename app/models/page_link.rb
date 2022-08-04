@@ -13,11 +13,11 @@ class PageLink
   end
 
   def slug
-    matched_data[1]
+    matched_data[1].downcase.strip.gsub(/\s+/, "_")
   end
 
   def name
-    matched_data[2] || slug
+    matched_data[2] || matched_data[1]
   end
 
   def matched_data
