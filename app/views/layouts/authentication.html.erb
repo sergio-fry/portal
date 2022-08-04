@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Portal</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "admin", "data-turbo-track": "reload" %>
+  </head>
+
+  <body a="auto">
+    <main class="page-content" aria-label="Content">
+      <div class="w">
+        <%= yield %>
+      </div>
+    </main>
+  </body>
+</html>
