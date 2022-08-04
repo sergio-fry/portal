@@ -1,8 +1,6 @@
 class PageLinkRegexp
   def match(str)
-    m = str.match regexp
-    puts [str, m].inspect
-    m
+    str.match regexp
   end
 
   def scan(str)
@@ -12,11 +10,11 @@ class PageLinkRegexp
   private
 
   def slug_regexp
-    "[[:alnum:]\s]+"
+    "[[:alnum:]\s_-]+"
   end
 
   def text_regexp
-    "[[:alnum:]\s]+"
+    slug_regexp
   end
 
   def regexp
