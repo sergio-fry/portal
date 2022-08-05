@@ -4,9 +4,8 @@
 
 <div id="pages">
   <% @pages.each do |page| %>
-    <%= render page %>
     <p>
-      <%= link_to "Show this page", page %>
+      <%= link_to page.title, page %>
     </p>
   <% end %>
 </div>

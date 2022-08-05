@@ -16,6 +16,8 @@ class PagesController < ApplicationController
   # GET /pages/1 or /pages/1.json
   def show
     redirect_to edit_page_url(@page) unless @page.persisted?
+
+    render layout: false
   end
 
   # GET /pages/new

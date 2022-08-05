@@ -1,3 +1,5 @@
+<%= raw @page.processed_content %>
+
 <%= link_to '..', '/' %>
 
 <p class="post-meta">
@@ -6,9 +8,8 @@
   <br />
   Sergei O. Udalov
   <br />
-  <%= link_to "permalink", ipfs_url(@page.cid) %>
+  <%= link_to "permalink", ipfs_url(@page.ipfs.cid) %>
 </p>
 <article>
-  <%= render @page %>
   <%= link_to "edit", edit_page_path(@page), title: "Edit this page", class: "invisible" %>
 </article>
