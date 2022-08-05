@@ -116,6 +116,7 @@ GEM
       railties (>= 6.0.0)
     io-console (0.5.11)
     io-wait (0.2.1)
+    ipfs-api (0.4.0)
     irb (1.4.1)
       reline (>= 0.3.0)
     jbuilder (2.11.5)
@@ -295,6 +296,7 @@ DEPENDENCIES
   factory_bot_rails
   image_processing (~> 1.2)
   importmap-rails
+  ipfs-api
   jbuilder
   kramdown
   pg

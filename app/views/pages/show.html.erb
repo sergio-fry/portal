@@ -5,6 +5,8 @@
   <time datetime="<%= @page.updated_at %>"><%= @page.updated_at %></time>
   <br />
   Sergei O. Udalov
+  <br />
+  <%= link_to "permalink", ipfs_url(@page.cid) %>
 </p>
 <article>
   <%= render @page %>

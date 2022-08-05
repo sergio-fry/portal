@@ -77,3 +77,4 @@ end
 gem "devise"
 gem "pundit", "~> 2.2"
 gem "kramdown"
+gem "ipfs-api"
