@@ -20,7 +20,6 @@ RSpec.feature "Authenticates", type: :feature do
 
     visit "/pages/main/edit"
     fill_in "Content", with: "some content"
-    # find("trix-editor").click.set("some content")
     click_on "Update"
 
     visit "/pages/main"
