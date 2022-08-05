@@ -6,8 +6,8 @@ RSpec.feature "Authenticates", type: :feature do
   let!(:user) { FactoryBot.create :user, email: "admin@example.com", password: "secret123" }
 
   before { FactoryBot.create :page, title: :main }
-  before { Capybara.current_driver = :selenium_chrome_headless }
-  after { Capybara.use_default_driver }
+  # before { Capybara.current_driver = :selenium_chrome_headless }
+  # after { Capybara.use_default_driver }
 
   it "requires auth to edit page" do
     visit "/pages/main/edit"
@@ -19,7 +19,7 @@ RSpec.feature "Authenticates", type: :feature do
     click_on "Log in"
 
     visit "/pages/main/edit"
-    find("trix-editor").click.set("some content")
+    fill_in "Content", with: "some content"
     click_on "Update"
 
     visit "/pages/main"

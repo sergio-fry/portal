@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 
 <%= form_with(model: page, url: page_url(page), method: :put) do |form| %>
   <% if page.errors.any? %>
@@ -19,10 +21,14 @@
 
   <div>
     <%= form.label :content, style: "display: block" %>
-    <%= form.rich_text_area :content %>
+    <%= form.text_area :content %>
   </div>
 
   <div>
     <%= form.submit %>
   </div>
 <% end %>
+
+<script>
+var simplemde = new SimpleMDE();
+</script>
