@@ -27,4 +27,12 @@ class IpfsFile
       end
     end
   end
+
+  def url(filename: nil)
+    URI::HTTPS.build(
+      host: "ipfs.io",
+      path: "/ipfs/#{cid}",
+      query: URI.encode_www_form({filename: filename}.compact)
+    ).to_s
+  end
 end

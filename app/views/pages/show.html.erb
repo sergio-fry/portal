@@ -1,15 +1,3 @@
 <%= raw @page.processed_content %>
 
-<%= link_to '..', '/' %>
-
-<p class="post-meta">
-
-  <time datetime="<%= @page.updated_at %>"><%= @page.updated_at %></time>
-  <br />
-  Sergei O. Udalov
-  <br />
-  <%= link_to "permalink", ipfs_url(@page.ipfs.cid) %>
-</p>
-<article>
-  <%= link_to "edit", edit_page_path(@page), title: "Edit this page", class: "invisible" %>
-</article>
+<%= link_to @page.ipfs.cid, @page.ipfs.url %>

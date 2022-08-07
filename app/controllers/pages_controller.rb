@@ -15,9 +15,13 @@ class PagesController < ApplicationController
 
   # GET /pages/1 or /pages/1.json
   def show
-    redirect_to edit_page_url(@page) unless @page.persisted?
-
-    render layout: false
+    if !@page.persisted?
+      redirect_to edit_page_url(@page)
+    elsif !signed_in?
+      redirect_to @page.ipfs.url, allow_other_host: true
+    else
+      render layout: false
+    end
   end
 
   # GET /pages/new

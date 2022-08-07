@@ -27,21 +27,36 @@ class ProcessedContent
         head do
           title page.title
           meta name: :viewport, content: "width=device-width,initial-scale=1"
-          style theme_styles
         end
         body a: :auto do
           main class: "page-content", "aria-label": "Content" do
             div class: :w do
-              raw(content)
+              a "..", href: "/"
+
+              article do
+                p class: "post-meta" do
+                  time datetime: page.updated_at do
+                    page.updated_at
+                  end
+                  br
+                  span "Sergei O. Udalov"
+                end
+                div do
+                  raw(content)
+                end
+              end
             end
           end
+          link href: theme_styles, rel: :stylesheet
         end
       end.to_s
     )
   end
 
   def theme_styles
-    ""
+    IpfsFile.new(
+      File.read(Rails.root.join("app/assets/stylesheets/monospace.css"))
+    ).url(filename: "style.css")
   end
 
   def wrapped_to_html(content)
