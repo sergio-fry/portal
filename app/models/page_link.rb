@@ -1,14 +1,18 @@
 class PageLink
   attr_reader :markup
 
-  def initialize(markup, page, regexp: PageLinkRegexp.new)
-    @page = page
+  def initialize(markup, regexp: PageLinkRegexp.new, pages: PagesRepo.new)
     @markup = markup
     @regexp = regexp
+    @pages = pages
   end
 
   def html
-    "<a href='/pages/#{slug}'>#{name}</a>"
+    if !page.nil?
+      "<a href='#{page.ipfs.url}' class='link'>#{name}</a>"
+    else
+      "<a href='#' class='link link_missing'>#{name}</a>"
+    end
   end
 
   def slug
@@ -17,6 +21,10 @@ class PageLink
 
   def name
     matched_data[2] || matched_data[1]
+  end
+
+  def page
+    @pages.find_by_slug slug
   end
 
   def matched_data

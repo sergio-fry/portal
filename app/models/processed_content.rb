@@ -31,7 +31,7 @@ class ProcessedContent
         body a: :auto do
           main class: "page-content", "aria-label": "Content" do
             div class: :w do
-              a "..", href: "/"
+              a "..", href: "https://#{ENV.fetch("DOMAIN_NAME", "sergei.udalovs.ru")}"
 
               article do
                 p class: "post-meta" do
@@ -84,7 +84,7 @@ class ProcessedContent
 
   def page_link_tags(content)
     PageLinkRegexp.new.scan(content).flatten.uniq.map do |markup|
-      PageLink.new(markup, @page)
+      PageLink.new(markup)
     end
   end
 end

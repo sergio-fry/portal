@@ -7,7 +7,7 @@ class PagesController < ApplicationController
     authorize @page, :show?
 
     if @page.persisted?
-      render action: :show
+      redirect_to @page
     else
       redirect_to edit_page_url(@page) unless @page.persisted?
     end
