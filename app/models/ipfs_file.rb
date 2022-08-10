@@ -29,10 +29,9 @@ class IpfsFile
   end
 
   def url(filename: nil)
-    URI::HTTPS.build(
-      host: "ipfs.io",
-      path: "/ipfs/#{cid}",
-      query: URI.encode_www_form({filename: filename}.compact)
-    ).to_s
+    result = "https://ipfs.io/ipfs/#{cid}"
+    result = [result, URI.encode_www_form({filename: filename})].join("?") unless filename.nil?
+
+    result
   end
 end
