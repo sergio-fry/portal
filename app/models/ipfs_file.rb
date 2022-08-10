@@ -16,7 +16,6 @@ class IpfsFile
       file.write @content
       file.rewind
 
-
       res = @http_client.post(
         "#{@api_endpoint}/api/v0/add",
         form: {
