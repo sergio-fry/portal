@@ -1,7 +1,7 @@
 class PageLink
   attr_reader :markup
 
-  def initialize(markup, regexp: PageLinkRegexp.new, pages: PagesRepo.new)
+  def initialize(markup, regexp: PageLinkRegexp.new, pages: Pages.new)
     @markup = markup
     @regexp = regexp
     @pages = pages
