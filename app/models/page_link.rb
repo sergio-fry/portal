@@ -9,7 +9,7 @@ class PageLink
 
   def html
     if !page.nil?
-      "<a href='#{page.ipfs.url}' class='link'>#{name}</a>"
+      "<a href='#{page.ipfs.url(only_path: true)}' class='link'>#{name}</a>"
     else
       "<a href='#' class='link link_missing'>#{name}</a>"
     end

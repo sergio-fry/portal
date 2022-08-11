@@ -13,6 +13,11 @@ class PagesController < ApplicationController
     end
   end
 
+  def rebuild
+    authorize Page, :rebuild?
+    Page.find_each { |page| ExportPageToIpfsJob.perform_later page }
+  end
+
   # GET /pages/1 or /pages/1.json
   def show
     if !@page.persisted?

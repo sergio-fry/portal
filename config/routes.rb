@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
+  get "admin", to: "admin#index"
+
   devise_for :users
-  resources :pages, except: [:new, :create]
+  resources :pages, except: [:new, :create] do
+    collection do
+      post :rebuild
+    end
+  end
 
   root "pages#index"
 

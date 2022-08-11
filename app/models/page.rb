@@ -14,6 +14,6 @@ class Page < ApplicationRecord
   end
 
   def export_to_ipfs
-    update_column :ipfs_cid, ipfs.cid
+    update_column(:ipfs_cid, ipfs.cid) if ipfs_cid != ipfs.cid
   end
 end

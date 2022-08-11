@@ -7,6 +7,10 @@ class PagePolicy < ApplicationPolicy
     authenticated?
   end
 
+  def rebuild?
+    authenticated?
+  end
+
   def edit? = update?
 
   def destroy? = update?
