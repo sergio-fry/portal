@@ -1,1 +1,10 @@
-<%= raw @page.processed_content %>
+<article>
+  <p class="post-meta">
+    <%= content_tag :time, @page.updated_at, datetime: @page.updated_at %>
+    <br/>
+    <span><%= link_to "Sergei O. Udalov", "/" %></span>
+  </p>
+  <div>
+    <%= raw @page.processed_content %>
+  </div>
+</article>

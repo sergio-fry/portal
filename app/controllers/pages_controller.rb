@@ -24,8 +24,6 @@ class PagesController < ApplicationController
       redirect_to edit_page_url(@page)
     elsif !signed_in?
       redirect_to @page.ipfs.url, allow_other_host: true
-    else
-      render layout: false
     end
   end
 
