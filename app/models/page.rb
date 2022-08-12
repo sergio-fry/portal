@@ -9,11 +9,12 @@ class Page < ApplicationRecord
     ProcessedContent.new(self, ipfs:)
   end
 
-  def ipfs
-    IpfsFile.new(processed_content(ipfs: true))
+  def ipfs_content
+    Ipfs::NewContent.new(processed_content(ipfs: true))
   end
 
   def export_to_ipfs
-    update_column(:ipfs_cid, ipfs.cid) if ipfs_cid != ipfs.cid
+    new_cid = ipfs_content.cid
+    update_column(:ipfs_cid, new_cid) if ipfs_cid != new_cid
   end
 end

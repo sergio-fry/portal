@@ -5,7 +5,7 @@ RSpec.describe Page, type: :model do
     let(:page) { FactoryBot.build :page, content: content }
     let(:content) { "Text [[page]] " }
 
-    subject { page.ipfs.cid }
+    subject { page.ipfs_content.cid }
     it { is_expected.to be_present }
   end
 end

@@ -6,13 +6,17 @@ module Ipfs
 
     def markup = @page_link.markup
 
+    def css_classes = @page_link.css_classes
+
+    def name = @page_link.name
+
     def html
       "<a href='#{link}' class='#{css_classes}'>#{name}</a>"
     end
 
     def link
       if @page_link.target_exists?
-        @page_link.page.ipfs.url(only_path: true)
+        @page_link.page.ipfs_content.content.url(only_path: true)
       else
         "#"
       end
