@@ -5,12 +5,12 @@ class Page < ApplicationRecord
     title
   end
 
-  def processed_content
-    ProcessedContent.new(self)
+  def processed_content(ipfs: false)
+    ProcessedContent.new(self, ipfs:)
   end
 
   def ipfs
-    IpfsFile.new(processed_content, cid: ipfs_cid)
+    IpfsFile.new(processed_content(ipfs: true))
   end
 
   def export_to_ipfs

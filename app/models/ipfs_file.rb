@@ -1,9 +1,9 @@
 require "http"
 
 class IpfsFile
-  def initialize(content, cid: nil, api_endpoint: "http://localhost:5001")
+  def initialize(content, api_endpoint: "http://localhost:5001")
     @content = content
-    @cid = cid
+    @cid = nil
 
     @api_endpoint = api_endpoint
     @http_client = HTTP
