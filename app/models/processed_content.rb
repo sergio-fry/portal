@@ -1,8 +1,8 @@
 require "kramdown"
 
 class ProcessedContent
-
-  def initialize(page)
+  def initialize(page, ipfs: false)
+    @ipfs = ipfs
     @page = page
   end
 
@@ -34,7 +34,13 @@ class ProcessedContent
 
   def page_link_tags(content)
     PageLinkRegexp.new.scan(content).flatten.uniq.map do |markup|
-      PageLink.new(markup)
+      if @ipfs
+        Ipfs::PageLink.new(
+          PageLink.new(markup)
+        )
+      else
+        PageLink.new(markup)
+      end
     end
   end
 end

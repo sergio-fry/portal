@@ -8,11 +8,27 @@ class PageLink
   end
 
   def html
-    if !page.nil?
-      "<a href='#{page.ipfs.url(only_path: true)}' class='link'>#{name}</a>"
+    "<a href='#{link}' class='#{css_classes}'>#{name}</a>"
+  end
+
+  def css_classes
+    if target_exists?
+      "link"
     else
-      "<a href='#' class='link link_missing'>#{name}</a>"
+      "link link_missing"
     end
+  end
+
+  def link
+    if target_exists?
+      "/pages/#{slug}"
+    else
+      "#"
+    end
+  end
+
+  def target_exists?
+    !page.nil?
   end
 
   def slug

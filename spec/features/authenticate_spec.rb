@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.feature "Authenticates", type: :feature do
-  include Devise::Test::IntegrationHelpers
-
   let!(:user) { FactoryBot.create :user, email: "admin@example.com", password: "secret123" }
 
   before { FactoryBot.create :page, title: :main }
