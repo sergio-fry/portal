@@ -14,12 +14,10 @@
     <main class="page-content" aria-label="Content">
       <div class="w">
         <% flash.each do |type, msg| %>
-          <div class="flash flash__<%= type %>><%= msg %></div>
+          <div class="flash flash__<%= type %>"><%= msg %></div>
         <% end %>
         <%= yield %>
       </div>
     </main>
   </body>
-
-
 </html>

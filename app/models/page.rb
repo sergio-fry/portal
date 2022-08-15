@@ -10,7 +10,12 @@ class Page < ApplicationRecord
   end
 
   def ipfs_content
-    Ipfs::NewContent.new(processed_content(ipfs: true))
+    Ipfs::NewContent.new(
+      Layout.new(
+        processed_content(ipfs: true).to_s, 
+        self
+      ).to_s
+    )
   end
 
   def export_to_ipfs

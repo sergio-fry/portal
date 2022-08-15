@@ -1,29 +1,30 @@
 class Layout
   include Hanami::Helpers
 
-  def initialize(content)
+  def initialize(content, page)
     @content = content
+    @page = page
   end
 
-  def html
+  def to_s
+    page = @page
     wrapped_to_html(
       html do
         head do
           title page.title
           meta name: :viewport, content: "width=device-width,initial-scale=1"
+          meta charset: "UTF-8"
         end
         body a: :auto do
           main class: "page-content", "aria-label": "Content" do
             div class: :w do
-              a "..", href: "https://#{ENV.fetch("DOMAIN_NAME", "sergei.udalovs.ru")}"
-
               article do
                 p class: "post-meta" do
                   time datetime: page.updated_at do
                     page.updated_at
                   end
                   br
-                  span "Sergei O. Udalov"
+                  a "Sergei O. Udalov", href: "https://#{ENV.fetch("DOMAIN_NAME", "sergei.udalovs.ru")}"
                 end
                 div do
                   raw(content)
@@ -42,9 +43,9 @@ class Layout
   attr_reader :content
 
   def theme_styles
-    IpfsFile.new(
+    Ipfs::NewContent.new(
       File.read(Rails.root.join("app/assets/stylesheets/monospace.css"))
-    ).url(filename: "style.css")
+    ).content.url(filename: "style.css")
   end
 
   def wrapped_to_html(content)

@@ -97,4 +97,5 @@ img {
 
 a.link.link_missing {
   color: red;
+  text-decoration-style: dotted;
 }

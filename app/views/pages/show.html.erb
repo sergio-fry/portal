@@ -1,5 +1,7 @@
 <article>
   <p class="post-meta">
+    <%= link_to "IPFS", @page.ipfs_content.content.url %>
+    <br/>
     <%= content_tag :time, @page.updated_at, datetime: @page.updated_at %>
     <br/>
     <span><%= link_to "Sergei O. Udalov", "/" %></span>
@@ -7,4 +9,9 @@
   <div>
     <%= raw @page.processed_content %>
   </div>
+
+  <br>
+  <br>
+  <br>
 </article>
+
