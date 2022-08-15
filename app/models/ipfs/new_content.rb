@@ -1,6 +1,6 @@
 module Ipfs
   class NewContent
-    def initialize(data, api_endpoint: "http://localhost:5001")
+    def initialize(data, api_endpoint: ENV.fetch("IPFS_KUBO_API", "http://localhost:5001"))
       @data = data
 
       @api_endpoint = api_endpoint
