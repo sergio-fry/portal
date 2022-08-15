@@ -10,16 +10,24 @@ class Page < ApplicationRecord
   end
 
   def ipfs_content
+    if changed?
+      ipfs_new_content
+    else
+      ipfs_cid.present? ? Ipfs::Content.new(ipfs_cid) : ipfs_new_content
+    end
+  end
+
+  def ipfs_new_content
     Ipfs::NewContent.new(
       Layout.new(
-        processed_content(ipfs: true).to_s, 
+        processed_content(ipfs: true).to_s,
         self
       ).to_s
     )
   end
 
   def export_to_ipfs
-    new_cid = ipfs_content.cid
+    new_cid = ipfs_new_content.cid
     update_column(:ipfs_cid, new_cid) if ipfs_cid != new_cid
   end
 end

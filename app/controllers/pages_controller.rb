@@ -23,7 +23,7 @@ class PagesController < ApplicationController
     if !@page.persisted?
       redirect_to edit_page_url(@page)
     elsif !signed_in?
-      redirect_to @page.ipfs.url, allow_other_host: true
+      redirect_to @page.ipfs_content.url, allow_other_host: true
     end
   end
 

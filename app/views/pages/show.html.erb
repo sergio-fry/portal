@@ -1,6 +1,7 @@
 <article>
   <p class="post-meta">
-    <%= link_to "IPFS", @page.ipfs_content.content.url %>
+    <%= link_to "IPFS", @page.ipfs_content.url %>
+    <%= link_to "edit", edit_page_path(@page) %>
     <br/>
     <%= content_tag :time, @page.updated_at, datetime: @page.updated_at %>
     <br/>

@@ -1,5 +1,7 @@
 module Ipfs
   class Content
+    attr_reader :cid
+
     def initialize(cid)
       @cid = cid
     end

@@ -33,5 +33,6 @@ module Ipfs
     def content
       Content.new(cid)
     end
+    delegate :url, to: :content
   end
 end
