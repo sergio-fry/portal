@@ -3,12 +3,22 @@ require "app/models/page_link"
 
 module Test
   class FakePages
+    def initialize
+      @pages = []
+    end
+
+    def <<(page)
+      @pages << page
+    end
+
+    def find_by_slug(slug)
+      @pages.find { |page| page.title.to_s == slug.to_s }
+    end
   end
 end
 
 RSpec.describe PageLink do
-  subject(:page_link) { described_class.new(markup, page, pages:) }
-  let(:page) { double(:page) }
+  subject(:page_link) { described_class.new(markup, pages: pages) }
   let(:pages) { Test::FakePages.new }
 
   context do

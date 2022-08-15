@@ -7,15 +7,24 @@ class PagesController < ApplicationController
     authorize @page, :show?
 
     if @page.persisted?
-      render action: :show
+      redirect_to @page
     else
       redirect_to edit_page_url(@page) unless @page.persisted?
     end
   end
 
+  def rebuild
+    authorize Page, :rebuild?
+    Page.find_each { |page| ExportPageToIpfsJob.perform_later page }
+  end
+
   # GET /pages/1 or /pages/1.json
   def show
-    redirect_to edit_page_url(@page) unless @page.persisted?
+    if !@page.persisted?
+      redirect_to edit_page_url(@page)
+    elsif !signed_in?
+      redirect_to @page.ipfs_content.url, allow_other_host: true
+    end
   end
 
   # GET /pages/new

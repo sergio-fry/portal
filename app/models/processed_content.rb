@@ -1,19 +1,24 @@
-require 'kramdown'
+require "kramdown"
 
 class ProcessedContent
-  def initialize(page)
+  def initialize(page, ipfs: false)
+    @ipfs = ipfs
     @page = page
   end
 
   def to_s
     with_page_links(
-      html(
+      converted_to_html(
         @page.content.to_s
       )
     )
   end
 
-  def html(content)
+  private
+
+  attr_reader :page
+
+  def converted_to_html(content)
     Kramdown::Document.new(content).to_html
   end
 
@@ -29,7 +34,13 @@ class ProcessedContent
 
   def page_link_tags(content)
     PageLinkRegexp.new.scan(content).flatten.uniq.map do |markup|
-      PageLink.new(markup, @page)
+      if @ipfs
+        Ipfs::PageLink.new(
+          PageLink.new(markup)
+        )
+      else
+        PageLink.new(markup)
+      end
     end
   end
 end

@@ -1,15 +1,34 @@
 class PageLink
   attr_reader :markup
 
-  def initialize(markup, page, pages: Pages.new, regexp: PageLinkRegexp.new)
-    @page = page
+  def initialize(markup, regexp: PageLinkRegexp.new, pages: Pages.new)
     @markup = markup
-    @pages = pages
     @regexp = regexp
+    @pages = pages
   end
 
   def html
-    "<a href='/pages/#{slug}'>#{name}</a>"
+    "<a href='#{link}' class='#{css_classes}'>#{name}</a>"
+  end
+
+  def css_classes
+    if target_exists?
+      "link"
+    else
+      "link link_missing"
+    end
+  end
+
+  def link
+    if target_exists?
+      "/pages/#{slug}"
+    else
+      "#"
+    end
+  end
+
+  def target_exists?
+    !page.nil?
   end
 
   def slug
@@ -18,6 +37,10 @@ class PageLink
 
   def name
     matched_data[2] || matched_data[1]
+  end
+
+  def page
+    @pages.find_by_slug slug
   end
 
   def matched_data

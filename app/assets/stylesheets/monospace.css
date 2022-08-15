@@ -92,3 +92,10 @@ img {
   display: block;
   margin: 0 auto;
 }
+
+/*- CUSTOM -*/
+
+a.link.link_missing {
+  color: red;
+  text-decoration-style: dotted;
+}
