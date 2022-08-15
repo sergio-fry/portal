@@ -7,8 +7,8 @@ class ProcessedContent
   end
 
   def to_s
-    with_page_links(
-      converted_to_html(
+    converted_to_html(
+      with_page_links(
         @page.content.to_s
       )
     )
