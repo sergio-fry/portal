@@ -84,5 +84,5 @@ jobs:
         # uses: wei/curl@61d92b5169ea0425820dd13cf6fbad66b483e9f1
         uses: wei/curl@v1.1.1
         with:
-          args: -X POST https://eop680ln46a5qsz.m.pipedream.net
+          args: -X POST https://captain.apps.udalovs.ru/api/v2/user/apps/webhooks/triggerbuild?namespace=captain&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InRva2VuVmVyc2lvbiI6IjFhMDE1Y2ZiLWY2NGUtNDQ5Yi1hYWVhLTFjMzA4ZWI1Y2EwYyIsImFwcE5hbWUiOiJzZXJnZWktdWRhbG92cyIsIm5hbWVzcGFjZSI6ImNhcHRhaW4ifSwiaWF0IjoxNjQ5MDYxNDA5fQ.8VDS9KaD7Ey7tlv-i8HMU1RDquFAmecGFGYOx7WILwI
         
