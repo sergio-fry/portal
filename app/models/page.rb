@@ -1,5 +1,5 @@
 class Page < ApplicationRecord
-  before_save { export_to_ipfs }
+  after_save { sync_to_ipfs }
 
   def to_param
     title
@@ -26,7 +26,10 @@ class Page < ApplicationRecord
     )
   end
 
-  def export_to_ipfs
-    self.ipfs_cid = ipfs_new_content.cid
+  def sync_to_ipfs
+    if ipfs_cid != ipfs_new_content.cid
+      update_column :ipfs_cid, ipfs_new_content.cid
+      PingJob.perform_later(ipfs_new_content.url)
+    end
   end
 end
