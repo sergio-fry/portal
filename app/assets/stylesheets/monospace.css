@@ -95,6 +95,10 @@ img {
 
 /*- CUSTOM -*/
 
+a.link {
+  color: green;
+}
+
 a.link.link_missing {
   color: red;
   text-decoration-style: dotted;
