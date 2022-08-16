@@ -27,7 +27,6 @@ class Page < ApplicationRecord
   end
 
   def export_to_ipfs
-    new_cid = ipfs_new_content.cid
-    update_column(:ipfs_cid, new_cid) if ipfs_cid != new_cid
+    self.ipfs_cid = ipfs_new_content.cid
   end
 end
