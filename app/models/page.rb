@@ -1,5 +1,5 @@
 class Page < ApplicationRecord
-  after_commit { ExportPageToIpfsJob.perform_later self }
+  before_save { export_to_ipfs }
 
   def to_param
     title
