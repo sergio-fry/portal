@@ -1,10 +1,16 @@
 class HtmlLink
-  def initialize(link)
+  def initialize(link, prefetch:)
     @link = link
+    @prefetch = prefetch
   end
 
   def html
-    "<a href='#{@link.link}' class='#{@link.css_classes}'>#{@link.name}</a>"
+    result = ""
+
+    result << "<a href='#{@link.link}' class='#{@link.css_classes}'>#{@link.name}</a>"
+    result << "<link rel='prefetch' href='#{@link.link}'>" if @prefetch
+
+    result
   end
 
   def markup = @link.markup
