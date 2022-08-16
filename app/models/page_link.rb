@@ -20,11 +20,7 @@ class PageLink
   end
 
   def link
-    if target_exists?
-      "/pages/#{slug}"
-    else
-      "#"
-    end
+    "/pages/#{slug}"
   end
 
   def target_exists?

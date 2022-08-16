@@ -16,7 +16,7 @@ module Ipfs
 
     def link
       if @page_link.target_exists?
-        @page_link.page.ipfs_content.url(only_path: true)
+        @page_link.page.ipfs_content.url
       else
         "#"
       end

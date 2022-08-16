@@ -6,10 +6,9 @@ module Ipfs
       @cid = cid
     end
 
-    def url(filename: nil, only_path: false)
+    def url(filename: nil)
       result = ""
-      result += "https://ipfs.io" unless only_path
-      result += "/ipfs/#{@cid}"
+      result += "https://ipfs.io/ipfs/#{@cid}"
       result = [result, URI.encode_www_form({filename: filename})].join("?") unless filename.nil?
 
       result
