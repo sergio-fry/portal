@@ -41,6 +41,6 @@ class ProcessedContent
       else
         PageLink.new(markup)
       end
-    end
+    end.map { |link| HtmlLink.new(link) }
   end
 end

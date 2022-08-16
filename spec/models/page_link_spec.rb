@@ -23,7 +23,6 @@ RSpec.describe PageLink do
 
   context do
     let(:markup) { "[[main]]" }
-    it { expect(page_link.html).to include "main" }
     it { expect(page_link.slug).to eq "main" }
     it { expect(page_link.name).to eq "main" }
   end

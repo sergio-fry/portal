@@ -10,10 +10,6 @@ module Ipfs
 
     def name = @page_link.name
 
-    def html
-      "<a href='#{link}' class='#{css_classes}'>#{name}</a>"
-    end
-
     def link
       if @page_link.target_exists?
         @page_link.page.ipfs_content.url

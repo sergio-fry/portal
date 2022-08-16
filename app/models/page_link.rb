@@ -7,10 +7,6 @@ class PageLink
     @pages = pages
   end
 
-  def html
-    "<a href='#{link}' class='#{css_classes}'>#{name}</a>"
-  end
-
   def css_classes
     if target_exists?
       "link"
