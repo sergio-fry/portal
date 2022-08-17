@@ -14,25 +14,7 @@ class ProcessedContent
     )
   end
 
-  private
-
-  attr_reader :page
-
-  def converted_to_html(content)
-    Kramdown::Document.new(content).to_html
-  end
-
-  def with_page_links(content)
-    content = content.dup
-
-    page_link_tags(content).each do |link|
-      content.gsub!(link.markup, link.html)
-    end
-
-    content
-  end
-
-  def page_link_tags(content)
+  def page_links(content)
     PageLinkRegexp.new.scan(content).flatten.uniq.map do |markup|
       if @ipfs
         HtmlLink.new(
@@ -44,5 +26,23 @@ class ProcessedContent
         HtmlLink.new(PageLink.new(markup), prefetch: false)
       end
     end
+  end
+
+  private
+
+  attr_reader :page
+
+  def converted_to_html(content)
+    Kramdown::Document.new(content).to_html
+  end
+
+  def with_page_links(content)
+    content = content.dup
+
+    page_links(content).each do |link|
+      content.gsub!(link.markup, link.html)
+    end
+
+    content
   end
 end

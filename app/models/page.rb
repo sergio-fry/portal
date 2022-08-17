@@ -1,6 +1,8 @@
 class Page < ApplicationRecord
   after_save { sync_to_ipfs }
 
+  has_and_belongs_to_many :linked_pages, class_name: "Page", join_table: :page_links, foreign_key: :target_page_id, association_foreign_key: :page_id
+
   def to_param
     title
   end
@@ -30,6 +32,8 @@ class Page < ApplicationRecord
     if ipfs_cid != ipfs_new_content.cid
       update_column :ipfs_cid, ipfs_new_content.cid
       PingJob.perform_later(ipfs_new_content.url)
+      UpdateBacklinksJob.perform_later(self)
+      linked_pages.each(&:sync_to_ipfs)
     end
   end
 end
