@@ -1,5 +1,5 @@
 require "app/models/page_link_regexp"
-require "app/models/page_link"
+require "app/models/page_link_from_markup"
 
 module Test
   class FakePages
@@ -17,7 +17,7 @@ module Test
   end
 end
 
-RSpec.describe PageLink do
+RSpec.describe PageLinkFromMarkup do
   subject(:page_link) { described_class.new(markup, pages: pages) }
   let(:pages) { Test::FakePages.new }
 

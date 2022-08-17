@@ -1,4 +1,4 @@
-class PageLink
+class PageLinkFromMarkup
   attr_reader :markup
 
   def initialize(markup, regexp: PageLinkRegexp.new, pages: Pages.new)

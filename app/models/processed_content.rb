@@ -23,11 +23,11 @@ class ProcessedContent
       if @ipfs
         HtmlLink.new(
           Ipfs::PageLink.new(
-            PageLink.new(markup)
+            PageLinkFromMarkup.new(markup)
           ), prefetch: true
         )
       else
-        HtmlLink.new(PageLink.new(markup), prefetch: false)
+        HtmlLink.new(PageLinkFromMarkup.new(markup), prefetch: false)
       end
     end
   end
