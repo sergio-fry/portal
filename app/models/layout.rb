@@ -14,6 +14,7 @@ class Layout
           title page.title
           meta name: :viewport, content: "width=device-width,initial-scale=1"
           meta charset: "UTF-8"
+          meta build_time: Time.now.utc
         end
         body a: :auto do
           main class: "page-content", "aria-label": "Content" do
@@ -28,16 +29,6 @@ class Layout
                 end
                 div do
                   raw(content)
-                end
-                div class: "secondary" do
-                  small "build: #{Time.now.utc}"
-                  br
-                  small do
-                    "rev:"
-                  end
-                  small do
-                    a `git rev-parse --short HEAD`, href: "https://github.com/sergio-fry/portal/commit/#{`git rev-parse --short HEAD`}"
-                  end
                 end
               end
             end
