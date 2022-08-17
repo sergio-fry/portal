@@ -32,7 +32,6 @@ class Page < ApplicationRecord
     if ipfs_cid != ipfs_new_content.cid
       update_column :ipfs_cid, ipfs_new_content.cid
       PingJob.perform_later(ipfs_new_content.url)
-      UpdateBacklinksJob.perform_later(self)
       linked_pages.each(&:sync_to_ipfs)
     end
   end
