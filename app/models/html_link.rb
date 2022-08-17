@@ -16,4 +16,6 @@ class HtmlLink
   def markup = @link.markup
 
   def page = @link.page
+
+  def target_exists? = @link.target_exists?
 end

@@ -42,6 +42,33 @@ class Page < ApplicationRecord
 
   def content=(value)
     super
-    self.linking_to_page_ids = processed_content.page_links.map(&:page).compact.map(&:id)
+
+    add_new_links
+    links.destroy removed_links
+  end
+
+  def removed_links
+    links.reject { |link| active_links.map(&:page).include?(link.target_page) }
+  end
+
+  def new_links
+    active_links.reject { |link| links.map(&:target_page).include? link.page }
+  end
+
+  def active_links
+    processed_content.page_links.find_all(&:target_exists?)
+  end
+
+  private
+
+  def add_new_links
+    links.build(
+      new_links.map { |link|
+        {
+          page: self,
+          target_page: link.page
+        }
+      }
+    )
   end
 end
