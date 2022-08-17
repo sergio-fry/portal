@@ -10,10 +10,8 @@ RSpec.describe Page, type: :model do
   end
 
   describe "#linked_pages" do
-    let!(:page) { FactoryBot.build :page }
-    let!(:linked_page) { FactoryBot.build :page }
-
-    before { BackLink.create page: page, source_page: linked_page }
+    let!(:page) { FactoryBot.create :page, title: "politics" }
+    let!(:linked_page) { FactoryBot.create :page, content: "Here is some [[politics]]" }
 
     it { expect(page.linked_pages.reload).to include linked_page }
   end

@@ -2,6 +2,7 @@ class Page < ApplicationRecord
   after_save { sync_to_ipfs }
 
   has_and_belongs_to_many :linked_pages, class_name: "Page", join_table: :page_links, foreign_key: :target_page_id, association_foreign_key: :page_id
+  has_and_belongs_to_many :linking_to_pages, class_name: "Page", join_table: :page_links, foreign_key: :page_id, association_foreign_key: :target_page_id
 
   def to_param
     title
@@ -34,5 +35,10 @@ class Page < ApplicationRecord
       PingJob.perform_later(ipfs_new_content.url)
       linked_pages.each(&:sync_to_ipfs)
     end
+  end
+
+  def content=(value)
+    super
+    self.linking_to_page_ids = processed_content.page_links.map(&:page).compact.map(&:id)
   end
 end
