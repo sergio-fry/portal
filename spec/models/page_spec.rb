@@ -16,7 +16,7 @@ RSpec.describe Page, type: :model do
     it { expect(page.linked_pages.reload).to include linked_page }
 
     context "when link removed" do
-      before { linked_page.update_attribute :content,  "Here was some politics" }
+      before { linked_page.update_attribute :content, "Here was some politics" }
       it { expect(page.linked_pages.reload).not_to include linked_page }
     end
   end

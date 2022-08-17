@@ -1,6 +1,9 @@
 class Page < ApplicationRecord
   after_save { sync_to_ipfs }
 
+  has_many :links
+  has_many :back_links, foreign_key: :target_page_id
+
   has_and_belongs_to_many :linked_pages, class_name: "Page", join_table: :page_links, foreign_key: :target_page_id, association_foreign_key: :page_id
   has_and_belongs_to_many :linking_to_pages, class_name: "Page", join_table: :page_links, foreign_key: :page_id, association_foreign_key: :target_page_id
 
