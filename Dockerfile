@@ -58,7 +58,7 @@ COPY --from=dev /app/public/assets /app/public/assets
 
 EXPOSE 3000
 
-# COPY docker-entrypoint.sh /usr/local/bin/
-# ENTRYPOINT ["docker-entrypoint.sh"]
-# CMD ["web"]
-CMD ["bundle", "exec", "rails", "server", "-p", "3000", "-b", "0.0.0.0"]
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/*
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["web"]
