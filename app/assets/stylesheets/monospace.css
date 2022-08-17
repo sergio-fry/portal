@@ -54,6 +54,9 @@ li { margin: 0.4rem 0; }
 hr {
   text-align: center;
   border: 0;
+  height: 1px;
+  background: black linear-gradient(to right, transparent 50%, #fff 50%);
+  background-size: 13px 2px, 100% 2px;
 
   &:before { content: '/////' }
   &:after { content: attr(data-content) '/////' }
@@ -102,4 +105,8 @@ a.link {
 a.link.link_missing {
   color: red;
   text-decoration-style: dotted;
+}
+
+.secondary {
+  color: grey;
 }

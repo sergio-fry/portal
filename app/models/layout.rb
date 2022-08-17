@@ -29,6 +29,16 @@ class Layout
                 div do
                   raw(content)
                 end
+                div class: "secondary" do
+                  small "build: #{Time.now.utc}"
+                  br
+                  small do
+                    "rev:"
+                  end
+                  small do
+                    a `git rev-parse --short HEAD`, href: "https://github.com/sergio-fry/portal/commit/#{`git rev-parse --short HEAD`}"
+                  end
+                end
               end
             end
           end
