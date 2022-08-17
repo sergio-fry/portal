@@ -4,7 +4,7 @@ set -e
 if [ "$1" = 'web' ]; then
   rm -rf tmp/pids/*
 
-  bundle exec rake db:migrate
+  bundle exec rake db:migrate db:seed
   bundle exec rails server -p 3000 --binding 0.0.0.0
 fi
 
