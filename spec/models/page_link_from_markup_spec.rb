@@ -12,7 +12,7 @@ module Test
     end
 
     def find_by_slug(slug)
-      @pages.find { |page| page.title.to_s == slug.to_s }
+      @pages.find { |page| page.slug.to_s == slug.to_s }
     end
   end
 end

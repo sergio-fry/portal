@@ -5,7 +5,7 @@
 <div id="pages">
   <% @pages.each do |page| %>
     <p>
-      <%= link_to page.title, page %>
+      <%= link_to page.slug, page %>
     </p>
   <% end %>
 </div>

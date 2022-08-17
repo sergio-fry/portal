@@ -7,6 +7,8 @@ class Page < ApplicationRecord
   has_many :linked_pages, through: :back_links, source: :page, class_name: "Page"
   has_many :linking_to_pages, through: :links, source: :target_page, class_name: "Page"
 
+  validates :slug, format: {with: /\A[a-zа-я0-9\-_]+\z/}, uniqueness: true, presence: true
+
   def to_param
     slug
   end

@@ -1,6 +1,12 @@
 require "rails_helper"
 
 RSpec.describe Page, type: :model do
+  describe "slug validation" do
+    it { expect(FactoryBot.build(:page, slug: "politics")).to be_valid }
+    it { expect(FactoryBot.build(:page, slug: "Politics")).not_to be_valid }
+    it { expect(FactoryBot.build(:page, slug: "история")).to be_valid }
+  end
+
   describe "#ipfs" do
     let(:page) { FactoryBot.build :page, content: content }
     let(:content) { "Text [[page]] " }
