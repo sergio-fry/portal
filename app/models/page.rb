@@ -32,7 +32,7 @@ class Page < ApplicationRecord
   def sync_to_ipfs
     if ipfs_cid != ipfs_new_content.cid
       update_column :ipfs_cid, ipfs_new_content.cid
-      PingJob.perform_later(ipfs_new_content.url)
+      PingJob.perform_later(ipfs_new_content.url) if ENV.fetch("IPFS_PING_ENABLED", "false") == "true"
       linked_pages.each(&:sync_to_ipfs)
     end
   end
