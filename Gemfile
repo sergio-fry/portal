@@ -74,6 +74,11 @@ group :test do
   gem "factory_bot_rails"
 end
 
+group :production do
+  gem "sentry-ruby"
+  gem "sentry-rails"
+end
+
 gem "devise"
 gem "pundit", "~> 2.2"
 gem "kramdown"
