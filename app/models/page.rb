@@ -5,7 +5,7 @@ class Page < ApplicationRecord
   has_many :back_links, foreign_key: :target_page_id, class_name: "Link"
 
   has_many :linked_pages, through: :back_links, source: :page, class_name: "Page"
-  has_and_belongs_to_many :linking_to_pages, class_name: "Page", join_table: :page_links, foreign_key: :page_id, association_foreign_key: :target_page_id
+  has_many :linking_to_pages, through: :links, source: :target_page, class_name: "Page"
 
   def to_param
     slug
