@@ -9,9 +9,27 @@ class ProcessedContent
   def to_s
     converted_to_html(
       with_page_links(
-        @page.content.to_s
+        page_content
       )
     )
+  end
+
+  def page_content
+    @page.content.to_s
+  end
+
+  def page_links
+    PageLinkRegexp.new.scan(page_content).flatten.uniq.map do |markup|
+      if @ipfs
+        HtmlLink.new(
+          Ipfs::PageLink.new(
+            PageLink.new(markup)
+          ), prefetch: true
+        )
+      else
+        HtmlLink.new(PageLink.new(markup), prefetch: false)
+      end
+    end
   end
 
   private
@@ -25,24 +43,10 @@ class ProcessedContent
   def with_page_links(content)
     content = content.dup
 
-    page_link_tags(content).each do |link|
+    page_links.each do |link|
       content.gsub!(link.markup, link.html)
     end
 
     content
-  end
-
-  def page_link_tags(content)
-    PageLinkRegexp.new.scan(content).flatten.uniq.map do |markup|
-      if @ipfs
-        HtmlLink.new(
-          Ipfs::PageLink.new(
-            PageLink.new(markup)
-          ), prefetch: true
-        )
-      else
-        HtmlLink.new(PageLink.new(markup), prefetch: false)
-      end
-    end
   end
 end

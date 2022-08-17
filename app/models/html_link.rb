@@ -14,4 +14,6 @@ class HtmlLink
   end
 
   def markup = @link.markup
+
+  def page = @link.page
 end
