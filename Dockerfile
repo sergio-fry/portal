@@ -57,5 +57,7 @@ RUN rm -rf /app/public/assets
 COPY --from=dev /app/public/assets /app/public/assets
 
 EXPOSE 3000
-CMD ["bundle", "exec", "rails", "server", "-p", "3000", "-b", "0.0.0.0"]
 
+COPY docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["web"]
