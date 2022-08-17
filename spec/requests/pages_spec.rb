@@ -4,7 +4,7 @@ RSpec.describe "Pages", type: :request do
   include Devise::Test::IntegrationHelpers
   let!(:user) { FactoryBot.create :user, email: "admin@example.com", password: "secret123" }
 
-  let!(:page) { FactoryBot.create :page, title: :main }
+  let!(:page) { FactoryBot.create :page, slug: :main }
 
   describe "GET pages/:id" do
     context "when guest" do

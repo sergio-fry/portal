@@ -11,7 +11,7 @@ class Layout
     wrapped_to_html(
       html do
         head do
-          title page.title
+          title page.slug
           meta name: :viewport, content: "width=device-width,initial-scale=1"
           meta charset: "UTF-8"
           meta build_time: Time.now.utc

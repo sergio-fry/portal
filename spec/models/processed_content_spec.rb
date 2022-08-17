@@ -12,7 +12,7 @@ RSpec.describe ProcessedContent do
   end
 
   context "with ipfs" do
-    before { FactoryBot.create :page, title: "page1" }
+    before { FactoryBot.create :page, slug: "page1" }
     let(:ipfs) { true }
     let(:content) { "Text with link to [[page1]]" }
 

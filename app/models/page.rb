@@ -5,7 +5,7 @@ class Page < ApplicationRecord
   has_and_belongs_to_many :linking_to_pages, class_name: "Page", join_table: :page_links, foreign_key: :page_id, association_foreign_key: :target_page_id
 
   def to_param
-    title
+    slug
   end
 
   def processed_content(ipfs: false)

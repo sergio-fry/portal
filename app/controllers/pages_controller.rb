@@ -3,7 +3,7 @@ class PagesController < ApplicationController
 
   # GET /pages or /pages.json
   def index
-    @page = Page.find_or_initialize_by title: ENV.fetch("HOME_TITLE", "home")
+    @page = Page.find_or_initialize_by slug: ENV.fetch("HOME_TITLE", "home")
     authorize @page, :show?
 
     if @page.persisted?
@@ -81,12 +81,12 @@ class PagesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_page
-    @page = Page.find_or_initialize_by(title: params[:id])
+    @page = Page.find_or_initialize_by(slug: params[:id])
     authorize @page
   end
 
   # Only allow a list of trusted parameters through.
   def page_params
-    params.require(:page).permit(:title, :content)
+    params.require(:page).permit(:slug, :content)
   end
 end
