@@ -13,9 +13,5 @@ class HtmlLink
     result
   end
 
-  def markup = @link.markup
-
-  def page = @link.page
-
-  def target_exists? = @link.target_exists?
+  delegate :markup, :page, :target_exists?, :slug, :moved_to, to: :@link
 end

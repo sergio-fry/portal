@@ -1,8 +1,9 @@
 class Page < ApplicationRecord
-  after_save { sync_to_ipfs }
+  before_save :update_backlinks
+  after_save :sync_to_ipfs
 
   has_many :links
-  has_many :back_links, foreign_key: :target_page_id, class_name: "Link"
+  has_many :back_links, foreign_key: :target_page_id, class_name: "Link", autosave: true
 
   has_many :linked_pages, through: :back_links, source: :page, class_name: "Page"
   has_many :linking_to_pages, through: :links, source: :target_page, class_name: "Page"
@@ -68,9 +69,18 @@ class Page < ApplicationRecord
       new_links.map { |link|
         {
           page: self,
-          target_page: link.page
+          target_page: link.page,
+          slug: link.page.slug
         }
       }
     )
+  end
+
+  def update_backlinks
+    return unless slug_changed?
+
+    back_links.each do |link|
+      link.slug = slug
+    end
   end
 end
