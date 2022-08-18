@@ -42,4 +42,12 @@ class PageLinkFromMarkup
 
     m
   end
+
+  def moved_to(slug)
+    self.class.new(
+      "[[#{slug}|#{name}]]",
+      regexp: @regexp,
+      pages: @pages
+    )
+  end
 end
