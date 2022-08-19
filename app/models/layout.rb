@@ -15,6 +15,7 @@ class Layout
           meta name: :viewport, content: "width=device-width,initial-scale=1"
           meta charset: "UTF-8"
           meta build_time: Time.now.utc
+          link href: theme_styles, rel: :stylesheet
         end
         body a: :auto do
           main class: "page-content", "aria-label": "Content" do
@@ -33,7 +34,6 @@ class Layout
               end
             end
           end
-          link href: theme_styles, rel: :stylesheet
         end
       end.to_s
     )
