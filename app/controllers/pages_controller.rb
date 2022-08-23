@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :set_page, only: %i[show edit update destroy]
+  before_action :set_page, only: %i[show edit update destroy history]
 
   # GET /pages or /pages.json
   def index
@@ -11,6 +11,12 @@ class PagesController < ApplicationController
     else
       redirect_to edit_page_url(@page) unless @page.persisted?
     end
+  end
+
+  def history
+    authorize @page, :history?
+
+    render inline: @page.history.to_s
   end
 
   def rebuild

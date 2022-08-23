@@ -6,11 +6,15 @@ class Page < ApplicationRecord
   has_many :linked_pages, through: :back_links, source: :page, class_name: "Page"
   has_many :linking_to_pages, through: :links, source: :target_page, class_name: "Page"
   has_many :links
-  has_many :page_versions, autosave: true
+  has_many :versions, class_name: "PageVersion", autosave: true
 
   validates :slug, format: {with: /\A[a-zа-я0-9\-_]+\z/}, uniqueness: true, presence: true
 
   def to_param
+    slug
+  end
+
+  def title
     slug
   end
 
@@ -51,8 +55,12 @@ class Page < ApplicationRecord
     track_history
   end
 
+  def history
+    PageHistory.new self
+  end
+
   def track_history
-    page_versions.build ipfs_cid: ipfs_cid
+    versions.build ipfs_cid: ipfs_cid
   end
 
   def removed_links
