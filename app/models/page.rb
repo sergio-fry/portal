@@ -2,11 +2,11 @@ class Page < ApplicationRecord
   before_save :update_backlinks
   after_save :sync_linked_pages
 
-  has_many :links
   has_many :back_links, foreign_key: :target_page_id, class_name: "Link", autosave: true
-
   has_many :linked_pages, through: :back_links, source: :page, class_name: "Page"
   has_many :linking_to_pages, through: :links, source: :target_page, class_name: "Page"
+  has_many :links
+  has_many :page_versions, autosave: true
 
   validates :slug, format: {with: /\A[a-zа-я0-9\-_]+\z/}, uniqueness: true, presence: true
 
@@ -52,7 +52,7 @@ class Page < ApplicationRecord
   end
 
   def track_history
-    # page_versions.build ipfs_cid: ipfs_cid
+    page_versions.build ipfs_cid: ipfs_cid
   end
 
   def removed_links
