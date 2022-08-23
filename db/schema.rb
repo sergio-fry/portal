@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_18_060209) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_23_045128) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -56,6 +56,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_18_060209) do
     t.string "slug"
   end
 
+  create_table "page_versions", force: :cascade do |t|
+    t.integer "page_id"
+    t.string "ipfs_cid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["page_id"], name: "index_page_versions_on_page_id"
+  end
+
   create_table "pages", force: :cascade do |t|
     t.string "slug", null: false
     t.datetime "created_at", null: false
@@ -87,4 +95,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_18_060209) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "page_versions", "pages"
 end

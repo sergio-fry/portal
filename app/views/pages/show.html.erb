@@ -4,7 +4,7 @@
     <%= link_to "IPFS", @page.ipfs_content.url %>
     <%= link_to "edit", edit_page_path(@page) %>
     <br/>
-    <%= content_tag :time, @page.updated_at, datetime: @page.updated_at %>
+    <%= link_to @page.updated_at, history_page_path(@page), datetime: @page.updated_at, title: "History" %>
     <br/>
     <span><%= link_to "Sergei O. Udalov", "/" %></span>
   </p>

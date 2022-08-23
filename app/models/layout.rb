@@ -1,17 +1,16 @@
 class Layout
   include Hanami::Helpers
 
-  def initialize(content, page)
-    @content = content
-    @page = page
+  def initialize(title:)
+    @title = title
   end
 
-  def to_s
-    page = @page
+  def wrap
+    meta_title = @title
     wrapped_to_html(
       html do
         head do
-          title page.slug
+          title meta_title
           meta name: :viewport, content: "width=device-width,initial-scale=1"
           meta charset: "UTF-8"
           meta build_time: Time.now.utc
@@ -20,18 +19,7 @@ class Layout
         body a: :auto do
           main class: "page-content", "aria-label": "Content" do
             div class: :w do
-              article do
-                p class: "post-meta" do
-                  time datetime: page.updated_at do
-                    page.updated_at
-                  end
-                  br
-                  a "Sergei O. Udalov", href: "https://#{ENV.fetch("DOMAIN_NAME", "sergei.udalovs.ru")}"
-                end
-                div do
-                  raw(content)
-                end
-              end
+              yield self
             end
           end
         end
@@ -40,8 +28,6 @@ class Layout
   end
 
   private
-
-  attr_reader :content
 
   def theme_styles
     Ipfs::NewContent.new(

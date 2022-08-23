@@ -1,16 +1,20 @@
 class Page < ApplicationRecord
   before_save :update_backlinks
-  after_save :sync_to_ipfs
+  after_save :sync_linked_pages
 
-  has_many :links
   has_many :back_links, foreign_key: :target_page_id, class_name: "Link", autosave: true
-
   has_many :linked_pages, through: :back_links, source: :page, class_name: "Page"
   has_many :linking_to_pages, through: :links, source: :target_page, class_name: "Page"
+  has_many :links
+  has_many :versions, class_name: "PageVersion", autosave: true
 
   validates :slug, format: {with: /\A[a-zа-я0-9\-_]+\z/}, uniqueness: true, presence: true
 
   def to_param
+    slug
+  end
+
+  def title
     slug
   end
 
@@ -28,7 +32,7 @@ class Page < ApplicationRecord
 
   def ipfs_new_content
     Ipfs::NewContent.new(
-      Layout.new(
+      PageLayout.new(
         processed_content(ipfs: true).to_s,
         self
       ).to_s
@@ -36,18 +40,27 @@ class Page < ApplicationRecord
   end
 
   def sync_to_ipfs
-    if ipfs_cid != ipfs_new_content.cid
-      update_column :ipfs_cid, ipfs_new_content.cid
-      PingJob.perform_later(ipfs_new_content.url) if ENV.fetch("IPFS_PING_ENABLED", "false") == "true"
-      linked_pages.each(&:sync_to_ipfs)
-    end
+    self.ipfs_cid = ipfs_new_content.cid
+    PingJob.perform_later(ipfs_new_content.url) if ENV.fetch("IPFS_PING_ENABLED", "false") == "true"
   end
 
   def content=(value)
     super
 
+    return unless content_changed?
+
     add_new_links
     links.destroy removed_links
+    sync_to_ipfs
+    track_history
+  end
+
+  def history
+    PageHistory.new self
+  end
+
+  def track_history
+    versions.build ipfs_cid: ipfs_cid
   end
 
   def removed_links
@@ -82,5 +95,9 @@ class Page < ApplicationRecord
     back_links.each do |link|
       link.slug = slug
     end
+  end
+
+  def sync_linked_pages
+    linked_pages.each { |page| ExportPageToIpfsJob.perform_later(page) }
   end
 end
