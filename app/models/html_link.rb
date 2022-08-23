@@ -8,7 +8,7 @@ class HtmlLink
     result = ""
 
     result << "<a href='#{@link.link}' class='#{@link.css_classes}'>#{@link.name}</a>"
-    result << "<link rel='prefetch' href='#{@link.link}'>" if @prefetch
+    result << "<link rel='preload' href='#{@link.link}' as='fetch'>" if @prefetch
 
     result
   end

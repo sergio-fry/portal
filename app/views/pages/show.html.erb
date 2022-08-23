@@ -1,6 +1,6 @@
 <article>
   <p class="post-meta">
-    <%= content_tag :link, nil, rel: :prefetch, href: @page.ipfs_content.url %>
+    <%= content_tag :link, nil, rel: :prefetch, href: @page.ipfs_content.url, as: :fetch %>
     <%= link_to "IPFS", @page.ipfs_content.url %>
     <%= link_to "edit", edit_page_path(@page) %>
     <br/>
