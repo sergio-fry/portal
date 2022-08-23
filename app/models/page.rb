@@ -28,7 +28,7 @@ class Page < ApplicationRecord
 
   def ipfs_new_content
     Ipfs::NewContent.new(
-      Layout.new(
+      PageLayout.new(
         processed_content(ipfs: true).to_s,
         self
       ).to_s
