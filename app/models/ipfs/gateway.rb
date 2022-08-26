@@ -60,8 +60,8 @@ module Ipfs
         )
 
         if res.code >= 200 && res.code <= 299
-          cid = JSON.parse(res.body)["Hash"]
-          @logger.info "Export content ##{cid} to IPFS"
+          cid = JSON.parse(res.body).dig("Cid", "/")
+          @logger.info "Export DAG ##{cid} to IPFS"
 
           cid
         else
