@@ -16,13 +16,21 @@ module Ipfs
     end
 
     def file(path)
-      Folder.new(cid).file(path)
+      folder.file(path)
     end
 
     def cid
       cid_v1 = @gateway.dag_put dag
 
       @gateway.cid_format cid_v1, v: 0
+    end
+
+    def folder
+      Folder.new(cid)
+    end
+
+    def url(*args)
+      folder.url(*args)
     end
 
     def dag

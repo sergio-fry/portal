@@ -16,10 +16,24 @@ module Ipfs
 
     def file(path)
       Content.new(
-        dag["Links"].find do |link|
-          link["Name"] == path
-        end.dig("Hash", "/")
+        file_link(path).dig("Hash", "/")
       )
+    end
+
+    def url(*args)
+      Content.new(@cid).url(*args)
+    end
+
+    private
+
+    def file_link(path)
+      result = dag["Links"].find do |link|
+        link["Name"] == path
+      end
+
+      raise "File not found #{path}" if result.nil?
+
+      result
     end
   end
 end

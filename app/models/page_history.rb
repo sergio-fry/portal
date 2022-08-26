@@ -32,11 +32,12 @@ class PageHistory
   end
 
   class Version
-    def initialize(version, number: )
+    def initialize(version, number:)
       @version = version
       @number = number
     end
 
+    # FIXME: Folder URL
     def url = Ipfs::Content.new(@version.ipfs_cid).url
 
     def title = @version.created_at
@@ -53,6 +54,7 @@ class PageHistory
       "Current"
     end
 
+    # TODO: link to current version could be generated via folder URL
     def has_link?
       false
     end

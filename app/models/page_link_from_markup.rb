@@ -16,7 +16,7 @@ class PageLinkFromMarkup
   end
 
   def link
-    "/pages/#{slug}"
+    "./#{slug}.html"
   end
 
   def target_exists?
