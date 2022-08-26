@@ -6,11 +6,12 @@ module Ipfs
     let(:hello) { NewContent.new("hello") }
 
     it do
-      folder = described_class.new(
-        "/hello.txt" => hello
-      )
+      folder = described_class.new
 
-      expect(folder.content_at("/hello.txt").content).to eq "hello"
+      expect(
+        folder.with_file("/hello.txt", NewContent.new("hello"))
+          .file("/hello.txt").content
+      ).to eq "hello"
     end
   end
 end
