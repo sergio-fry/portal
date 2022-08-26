@@ -1,9 +1,12 @@
+require_relative "gateway"
+
 module Ipfs
   class Content
     attr_reader :cid
 
-    def initialize(cid)
+    def initialize(cid, gateway: Gateway.new)
       @cid = cid
+      @gateway = gateway
     end
 
     def url(filename: nil)
@@ -15,7 +18,7 @@ module Ipfs
     end
 
     def data
-      raise "not implemented"
+      @gateway.cat @cid
     end
   end
 end

@@ -10,7 +10,7 @@ module Ipfs
 
       expect(
         folder.with_file("/hello.txt", NewContent.new("hello"))
-          .file("/hello.txt").content
+          .file("/hello.txt").data
       ).to eq "hello"
     end
   end

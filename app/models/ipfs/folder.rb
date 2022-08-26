@@ -1,29 +1,25 @@
 require "http"
+require_relative "gateway"
+require_relative "content"
 
 module Ipfs
   class Folder
-    def initialize(cid, api_endpoint: ENV.fetch("IPFS_KUBO_API", "http://localhost:5001"))
+    def initialize(cid, gateway: Gateway.new)
       @cid = cid
-      @http_client = HTTP
-      @api_endpoint = api_endpoint
+      @gateway = gateway
     end
 
     def dag
-      res = @http_client.post(
-        "#{@api_endpoint}/api/v0/dag/get",
-        params: {arg: @cid}
-      )
-
-      if res.code >= 200 && res.code <= 299
-        JSON.parse(res.body)
-      else
-        puts res.code
-        raise res.body
-      end
+      cid_v1 = @gateway.cid_format(@cid, v: 1)
+      @gateway.dag_get(cid_v1)
     end
 
-    def content_at(path)
-      dag.find path
+    def file(path)
+      Content.new(
+        dag["Links"].find do |link|
+          link["Name"] == path
+        end.dig("Hash", "/")
+      )
     end
   end
 end

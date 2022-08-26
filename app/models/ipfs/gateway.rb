@@ -21,7 +21,20 @@ module Ipfs
       @logger = defined?(Rails) ? Rails.logger : Logger.new($stdout)
     end
 
-    def call_method_with_file(method, params:, data:)
+    def call_method(method, params:, json_parse: true)
+      res = @http_client.post(
+        URI.join(@api_endpoint, method),
+        params: params
+      )
+
+      if res.code >= 200 && res.code <= 299
+        json_parse ? JSON.parse(res.body) : res.body.to_s
+      else
+        raise Error.new(res.code, res.body)
+      end
+    end
+
+    def call_method_with_file(method, params:, data:, json_parse: true)
       Tempfile.open("file") do |file|
         file.write data
         file.rewind
@@ -33,7 +46,7 @@ module Ipfs
         )
 
         if res.code >= 200 && res.code <= 299
-          JSON.parse(res.body)
+          json_parse ? JSON.parse(res.body) : res.body
         else
           raise Error.new(res.code, res.body)
         end
@@ -41,13 +54,23 @@ module Ipfs
     end
 
     def add(data)
-      resp = call_method_with_file("/api/v0/add", params: {}, data: data)
-      resp["Hash"]
+      call_method_with_file("/api/v0/add", params: {}, data: data)["Hash"]
     end
 
     def dag_put(dag)
-      resp = call_method_with_file("/api/v0/add", params: {"store-codec" => "dag-pb"}, data: dag)
-      resp.dig("Cid", "/")
+      call_method_with_file("/api/v0/dag/put", params: {"store-codec" => "dag-pb"}, data: dag).dig("Cid", "/")
+    end
+
+    def dag_get(cid)
+      call_method("/api/v0/dag/get", params: {arg: cid})
+    end
+
+    def cid_format(cid, v:)
+      call_method("/api/v0/cid/format", params: {arg: cid, v: v})["Formatted"]
+    end
+
+    def cat(cid)
+      call_method("/api/v0/cat", params: {arg: cid, progress: false}, json_parse: false)
     end
   end
 end
