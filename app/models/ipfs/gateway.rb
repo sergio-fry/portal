@@ -21,53 +21,33 @@ module Ipfs
       @logger = defined?(Rails) ? Rails.logger : Logger.new($stdout)
     end
 
-    def add(data)
-      Tempfile.open("ifps_file") do |file|
+    def call_method_with_file(method, params:, data:)
+      Tempfile.open("file") do |file|
         file.write data
         file.rewind
 
         res = @http_client.post(
-          "#{@api_endpoint}/api/v0/add",
-          form: {
-            file: HTTP::FormData::File.new(file)
-          }
+          URI.join(@api_endpoint, method),
+          form: {file: HTTP::FormData::File.new(file)},
+          params: params
         )
 
         if res.code >= 200 && res.code <= 299
-          cid = JSON.parse(res.body)["Hash"]
-          @logger.info "Export content ##{cid} to IPFS"
-
-          cid
+          JSON.parse(res.body)
         else
           raise Error.new(res.code, res.body)
         end
       end
     end
 
+    def add(data)
+      resp = call_method_with_file("/api/v0/add", params: {}, data: data)
+      resp["Hash"]
+    end
+
     def dag_put(dag)
-      Tempfile.open("dag_json") do |file|
-        file.write dag
-        file.rewind
-
-        res = @http_client.post(
-          "#{@api_endpoint}/api/v0/dag/put",
-          form: {
-            file: HTTP::FormData::File.new(file)
-          },
-          params: {
-            "store-codec" => "dag-pb"
-          }
-        )
-
-        if res.code >= 200 && res.code <= 299
-          cid = JSON.parse(res.body).dig("Cid", "/")
-          @logger.info "Export DAG ##{cid} to IPFS"
-
-          cid
-        else
-          raise Error.new(res.code, res.body)
-        end
-      end
+      resp = call_method_with_file("/api/v0/add", params: {"store-codec" => "dag-pb"}, data: dag)
+      resp.dig("Cid", "/")
     end
   end
 end
