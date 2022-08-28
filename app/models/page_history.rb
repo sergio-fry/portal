@@ -13,11 +13,7 @@ class PageHistory
       html.ol reversed: :reversed do
         versions.each do |version|
           li do
-            if version.has_link?
-              a version.title, href: version.url, title: version.meta_title
-            else
-              span version.title
-            end
+            a version.title, href: version.url, title: version.meta_title
           end
         end
       end
@@ -25,50 +21,44 @@ class PageHistory
   end
 
   def versions
-    [CurrentVersion.new(@page, number: 0)] +
-      @page.versions.order("created_at").each_with_index.map do |version, index|
-        Version.new(version, number: index + 1)
-      end.reverse
+    @page.versions.sort_by { |version| version.created_at || Time.now }.each_with_index.map do |version, index|
+      Version.new(@page, version, number: index + 1)
+    end.reverse
   end
 
   class Version
-    def initialize(version, number:)
+    def initialize(page, version, number:)
+      @page = page
       @version = version
       @number = number
     end
 
-    # FIXME: Folder URL.
-    # NOTE: Is it possible?
-    def url = Ipfs::Content.new(@version.ipfs_cid).url
-
-    def title = @version.created_at
-
-    def meta_title = "Version #{@number}"
-
-    def has_link?
-      true
-    end
-  end
-
-  class CurrentVersion
-    def initialize(page, number:)
-      @page = page
-      @number = number
+    def url
+      if current?
+        "../#{@page.slug}.html"
+      else
+        Ipfs::Content.new(@version.ipfs_cid).url
+      end
     end
 
     def title
-      "#{Time.now.utc} - Current"
+      if current?
+        "#{time} - Current"
+      else
+        time
+      end
     end
 
-    # TODO: link to current version could be generated via folder URL
-    def has_link?
-      true
-    end
-
-    def url
-      "../#{@page.slug}.html"
-    end
+    def time = @version.created_at || Time.now.utc
 
     def meta_title = "Version #{@number}"
+
+    def current?
+      if @page.changed?
+        @version.created_at.nil?
+      else
+        @page.versions.max_by(&:created_at) == @version
+      end
+    end
   end
 end
