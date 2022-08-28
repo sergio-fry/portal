@@ -24,7 +24,7 @@ module SitemapTest
     subject(:sitemap) { described_class.new pages: pages }
     let(:pages) { FakePages.new }
 
-    let(:home) { double(:home, slug: "home", ipfs_content: Ipfs::NewContent.new("Hello"), history: "Some hist") }
+    let(:home) { double(:home, slug: "home", ipfs_content: Ipfs::NewContent.new("Hello"), history_ipfs_content: Ipfs::NewContent.new("Some hist")) }
     before { pages << home }
 
     it { expect(sitemap.ifps_folder.file("index.html").data).to include "Hello" }

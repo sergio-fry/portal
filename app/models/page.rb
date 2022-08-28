@@ -9,6 +9,7 @@ class Page < ApplicationRecord
   has_many :versions, class_name: "PageVersion", autosave: true
 
   validates :slug, format: {with: /\A[a-zа-я0-9\-_]+\z/}, uniqueness: true, presence: true
+  validates :content, presence: true
 
   def to_param
     slug
@@ -23,11 +24,7 @@ class Page < ApplicationRecord
   end
 
   def ipfs_content
-    if changed?
-      ipfs_new_content
-    else
-      ipfs_cid.present? ? Ipfs::Content.new(ipfs_cid) : ipfs_new_content
-    end
+    ipfs_cid.present? ? Ipfs::Content.new(ipfs_cid) : ipfs_new_content
   end
 
   def ipfs_new_content
@@ -41,7 +38,6 @@ class Page < ApplicationRecord
 
   def sync_to_ipfs
     self.ipfs_cid = ipfs_new_content.cid
-    PingJob.perform_later(ipfs_new_content.url) if ENV.fetch("IPFS_PING_ENABLED", "false") == "true"
   end
 
   def content=(value)
@@ -59,8 +55,13 @@ class Page < ApplicationRecord
     PageHistory.new self
   end
 
+  def history_ipfs_content
+    history_ipfs_cid.present? ? Ipfs::Content.new(history_ipfs_cid) : Ipfs::NewContent.new(history.to_s)
+  end
+
   def track_history
     versions.build ipfs_cid: ipfs_cid
+    self.history_ipfs_cid = Ipfs::NewContent.new(history.to_s).cid
   end
 
   def removed_links
