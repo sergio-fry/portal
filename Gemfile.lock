@@ -152,6 +152,7 @@ GEM
       mini_mime (>= 0.1.1)
     marcel (1.0.2)
     matrix (0.4.2)
+    memory_profiler (1.0.0)
     method_source (1.0.0)
     mini_magick (4.11.0)
     mini_mime (1.1.2)
@@ -189,6 +190,8 @@ GEM
       activesupport (>= 3.0.0)
     racc (1.6.0)
     rack (2.2.3)
+    rack-mini-profiler (3.0.0)
+      rack (>= 1.2.0)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (7.0.2.3)
@@ -281,6 +284,7 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.4.2)
+    stackprof (0.2.19)
     standard (1.12.1)
       rubocop (= 1.29.1)
       rubocop-performance (= 1.13.3)
@@ -334,9 +338,11 @@ DEPENDENCIES
   ipfs-api
   jbuilder
   kramdown
+  memory_profiler
   pg
   puma (~> 5.0)
   pundit (~> 2.2)
+  rack-mini-profiler
   rails (~> 7.0.2, >= 7.0.2.3)
   rspec-rails
   selenium-webdriver
@@ -344,6 +350,7 @@ DEPENDENCIES
   sentry-ruby
   sprockets-rails
   sqlite3 (~> 1.4)
+  stackprof
   standard
   stimulus-rails
   turbo-rails

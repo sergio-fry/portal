@@ -12,15 +12,19 @@ class PageLayout
     Layout.new(title: page.slug).wrap do |html|
       html.article do
         p class: "post-meta" do
-          a page.updated_at, datetime: page.updated_at, title: "History", href: Ipfs::NewContent.new(page.history.to_s).url
+          a updated_at, datetime: updated_at, title: "History", href: "./#{page.slug}/history.html"
           br
-          a "Sergei O. Udalov", href: "https://#{ENV.fetch("DOMAIN_NAME", "sergei.udalovs.ru")}"
+          a "Sergei O. Udalov", href: "./index.html"
         end
         div do
           raw(content)
         end
       end
     end
+  end
+
+  def updated_at
+    (@page.changed? ? Time.now : @page.updated_at).utc
   end
 
   private

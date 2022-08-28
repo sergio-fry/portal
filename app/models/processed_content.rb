@@ -20,15 +20,7 @@ class ProcessedContent
 
   def page_links
     PageLinkRegexp.new.scan(page_content).flatten.uniq.map do |markup|
-      if @ipfs
-        HtmlLink.new(
-          Ipfs::PageLink.new(
-            PageLinkFromMarkup.new(markup)
-          ), prefetch: true
-        )
-      else
-        HtmlLink.new(PageLinkFromMarkup.new(markup), prefetch: false)
-      end
+      HtmlLink.new(PageLinkFromMarkup.new(markup), prefetch: true)
     end
   end
 

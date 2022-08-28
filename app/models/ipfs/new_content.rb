@@ -2,6 +2,8 @@ require_relative "./gateway"
 
 module Ipfs
   class NewContent
+    attr_reader :data
+
     def initialize(data, gateway: Gateway.new)
       @data = data
 
@@ -9,7 +11,10 @@ module Ipfs
     end
 
     def cid
-      @gateway.add @data
+      result = @gateway.add @data
+      PingJob.perform_later(url) if ENV.fetch("IPFS_PING_ENABLED", "false") == "true"
+
+      result
     end
 
     def content
