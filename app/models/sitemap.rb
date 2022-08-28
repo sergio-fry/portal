@@ -8,8 +8,7 @@ class Sitemap
   def ifps_folder
     folder = Ipfs::NewFolder.new
 
-    home = @pages.find_by_slug ENV.fetch("HOME_TITLE", "home")
-    folder = folder.with_file("index.html", home.ipfs_content)
+    folder = folder.with_file("index.html", home.ipfs_content) if home_exists?
 
     @pages.each do |page|
       folder = folder.with_file("#{page.slug}.html", page.ipfs_content)
@@ -19,5 +18,13 @@ class Sitemap
     end
 
     folder
+  end
+
+  def home
+    @pages.find_by_slug ENV.fetch("HOME_TITLE", "home")
+  end
+
+  def home_exists?
+    !home.nil?
   end
 end
