@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_action :set_page, only: %i[show edit update destroy history]
+  include PagesHelper
 
   # GET /pages or /pages.json
   def index
@@ -29,7 +30,7 @@ class PagesController < ApplicationController
     if !@page.persisted?
       redirect_to edit_page_url(@page)
     elsif !signed_in?
-      redirect_to @page.ipfs_content.url, allow_other_host: true
+      redirect_to ipfs_page_url(@page), allow_other_host: true
     end
   end
 
