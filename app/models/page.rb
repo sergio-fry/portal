@@ -1,6 +1,5 @@
 class Page < ApplicationRecord
   before_save :update_backlinks
-  after_save :sync_linked_pages
 
   has_many :back_links, foreign_key: :target_page_id, class_name: "Link", autosave: true
   has_many :linked_pages, through: :back_links, source: :page, class_name: "Page"
@@ -96,9 +95,5 @@ class Page < ApplicationRecord
     back_links.each do |link|
       link.slug = slug
     end
-  end
-
-  def sync_linked_pages
-    linked_pages.each { |page| ExportPageToIpfsJob.perform_later(page) }
   end
 end

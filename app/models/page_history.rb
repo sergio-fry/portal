@@ -25,7 +25,7 @@ class PageHistory
   end
 
   def versions
-    [CurrentVersion.new] +
+    [CurrentVersion.new(@page, number: 0)] +
       @page.versions.order("created_at").each_with_index.map do |version, index|
         Version.new(version, number: index + 1)
       end.reverse
@@ -37,7 +37,8 @@ class PageHistory
       @number = number
     end
 
-    # FIXME: Folder URL
+    # FIXME: Folder URL.
+    # NOTE: Is it possible?
     def url = Ipfs::Content.new(@version.ipfs_cid).url
 
     def title = @version.created_at
@@ -50,13 +51,24 @@ class PageHistory
   end
 
   class CurrentVersion
+    def initialize(page, number:)
+      @page = page
+      @number = number
+    end
+
     def title
-      "Current"
+      "#{Time.now.utc} - Current"
     end
 
     # TODO: link to current version could be generated via folder URL
     def has_link?
-      false
+      true
     end
+
+    def url
+      "../#{@page.slug}.html"
+    end
+
+    def meta_title = "Version #{@number}"
   end
 end

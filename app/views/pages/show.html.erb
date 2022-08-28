@@ -2,7 +2,7 @@
   <p class="post-meta">
     <%= content_tag :link, nil, rel: :prefetch, href: @page.ipfs_content.url, as: :fetch %>
     <%= link_to "admin", admin_path(@page) %>
-    <%= link_to "IPFS", Sitemap.new.ifps_folder.url %>
+    <%= link_to "IPFS", ipfs_page_url(@page) %>
     <%= link_to "edit", edit_page_path(@page) %>
     <br/>
     <%= link_to @page.updated_at, history_page_path(@page), datetime: @page.updated_at, title: "History" %>
