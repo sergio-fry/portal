@@ -22,7 +22,12 @@ class PagesController < ApplicationController
 
   def rebuild
     authorize Page, :rebuild?
-    Page.find_each { |page| ExportPageToIpfsJob.perform_later page }
+
+    Page.find_each do |page|
+      page.sync_to_ipfs
+      page.history_ipfs_cid = Ipfs::NewContent.new(page.history.to_s).cid
+      page.save!
+    end
   end
 
   # GET /pages/1 or /pages/1.json
