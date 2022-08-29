@@ -11,10 +11,7 @@ module Ipfs
     end
 
     def cid
-      result = @gateway.add @data
-      PingJob.perform_later(url) if ENV.fetch("IPFS_PING_ENABLED", "false") == "true"
-
-      result
+      @gateway.add @data
     end
 
     def content
