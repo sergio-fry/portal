@@ -15,7 +15,7 @@ class PagePolicy < ApplicationPolicy
 
   def destroy? = update?
 
-  def history? = update?
+  def history? = show?
 
   class Scope < Scope
     def resolve

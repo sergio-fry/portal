@@ -9,7 +9,7 @@ RSpec.describe "Pages", type: :request do
   describe "GET pages/:id" do
     context "when guest" do
       before { get "/pages/main" }
-      it { expect(response).to have_http_status(:redirect) }
+      it { expect(response).to have_http_status(:success) }
     end
 
     context "when admin" do

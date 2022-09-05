@@ -34,8 +34,6 @@ class PagesController < ApplicationController
   def show
     if !@page.persisted?
       redirect_to edit_page_url(@page)
-    elsif !signed_in?
-      redirect_to ipfs_page_url(@page), allow_other_host: true
     end
   end
 
