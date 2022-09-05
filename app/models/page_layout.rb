@@ -33,12 +33,6 @@ class PageLayout
 
   attr_reader :content
 
-  def theme_styles
-    Ipfs::NewContent.new(
-      File.read(Rails.root.join('app/assets/stylesheets/monospace.css'))
-    ).content.url(filename: 'style.css')
-  end
-
   def wrapped_to_html(content)
     <<~HTML
       <!DOCTYPE html>

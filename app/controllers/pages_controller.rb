@@ -34,7 +34,11 @@ class PagesController < ApplicationController
 
   # GET /pages/1 or /pages/1.json
   def show
-    redirect_to edit_page_url(@page) unless @page.persisted?
+    if @page.persisted?
+      render inline: @page.processed_content_with_layout
+    else
+      redirect_to edit_page_url(@page)
+    end
   end
 
   # GET /pages/new

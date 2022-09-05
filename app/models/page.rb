@@ -20,8 +20,15 @@ class Page < ApplicationRecord
     slug
   end
 
-  def processed_content(ipfs: false)
-    ProcessedContent.new(self, ipfs:)
+  def processed_content
+    ProcessedContent.new(self)
+  end
+
+  def processed_content_with_layout
+    PageLayout.new(
+      processed_content.to_s,
+      self
+    ).to_s
   end
 
   def ipfs_content
@@ -30,10 +37,7 @@ class Page < ApplicationRecord
 
   def ipfs_new_content
     Ipfs::NewContent.new(
-      PageLayout.new(
-        processed_content(ipfs: true).to_s,
-        self
-      ).to_s
+      processed_content_with_layout
     )
   end
 

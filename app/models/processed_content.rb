@@ -3,8 +3,7 @@
 require 'kramdown'
 
 class ProcessedContent
-  def initialize(page, ipfs: false)
-    @ipfs = ipfs
+  def initialize(page)
     @page = page
   end
 

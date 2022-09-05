@@ -17,7 +17,9 @@ class Layout
           meta charset: 'UTF-8'
           meta build_time: Time.now.utc
           link href: theme_styles, rel: :stylesheet
-          script type: 'text/javascript', src: jquery_url
+          script type: 'text/javascript', src: js_from_url('https://code.jquery.com/jquery-3.6.1.min.js')
+          script type: 'text/javascript', src: js_from_url('https://cdn.opalrb.com/opal/current/opal.min.js')
+          script type: 'text/javascript', src: js_from_url('https://cdn.opalrb.com/opal/current/native.min.js')
           script type: 'text/javascript', src: embed_js_url
         end
         body a: :auto do
@@ -33,16 +35,18 @@ class Layout
 
   private
 
-  def jquery_url
+  def js_from_url(url)
     Ipfs::NewContent.new(
-      Net::HTTP.get(URI.parse('https://code.jquery.com/jquery-3.6.1.min.js'))
-    ).content.url(filename: 'style.css')
+      Net::HTTP.get(URI.parse(url))
+    ).content.url(filename: 'script.js')
   end
 
   def embed_js_url
     Ipfs::NewContent.new(
-      File.read(Rails.root.join('app/javascript/embed.js'))
-    ).content.url(filename: 'style.css')
+      Opal.compile(
+        File.read(Rails.root.join('app/javascript/embed.rb'))
+      )
+    ).content.url(filename: 'embed.js')
   end
 
   def theme_styles
