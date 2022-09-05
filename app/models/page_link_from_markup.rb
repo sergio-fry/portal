@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PageLinkFromMarkup
   attr_reader :markup
 
@@ -9,9 +11,9 @@ class PageLinkFromMarkup
 
   def css_classes
     if target_exists?
-      "link"
+      'link'
     else
-      "link link_missing"
+      'link link_missing'
     end
   end
 
@@ -24,7 +26,7 @@ class PageLinkFromMarkup
   end
 
   def slug
-    matched_data[1].downcase.strip.gsub(/\s+/, "_")
+    matched_data[1].downcase.strip.gsub(/\s+/, '_')
   end
 
   def name
@@ -38,7 +40,7 @@ class PageLinkFromMarkup
   def matched_data
     m = @regexp.match(@markup)
 
-    raise "Wrong page link markup" if m.nil?
+    raise 'Wrong page link markup' if m.nil?
 
     m
   end

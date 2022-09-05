@@ -1,4 +1,6 @@
-require_relative "./gateway"
+# frozen_string_literal: true
+
+require_relative './gateway'
 
 module Ipfs
   class NewContent

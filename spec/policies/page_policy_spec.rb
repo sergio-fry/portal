@@ -1,5 +1,7 @@
-require "rails_helper"
-require "pundit/rspec"
+# frozen_string_literal: true
+
+require 'rails_helper'
+require 'pundit/rspec'
 
 RSpec.describe PagePolicy, type: :policy do
   subject { described_class }
@@ -24,6 +26,6 @@ RSpec.describe PagePolicy, type: :policy do
     it { expect(subject).not_to permit(guest, page) }
   end
 
-  permissions ".scope" do
+  permissions '.scope' do
   end
 end

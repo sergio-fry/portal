@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreatePageLinks < ActiveRecord::Migration[7.0]
   def change
     create_table :page_links do |t|

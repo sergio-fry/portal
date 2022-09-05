@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PageHistory
   def initialize(page)
     @page = page
@@ -5,7 +7,7 @@ class PageHistory
 
   def to_s
     page = @page
-    Layout.new(title: "History").wrap do |html|
+    Layout.new(title: 'History').wrap do |html|
       html.h1 do
         "History of #{page.title}"
       end

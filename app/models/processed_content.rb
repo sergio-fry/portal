@@ -1,4 +1,6 @@
-require "kramdown"
+# frozen_string_literal: true
+
+require 'kramdown'
 
 class ProcessedContent
   def initialize(page, ipfs: false)

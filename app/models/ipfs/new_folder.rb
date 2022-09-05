@@ -1,5 +1,7 @@
-require_relative "./folder"
-require_relative "./gateway"
+# frozen_string_literal: true
+
+require_relative './folder'
+require_relative './gateway'
 
 module Ipfs
   class NewFolder
@@ -37,10 +39,10 @@ module Ipfs
       {
         Data: {
           "/": {
-            bytes: "CAE"
+            bytes: 'CAE'
           }
         },
-        Links: @files_map.map { |path, content|
+        Links: @files_map.map do |path, content|
           {
             Hash: {
               "/": content.cid
@@ -48,7 +50,7 @@ module Ipfs
             Name: path,
             Tsize: 14
           }
-        }
+        end
       }.to_json
     end
   end

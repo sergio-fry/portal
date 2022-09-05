@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HtmlLink
   def initialize(link, prefetch:)
     @link = link
@@ -5,7 +7,7 @@ class HtmlLink
   end
 
   def html
-    result = ""
+    result = ''
 
     result << "<a href='#{@link.link}' class='#{@link.css_classes}'>#{@link.name}</a>"
     result << "<link rel='preload' href='#{@link.link}' as='fetch'>" if @prefetch

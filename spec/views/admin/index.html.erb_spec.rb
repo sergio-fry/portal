@@ -1,4 +1,6 @@
-require "rails_helper"
+# frozen_string_literal: true
 
-RSpec.describe "admin/index.html.erb", type: :view do
+require 'rails_helper'
+
+RSpec.describe 'admin/index.html.erb', type: :view do
 end

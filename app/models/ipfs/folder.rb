@@ -1,6 +1,8 @@
-require "http"
-require_relative "gateway"
-require_relative "content"
+# frozen_string_literal: true
+
+require 'http'
+require_relative 'gateway'
+require_relative 'content'
 
 module Ipfs
   class Folder
@@ -16,7 +18,7 @@ module Ipfs
 
     def file(path)
       Content.new(
-        file_link(path).dig("Hash", "/")
+        file_link(path).dig('Hash', '/')
       )
     end
 
@@ -27,8 +29,8 @@ module Ipfs
     private
 
     def file_link(path)
-      result = dag["Links"].find do |link|
-        link["Name"] == path
+      result = dag['Links'].find do |link|
+        link['Name'] == path
       end
 
       raise "File not found #{path}" if result.nil?
