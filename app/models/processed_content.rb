@@ -21,7 +21,7 @@ class ProcessedContent
 
   def page_links
     PageLinkRegexp.new.scan(page_content).flatten.uniq.map do |markup|
-      HtmlLink.new(PageLinkFromMarkup.new(markup), prefetch: true)
+      HtmlLink.new(PageLinkFromMarkup.new(markup))
     end
   end
 

@@ -21,6 +21,13 @@ class PageLinkFromMarkup
     "./#{slug}.html"
   end
 
+  def canonical
+    URI.join(
+      "https://#{ENV.fetch('DOMAIN_NAME')}",
+      link
+    )
+  end
+
   def target_exists?
     !page.nil?
   end
