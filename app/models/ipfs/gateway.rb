@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'http'
-require 'logger'
+require "http"
+require "logger"
 
 module Ipfs
   class Gateway
@@ -16,7 +16,7 @@ module Ipfs
       end
     end
 
-    def initialize(api_endpoint: ENV.fetch('IPFS_KUBO_API', 'http://localhost:5001'), http: HTTP, logger: nil)
+    def initialize(api_endpoint: ENV.fetch("IPFS_KUBO_API", "http://localhost:5001"), http: HTTP, logger: nil)
       @http_client = HTTP
       @api_endpoint = api_endpoint
 
@@ -37,13 +37,13 @@ module Ipfs
     end
 
     def call_method_with_file(method, params:, data:, json_parse: true)
-      Tempfile.open('file') do |file|
+      Tempfile.open("file") do |file|
         file.write data
         file.rewind
 
         res = @http_client.post(
           URI.join(@api_endpoint, method),
-          form: { file: HTTP::FormData::File.new(file) },
+          form: {file: HTTP::FormData::File.new(file)},
           params:
         )
 
@@ -56,23 +56,23 @@ module Ipfs
     end
 
     def add(data)
-      call_method_with_file('/api/v0/add', params: {}, data:)['Hash']
+      call_method_with_file("/api/v0/add", params: {}, data:)["Hash"]
     end
 
     def dag_put(dag)
-      call_method_with_file('/api/v0/dag/put', params: { 'store-codec' => 'dag-pb' }, data: dag).dig('Cid', '/')
+      call_method_with_file("/api/v0/dag/put", params: {"store-codec" => "dag-pb"}, data: dag).dig("Cid", "/")
     end
 
     def dag_get(cid)
-      call_method('/api/v0/dag/get', params: { arg: cid })
+      call_method("/api/v0/dag/get", params: {arg: cid})
     end
 
     def cid_format(cid, v:)
-      call_method('/api/v0/cid/format', params: { arg: cid, v: })['Formatted']
+      call_method("/api/v0/cid/format", params: {arg: cid, v:})["Formatted"]
     end
 
     def cat(cid)
-      call_method('/api/v0/cat', params: { arg: cid, progress: false }, json_parse: false)
+      call_method("/api/v0/cat", params: {arg: cid, progress: false}, json_parse: false)
     end
   end
 end

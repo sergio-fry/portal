@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'app/models/sitemap'
-require 'app/models/ipfs/new_content'
+require "app/models/sitemap"
+require "app/models/ipfs/new_content"
 
 module SitemapTest
   class FakePages
@@ -27,11 +27,11 @@ module SitemapTest
     let(:pages) { FakePages.new }
 
     let(:home) do
-      double(:home, slug: 'home', ipfs_content: Ipfs::NewContent.new('Hello'),
-                    history_ipfs_content: Ipfs::NewContent.new('Some hist'))
+      double(:home, slug: "home", ipfs_content: Ipfs::NewContent.new("Hello"),
+        history_ipfs_content: Ipfs::NewContent.new("Some hist"))
     end
     before { pages << home }
 
-    it { expect(sitemap.ifps_folder.file('index.html').data).to include 'Hello' }
+    it { expect(sitemap.ifps_folder.file("index.html").data).to include "Hello" }
   end
 end

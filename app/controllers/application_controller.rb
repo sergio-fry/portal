@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   private
 
   def user_not_authorized
-    flash[:notice] = 'not authorized'
+    flash[:notice] = "not authorized"
 
     if user_signed_in?
       redirect_to root_path

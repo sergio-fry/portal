@@ -11,20 +11,20 @@ class PageLinkFromMarkup
 
   def css_classes
     if target_exists?
-      'link'
+      "link"
     else
-      'link link_missing'
+      "link link_missing"
     end
   end
 
   def link
-    "./#{slug}.html"
+    "#{slug}.html"
   end
 
   def canonical
     URI.join(
-      "https://#{ENV.fetch('DOMAIN_NAME')}",
-      link
+      ENV.fetch("ROOT_URL"),
+      "/pages/#{link}"
     )
   end
 
@@ -33,7 +33,7 @@ class PageLinkFromMarkup
   end
 
   def slug
-    matched_data[1].downcase.strip.gsub(/\s+/, '_')
+    matched_data[1].downcase.strip.gsub(/\s+/, "_")
   end
 
   def name
@@ -47,7 +47,7 @@ class PageLinkFromMarkup
   def matched_data
     m = @regexp.match(@markup)
 
-    raise 'Wrong page link markup' if m.nil?
+    raise "Wrong page link markup" if m.nil?
 
     m
   end

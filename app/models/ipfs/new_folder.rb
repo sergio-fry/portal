@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-require_relative './folder'
-require_relative './gateway'
+require_relative "./folder"
 
 module Ipfs
   class NewFolder
-    def initialize(files_map: {}, gateway: Gateway.new)
+    def initialize(files_map: {})
       @files_map = files_map
-      @gateway = gateway
+      @gateway = DependenciesContainer.resolve("ipfs")
     end
 
     def with_file(path, content)
@@ -39,7 +38,7 @@ module Ipfs
       {
         Data: {
           "/": {
-            bytes: 'CAE'
+            bytes: "CAE"
           }
         },
         Links: @files_map.map do |path, content|

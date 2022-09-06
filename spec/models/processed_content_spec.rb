@@ -1,22 +1,13 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ProcessedContent do
-  subject { described_class.new page, ipfs: }
-  let(:ipfs) { false }
+  subject { described_class.new page }
   let(:page) { Page.new content: }
 
   context do
-    let(:content) { 'Text with link to [[page1]]' }
-
-    it { expect(subject.to_s).to match(%r{Text with link to <a.*>page1</a>}) }
-  end
-
-  context 'with ipfs' do
-    before { FactoryBot.create :page, slug: 'page1' }
-    let(:ipfs) { true }
-    let(:content) { 'Text with link to [[page1]]' }
+    let(:content) { "Text with link to [[page1]]" }
 
     it { expect(subject.to_s).to match(%r{Text with link to <a.*>page1</a>}) }
   end

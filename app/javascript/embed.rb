@@ -2,13 +2,11 @@
 
 # This code is used inside IPFS pages
 
-require 'native'
+require "native"
 
 class JQuery
   def onload(&block)
-    %x{
-      jQuery(document).ready(block);
-    }
+    `jQuery(document).ready(block)`
   end
 
   def [](selector)
@@ -38,7 +36,23 @@ class Link
   end
 
   def render
-    # @el.css(:color, :red)
+    if target_available?
+      @el.attr(:href, link)
+    else
+      @el.attr(:href, canonical_link)
+    end
+  end
+
+  def target_available?
+    @state.dig(:remote_links, link) == "available"
+  end
+
+  def link
+    @el.data("link")
+  end
+
+  def canonical_link
+    @el.data("canonical-link")
   end
 end
 

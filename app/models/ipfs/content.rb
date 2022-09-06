@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'gateway'
+require_relative "gateway"
 
 module Ipfs
   class Content
@@ -12,9 +12,9 @@ module Ipfs
     end
 
     def url(filename: nil)
-      result = ''
+      result = ""
       result += "https://ipfs.io/ipfs/#{@cid}"
-      result = [result, URI.encode_www_form({ filename: })].join('?') unless filename.nil?
+      result = [result, URI.encode_www_form({filename:})].join("?") unless filename.nil?
 
       result
     end
