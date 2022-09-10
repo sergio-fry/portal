@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 require "app/models/sitemap"
 require "app/models/ipfs/new_content"
+require "spec/fake/ipfs/gateway"
 
 module SitemapTest
   class FakePages
@@ -11,8 +14,8 @@ module SitemapTest
       @pages << page
     end
 
-    def each
-      @pages.each { |page| yield page }
+    def each(&block)
+      @pages.each(&block)
     end
 
     def find_by_slug(slug)
@@ -21,10 +24,16 @@ module SitemapTest
   end
 
   RSpec.describe Sitemap do
-    subject(:sitemap) { described_class.new pages: pages }
+    before { Dependencies.container.stub(:ipfs, Fake::Ipfs::Gateway.new) }
+    after { Dependencies.container.unstub :ipfs }
+
+    subject(:sitemap) { described_class.new pages: }
     let(:pages) { FakePages.new }
 
-    let(:home) { double(:home, slug: "home", ipfs_content: Ipfs::NewContent.new("Hello"), history_ipfs_content: Ipfs::NewContent.new("Some hist")) }
+    let(:home) do
+      double(:home, slug: "home", ipfs_content: Ipfs::NewContent.new("Hello"),
+        history_ipfs_content: Ipfs::NewContent.new("Some hist"))
+    end
     before { pages << home }
 
     it { expect(sitemap.ifps_folder.file("index.html").data).to include "Hello" }

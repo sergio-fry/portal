@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "app/models/page_link_regexp"
 
 RSpec.describe PageLinkRegexp do

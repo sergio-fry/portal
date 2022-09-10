@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "http"
 require "logger"
 
@@ -24,7 +26,7 @@ module Ipfs
     def call_method(method, params:, json_parse: true)
       res = @http_client.post(
         URI.join(@api_endpoint, method),
-        params: params
+        params:
       )
 
       if res.code >= 200 && res.code <= 299
@@ -42,7 +44,7 @@ module Ipfs
         res = @http_client.post(
           URI.join(@api_endpoint, method),
           form: {file: HTTP::FormData::File.new(file)},
-          params: params
+          params:
         )
 
         if res.code >= 200 && res.code <= 299
@@ -54,11 +56,11 @@ module Ipfs
     end
 
     def add(data)
-      call_method_with_file("/api/v0/add", params: {}, data: data)["Hash"]
+      call_method_with_file("/api/v0/add", params: {}, data:)["Hash"]
     end
 
     def dag_put(dag)
-      call_method_with_file("/api/v0/dag/put", params: {"store-codec" => "dag-pb"}, data: dag).dig("Cid", "/")
+      call_method_with_file("/api/v0/dag/put", params: {"store-codec" => "dag-pb"}, data: dag.to_json).dig("Cid", "/")
     end
 
     def dag_get(cid)
@@ -66,7 +68,7 @@ module Ipfs
     end
 
     def cid_format(cid, v:)
-      call_method("/api/v0/cid/format", params: {arg: cid, v: v})["Formatted"]
+      call_method("/api/v0/cid/format", params: {arg: cid, v:})["Formatted"]
     end
 
     def cat(cid)

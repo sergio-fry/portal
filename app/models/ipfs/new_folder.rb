@@ -1,17 +1,17 @@
+# frozen_string_literal: true
+
 require_relative "./folder"
-require_relative "./gateway"
 
 module Ipfs
   class NewFolder
-    def initialize(files_map: {}, gateway: Gateway.new)
+    def initialize(files_map: {})
       @files_map = files_map
-      @gateway = gateway
+      @gateway = DependenciesContainer.resolve("ipfs")
     end
 
     def with_file(path, content)
       self.class.new(
-        files_map: @files_map.merge(path => content),
-        gateway: @gateway
+        files_map: @files_map.merge(path => content)
       )
     end
 
@@ -40,7 +40,7 @@ module Ipfs
             bytes: "CAE"
           }
         },
-        Links: @files_map.map { |path, content|
+        Links: @files_map.map do |path, content|
           {
             Hash: {
               "/": content.cid
@@ -48,8 +48,8 @@ module Ipfs
             Name: path,
             Tsize: 14
           }
-        }
-      }.to_json
+        end
+      }
     end
   end
 end

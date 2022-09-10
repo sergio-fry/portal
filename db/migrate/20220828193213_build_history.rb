@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BuildHistory < ActiveRecord::Migration[7.0]
   def change
     Page.find_each do |page|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PageLinkRegexp
   def match(str)
     str.match regexp

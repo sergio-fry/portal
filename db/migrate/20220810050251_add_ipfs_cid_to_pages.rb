@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddIpfsCidToPages < ActiveRecord::Migration[7.0]
   def change
     add_column :pages, :ipfs_cid, :string

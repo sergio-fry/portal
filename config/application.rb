@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "boot"
 
 require "rails"
@@ -42,3 +44,5 @@ module Portal
     end
   end
 end
+
+require_relative "dependencies"

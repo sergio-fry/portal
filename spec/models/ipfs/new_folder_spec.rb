@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "app/models/ipfs/new_content"
 require "app/models/ipfs/new_folder"
 

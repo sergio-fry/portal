@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PageHistory
   def initialize(page)
     @page = page

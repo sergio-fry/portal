@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 require_relative "gateway"
 
 module Ipfs
   class Content
     attr_reader :cid
 
-    def initialize(cid, gateway: Gateway.new)
+    def initialize(cid)
       @cid = cid
-      @gateway = gateway
+      @gateway = DependenciesContainer.resolve(:ipfs)
     end
 
     def url(filename: nil)
       result = ""
       result += "https://ipfs.io/ipfs/#{@cid}"
-      result = [result, URI.encode_www_form({filename: filename})].join("?") unless filename.nil?
+      result = [result, URI.encode_www_form({filename:})].join("?") unless filename.nil?
 
       result
     end

@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require "kramdown"
 
 class ProcessedContent
-  def initialize(page, ipfs: false)
-    @ipfs = ipfs
+  def initialize(page)
     @page = page
   end
 
@@ -20,7 +21,7 @@ class ProcessedContent
 
   def page_links
     PageLinkRegexp.new.scan(page_content).flatten.uniq.map do |markup|
-      HtmlLink.new(PageLinkFromMarkup.new(markup), prefetch: true)
+      HtmlLink.new(PageLinkFromMarkup.new(markup))
     end
   end
 

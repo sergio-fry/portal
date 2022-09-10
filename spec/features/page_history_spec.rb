@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rails_helper"
 
 RSpec.feature "Page history", type: :feature do
@@ -13,7 +15,9 @@ RSpec.feature "Page history", type: :feature do
 
     expect(page).to have_content "I like Beatles"
 
-    click_on "edit"
+    # NOTE click_on "edit" does not work because it uses
+    # CanonicalLink to generate link with domain
+    visit "/pages/article/edit"
     fill_in "Content", with: "I like Queen"
     click_on "Update"
 

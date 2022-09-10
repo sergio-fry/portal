@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PageLinkFromMarkup
   attr_reader :markup
 
@@ -16,7 +18,11 @@ class PageLinkFromMarkup
   end
 
   def link
-    "./#{slug}.html"
+    "#{slug}.html"
+  end
+
+  def canonical
+    CanonicalLink.new(link).link
   end
 
   def target_exists?

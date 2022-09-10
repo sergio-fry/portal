@@ -1,6 +1,12 @@
+# frozen_string_literal: true
+
 require "rails_helper"
+require "spec/fake/ipfs/gateway"
 
 RSpec.describe Page, type: :model do
+  before { Dependencies.container.stub(:ipfs, Fake::Ipfs::Gateway.new) }
+  after { Dependencies.container.unstub :ipfs }
+
   describe "slug validation" do
     it { expect(FactoryBot.build(:page, slug: "politics")).to be_valid }
     it { expect(FactoryBot.build(:page, slug: "Politics")).not_to be_valid }
@@ -8,7 +14,7 @@ RSpec.describe Page, type: :model do
   end
 
   describe "#ipfs" do
-    let(:page) { FactoryBot.build :page, content: content }
+    let(:page) { FactoryBot.build :page, content: }
     let(:content) { "Text [[page]] " }
 
     subject { page.ipfs_content.cid }

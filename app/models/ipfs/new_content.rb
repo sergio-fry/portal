@@ -1,13 +1,13 @@
-require_relative "./gateway"
+# frozen_string_literal: true
 
 module Ipfs
   class NewContent
     attr_reader :data
 
-    def initialize(data, gateway: Gateway.new)
+    def initialize(data)
       @data = data
 
-      @gateway = gateway
+      @gateway = DependenciesContainer.resolve("ipfs")
     end
 
     def cid

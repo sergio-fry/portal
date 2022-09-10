@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 require "http"
 require_relative "gateway"
 require_relative "content"
 
 module Ipfs
   class Folder
-    def initialize(cid, gateway: Gateway.new)
+    def initialize(cid)
       @cid = cid
-      @gateway = gateway
+      @gateway = DependenciesContainer.resolve(:ipfs)
     end
 
     def dag

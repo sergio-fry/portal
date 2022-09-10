@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PageLayout
   include Hanami::Helpers
 
@@ -12,9 +14,11 @@ class PageLayout
     Layout.new(title: page.slug).wrap do |html|
       html.article do
         p class: "post-meta" do
-          a updated_at, datetime: updated_at, title: "History", href: "./#{page.slug}/history.html"
+          a "edit", datetime: updated_at, title: "Edit", href: "#{page_canonical_link}/edit", class: "admin-tools"
           br
-          a "Sergei O. Udalov", href: "./index.html"
+          a updated_at, datetime: updated_at, title: "History", href: "#{page.slug}/history.html"
+          br
+          a "Sergei O. Udalov", href: "./#{ENV.fetch("HOME_TITLE", "home")}.html"
         end
         div do
           raw(content)
@@ -31,10 +35,8 @@ class PageLayout
 
   attr_reader :content
 
-  def theme_styles
-    Ipfs::NewContent.new(
-      File.read(Rails.root.join("app/assets/stylesheets/monospace.css"))
-    ).content.url(filename: "style.css")
+  def page_canonical_link
+    CanonicalLink.new(@page.slug).link
   end
 
   def wrapped_to_html(content)

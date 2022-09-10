@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "app/models/page_link_regexp"
 require "app/models/page_link_from_markup"
 
@@ -17,7 +19,7 @@ module PageLinkFromMarkupTest
   end
 
   RSpec.describe PageLinkFromMarkup do
-    subject(:page_link) { described_class.new(markup, pages: pages) }
+    subject(:page_link) { described_class.new(markup, pages:) }
     let(:pages) { FakePages.new }
 
     context do

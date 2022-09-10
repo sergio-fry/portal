@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   get "admin", to: "admin#index"
 
   devise_for :users
-  resources :pages, except: [:new, :create] do
+  resources :pages, except: %i[new create] do
     collection do
       post :rebuild
     end
