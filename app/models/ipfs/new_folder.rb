@@ -49,7 +49,7 @@ module Ipfs
             Tsize: 14
           }
         end
-      }.to_json
+      }
     end
   end
 end
