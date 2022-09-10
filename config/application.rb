@@ -44,3 +44,5 @@ module Portal
     end
   end
 end
+
+require_relative "dependencies"

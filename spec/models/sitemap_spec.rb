@@ -2,6 +2,7 @@
 
 require "app/models/sitemap"
 require "app/models/ipfs/new_content"
+require "spec/fake/ipfs/gateway"
 
 module SitemapTest
   class FakePages
@@ -23,6 +24,9 @@ module SitemapTest
   end
 
   RSpec.describe Sitemap do
+  before { Dependencies.container.stub(:ipfs, Fake::Ipfs::Gateway.new) }
+  after { Dependencies.container.unstub :ipfs }
+
     subject(:sitemap) { described_class.new pages: }
     let(:pages) { FakePages.new }
 

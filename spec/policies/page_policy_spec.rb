@@ -2,8 +2,11 @@
 
 require "rails_helper"
 require "pundit/rspec"
+require "spec/fake/ipfs/gateway"
 
 RSpec.describe PagePolicy, type: :policy do
+  before { Dependencies.container.stub(:ipfs, Fake::Ipfs::Gateway.new) }
+  after { Dependencies.container.unstub :ipfs }
   subject { described_class }
   let(:user) { User.new }
   let(:guest) { nil }

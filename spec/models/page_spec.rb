@@ -3,10 +3,9 @@
 require "rails_helper"
 require "spec/fake/ipfs/gateway"
 
-RSpec.describe Page, type: :model, dependencies: true do
-  before do
-    Dependencies.container.stub(:ipfs, Fake::Ipfs::Gateway.new)
-  end
+RSpec.describe Page, type: :model do
+  before { Dependencies.container.stub(:ipfs, Fake::Ipfs::Gateway.new) }
+  after { Dependencies.container.unstub :ipfs }
 
   describe "slug validation" do
     it { expect(FactoryBot.build(:page, slug: "politics")).to be_valid }

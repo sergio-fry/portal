@@ -12,8 +12,8 @@ RSpec.feature "Moving page", type: :feature do
   let!(:main) { FactoryBot.create :page, slug: "main" }
 
   before { main.update_attribute :content, "Link to [[moscow|Moscow]]" }
-  before { Capybara.current_driver = :selenium_chrome_headless }
-  after { Capybara.use_default_driver }
+  # before { Capybara.current_driver = :selenium_chrome_headless }
+  # after { Capybara.use_default_driver }
 
   context "when target page is moved" do
     before { moscow.reload }

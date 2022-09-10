@@ -18,11 +18,11 @@ module Fake
       end
 
       def dag_put(dag)
-        add dag
+        add dag.to_json
       end
 
       def dag_get(cid)
-        cat cid
+        JSON.parse cat(cid)
       end
 
       def cid_format(cid, v:)

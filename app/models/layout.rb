@@ -17,9 +17,9 @@ class Layout
           meta charset: "UTF-8"
           meta build_time: Time.now.utc
           link href: theme_styles, rel: :stylesheet
-          script type: "text/javascript", src: js_from_url("https://code.jquery.com/jquery-3.6.1.min.js")
-          script type: "text/javascript", src: js_from_url("https://cdn.opalrb.com/opal/current/opal.min.js")
-          script type: "text/javascript", src: js_from_url("https://cdn.opalrb.com/opal/current/native.min.js")
+          script type: "text/javascript", src: js_from_vendor("jquery-3.6.1.min.js")
+          script type: "text/javascript", src: js_from_vendor("opal-1.5.1/opal.min.js")
+          script type: "text/javascript", src: js_from_vendor("opal-1.5.1/native.min.js")
           script type: "text/javascript", src: embed_js_url
         end
         body a: :auto do
@@ -35,9 +35,9 @@ class Layout
 
   private
 
-  def js_from_url(url)
+  def js_from_vendor(name)
     Ipfs::NewContent.new(
-      Net::HTTP.get(URI.parse(url))
+      File.read(Rails.root.join("vendor/javascript", name))
     ).content.url(filename: "script.js")
   end
 

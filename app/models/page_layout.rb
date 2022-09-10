@@ -14,9 +14,9 @@ class PageLayout
     Layout.new(title: page.slug).wrap do |html|
       html.article do
         p class: "post-meta" do
-          a "edit", datetime: updated_at, title: "History", href: "./#{page.slug}/edit"
+          a "edit", datetime: updated_at, title: "Edit", href: "#{page.slug}/edit"
           br
-          a updated_at, datetime: updated_at, title: "History", href: "./#{page.slug}/history.html"
+          a updated_at, datetime: updated_at, title: "History", href: "#{page.slug}/history.html"
           br
           a "Sergei O. Udalov", href: "./#{ENV.fetch("HOME_TITLE", "home")}.html"
         end
