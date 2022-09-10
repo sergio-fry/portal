@@ -14,7 +14,7 @@ class PageLayout
     Layout.new(title: page.slug).wrap do |html|
       html.article do
         p class: "post-meta" do
-          a "edit", datetime: updated_at, title: "Edit", href: "#{page.slug}/edit"
+          a "edit", datetime: updated_at, title: "Edit", href: "#{page_canonical_link}/edit", class: "admin-tools"
           br
           a updated_at, datetime: updated_at, title: "History", href: "#{page.slug}/history.html"
           br
@@ -34,6 +34,10 @@ class PageLayout
   private
 
   attr_reader :content
+
+  def page_canonical_link
+    CanonicalLink.new(@page.slug).link
+  end
 
   def wrapped_to_html(content)
     <<~HTML

@@ -22,10 +22,7 @@ class PageLinkFromMarkup
   end
 
   def canonical
-    URI.join(
-      ENV.fetch("ROOT_URL"),
-      "/pages/#{link}"
-    )
+    CanonicalLink.new(link).link
   end
 
   def target_exists?

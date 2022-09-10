@@ -44,6 +44,7 @@ class Link
   end
 
   def target_available?
+    # TODO: update state with request
     @state.dig(:remote_links, link) == "available"
   end
 
@@ -64,12 +65,33 @@ class Page
 
   def render
     links.each(&:render)
+    render_admin_tools
   end
 
   def links
     @jquery[".link"].map do |el|
       Link.new $$.jQuery(el), state: @store.state
     end
+  end
+
+  def render_admin_tools
+    if admin?
+      disaply_admin_tools
+    else
+      hide_admin_tools
+    end
+  end
+
+  def hide_admin_tools
+    $$.jQuery(".admin-tools").css(opacity: 0.1)
+  end
+
+  def disaply_admin_tools
+    $$.jQuery(".admin-tools").css(opacity: 1)
+  end
+
+  def admin?
+    @store.state.dig(:is_admin) == "true"
   end
 end
 
