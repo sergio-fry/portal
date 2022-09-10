@@ -11,8 +11,7 @@ module Ipfs
 
     def with_file(path, content)
       self.class.new(
-        files_map: @files_map.merge(path => content),
-        gateway: @gateway
+        files_map: @files_map.merge(path => content)
       )
     end
 

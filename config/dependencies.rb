@@ -1,3 +1,6 @@
+require "dry-container"
+require "dry-auto_inject"
+
 class DependenciesContainer
   extend Dry::Container::Mixin
 
