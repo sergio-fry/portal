@@ -6,9 +6,9 @@ module Ipfs
   class Content
     attr_reader :cid
 
-    def initialize(cid, gateway: Gateway.new)
+    def initialize(cid)
       @cid = cid
-      @gateway = gateway
+      @gateway = DependenciesContainer.resolve(:ipfs)
     end
 
     def url(filename: nil)

@@ -9,6 +9,8 @@ module Fake
 
       def add(content)
         @storage[cid(content)] = content
+
+        cid(content)
       end
 
       def cid(content)
@@ -16,7 +18,20 @@ module Fake
       end
 
       def dag_put(dag)
+        add dag
+      end
 
+      def dag_get(cid)
+        cat cid
+      end
+
+      def cid_format(cid, v:)
+        # no conversion
+        cid
+      end
+
+      def cat(cid)
+        @storage[cid]
       end
     end
   end
