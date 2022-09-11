@@ -57,7 +57,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       if @page.save
-        format.html { redirect_to page_url(@page), notice: "Page was successfully created." }
+        format.html { redirect_to page_url(@page) }
         format.json { render :show, status: :created, location: @page }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -72,7 +72,7 @@ class PagesController < ApplicationController
       @page.assign_attributes(page_params)
 
       if @page.save
-        format.html { redirect_to page_url(@page), notice: "Page was successfully updated." }
+        format.html { redirect_to page_url(@page) }
         format.json { render :show, status: :ok, location: @page }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -86,7 +86,7 @@ class PagesController < ApplicationController
     @page.destroy
 
     respond_to do |format|
-      format.html { redirect_to pages_url, notice: "Page was successfully destroyed." }
+      format.html { redirect_to pages_url }
       format.json { head :no_content }
     end
   end
