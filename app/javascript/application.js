@@ -4,12 +4,8 @@ import "controllers"
 // import "trix"
 // import "@rails/actiontext"
 
-import jQuery from "jquery";
 
-window.jQuery = jQuery
-window.$ = jQuery
-
-
+/*
 $(function() {
   $('.ipfs-page').each(function() {
     var url = $(this).data('ipfs-url');
@@ -21,3 +17,4 @@ $(function() {
     })
   });
 });
+*/

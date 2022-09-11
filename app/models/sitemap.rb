@@ -7,6 +7,14 @@ class Sitemap
     @pages = pages
   end
 
+  def url
+    ifps_folder.url
+  end
+
+  def page_url(page)
+    "#{url}/#{page.slug}.html"
+  end
+
   def ifps_folder
     folder = Ipfs::NewFolder.new
 

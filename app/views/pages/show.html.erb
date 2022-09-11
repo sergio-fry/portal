@@ -1,4 +1,4 @@
-<article class="ipfs-page" data-ipfs-url="<%= ipfs_page_url(@page) %>">
+<article>
   <p class="post-meta">
     <%= content_tag :link, nil, rel: :prefetch, href: @page.ipfs_content.url, as: :fetch %>
     <%= link_to "admin", admin_path(@page) if policy(:admin).index? %>

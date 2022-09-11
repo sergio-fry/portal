@@ -15,8 +15,8 @@ class JQuery
 end
 
 class Store
-  def initialize
-    @state = {}
+  def initialize(state = {})
+    @state = state
     @listeners = []
   end
 
@@ -27,10 +27,26 @@ class Store
   def state
     @state.clone
   end
+
+  def dispatch(reducer)
+    update_state_with reducer.call(state)
+    awake_listeners
+  end
+
+  private
+
+  def update_state_with(new_state)
+    @state = new_state
+  end
+
+  def awake_listeners
+    current = state
+    @listeners.each { |listener| listener.call(current) }
+  end
 end
 
 class Link
-  def initialize(el, state:)
+  def initialize(el:, state:)
     @el = el
     @state = state
   end
@@ -44,6 +60,7 @@ class Link
   end
 
   def target_available?
+    puts @state.inspect
     # TODO: update state with request
     @state.dig(:remote_links, link) == "available"
   end
@@ -58,19 +75,20 @@ class Link
 end
 
 class Page
-  def initialize(jquery:, store:)
-    @jquery = jquery
-    @store = store
+  def initialize(state)
+    @jquery = JQuery.new
+    @state = state
   end
 
   def render
     links.each(&:render)
     render_admin_tools
+    update_url
   end
 
   def links
     @jquery[".link"].map do |el|
-      Link.new $$.jQuery(el), state: @store.state
+      Link.new el: $$.jQuery(el), state: @state
     end
   end
 
@@ -91,16 +109,75 @@ class Page
   end
 
   def admin?
-    @store.state.dig(:is_admin) == "true"
+    @state.dig(:is_admin) == "true"
+  end
+
+  def update_url
+    if @state.dig(:remote_links, ipfs_page_url) == "available"
+      $$.window.location.href = ipfs_page_url
+    end
+  end
+
+  def ipfs_page_url
+    $$.jQuery(".ipfs-page").data("ipfs-url")
+  end
+
+  def ipfs_links
+    [ipfs_page_url]
+  end
+end
+
+class RemoteLinks
+  def initialize(links, store:)
+    @links = links
+    @store = store
+  end
+
+  def update
+    @links.compact.each { |link| check_link link }
+  end
+
+  def check_link(link)
+    return if available?(link)
+
+    @store.dispatch ->(state) {
+      state[:remote_links][link] = "loading"
+
+      state
+    }
+
+    promise = Native(`jQuery.ajax(link)`)
+
+    promise.done -> {
+      mark_link_as_available link
+    }
+  end
+
+  def mark_link_as_available(link)
+    @store.dispatch ->(state) {
+      state[:remote_links] ||= {}
+      state[:remote_links][link] = "available"
+
+      state
+    }
+  end
+
+  def available?(link)
+    @store.state.dig(:remote_links, link) == "available"
   end
 end
 
 jquery = JQuery.new
-store = Store.new
+store = Store.new(
+  remote_links: {}
+)
 
-page = Page.new(jquery: jquery, store: store)
-store.subscribe { page.render }
+store.subscribe ->(state) {
+  Page.new(state).render
+}
 
 jquery.onload do
-  page.render
+  store.dispatch(->(state) { state })
+
+  RemoteLinks.new(Page.new(store.state).ipfs_links, store: store).update
 end
