@@ -62,3 +62,4 @@ COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/*
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["web"]
+HEALTHCHECK CMD curl --fail http://0.0.0.0:3000 || exit 1  

@@ -1,3 +1,4 @@
 shared-mime-info
 sqlite3
 libpq-dev
+curl
