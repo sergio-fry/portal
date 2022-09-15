@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<script src="https://cdnout.com/autosize.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
 <%= form_with(model: page, url: page_url(page), method: :put) do |form| %>
   <% if page.errors.any? %>
@@ -20,8 +20,8 @@
   </div>
 
   <div>
-    <%= form.label :content, style: "display: block" %>
-    <%= form.text_area :content %>
+    <%= form.label :content %>
+    <%= form.text_area :content, class: "editor" %>
   </div>
 
   <div>
@@ -29,15 +29,9 @@
   </div>
 <% end %>
 
-<script>
-  var simplemde = new SimpleMDE({
-    spellChecker: false
-  });
-</script>
-
 <style>
-  .CodeMirror {
-    font-size: 16px;
-    font-family: Monaco, "Roboto Mono", "Ubuntu Mono", "Courier New", monospace;
-  }
 </style>
+
+<script>
+  autosize($('.editor'));
+</script>
