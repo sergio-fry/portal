@@ -14,9 +14,10 @@ class PageLayout
     Layout.new(title: page.slug).wrap do |html|
       html.article do
         p class: "post-meta" do
-          a "edit", datetime: updated_at, title: "Edit", href: "#{page_canonical_link}/edit", class: "admin-tools"
+          a "edit", title: "Edit", href: "#{page_canonical_link}/edit", class: "admin-tools"
           br
-          a updated_at, datetime: updated_at, title: "History", href: "#{page.slug}/history.html"
+          span "#{updated_at}, "
+          a version_title, datetime: updated_at, title: "History", href: "#{page.slug}/history.html"
           br
           a "Sergei O. Udalov", href: "./#{ENV.fetch("HOME_TITLE", "home")}.html"
         end
@@ -32,6 +33,10 @@ class PageLayout
   end
 
   private
+
+  def version_title
+    "v#{@page.history.versions.map(&:number).max}"
+  end
 
   attr_reader :content
 

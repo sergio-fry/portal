@@ -29,6 +29,8 @@ class PageHistory
   end
 
   class Version
+    attr_reader :number
+
     def initialize(page, version, number:)
       @page = page
       @version = version
