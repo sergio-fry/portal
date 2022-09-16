@@ -83,3 +83,8 @@ jobs:
         uses: joelwmale/webhook-action@fd99bb3b8272237103e349e9bb4d9b0ead9a217c
         with:
           url: ${{ secrets.WEBHOOK_URL }}
+
+      - name: Deploy Worker
+        uses: joelwmale/webhook-action@fd99bb3b8272237103e349e9bb4d9b0ead9a217c
+        with:
+          url: ${{ secrets.WEBHOOK_URL_WORKER }}
