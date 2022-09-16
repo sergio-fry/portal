@@ -22,6 +22,8 @@ class PageLayout
           br
           span "ver. "
           a version, datetime: updated_at, title: "History", href: "#{page.slug}/history.html"
+          br
+          a "edit", title: "Edit", href: "#{page_canonical_link}/edit", class: "admin-tools"
         end
         div do
           raw(content)
