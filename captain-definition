@@ -1,6 +1,5 @@
 {
   "schemaVersion": 2,
-  "imageName": "ghcr.io/sergio-fry/portal:main"
   "dockerfileLines": [
                         "FROM ghcr.io/sergio-fry/portal:main",
                         "CMD [ \"web\" ]"
