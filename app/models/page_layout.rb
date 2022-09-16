@@ -14,9 +14,9 @@ class PageLayout
     Layout.new(title: page.slug).wrap do |html|
       html.article do
         p class: "post-meta" do
-          a "Sergei O. Udalov", href: "./#{ENV.fetch("HOME_TITLE", "home")}.html", class: "title"
-          span "/"
           strong "#{page.slug}.html"
+          span "/"
+          a "Sergei O. Udalov", href: "./#{ENV.fetch("HOME_TITLE", "home")}.html", class: "title"
           br
           span updated_at.to_s
           br
