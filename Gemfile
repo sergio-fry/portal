@@ -85,6 +85,7 @@ group :production do
   gem "redis"
   gem "sentry-rails"
   gem "sentry-ruby"
+  gem "delayed_job_active_record"
 end
 
 gem "devise"
