@@ -3,6 +3,7 @@
   "imageName": "ghcr.io/sergio-fry/portal:main"
   "dockerfileLines": [
                         "FROM ghcr.io/sergio-fry/portal:main",
-                        "CMD [ \"worker\" ]"
+                        "CMD [ \"worker\" ]",
+                        "HEALTHCHECK CMD echo \"OK\""
                      ]
 }
