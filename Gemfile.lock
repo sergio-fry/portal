@@ -233,6 +233,7 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
+    redis (4.6.0)
     regexp_parser (2.5.0)
     reline (0.3.1)
       io-console (~> 0.5)
@@ -358,6 +359,7 @@ DEPENDENCIES
   pundit (~> 2.2)
   rack-mini-profiler
   rails (~> 7.0.2, >= 7.0.2.3)
+  redis
   rspec-rails
   selenium-webdriver
   sentry-rails

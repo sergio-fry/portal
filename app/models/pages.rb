@@ -8,4 +8,8 @@ class Pages
   def each(&block)
     Page.find_each(&block)
   end
+
+  def updated_at
+    Page.maximum(:updated_at)
+  end
 end
