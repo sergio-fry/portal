@@ -26,9 +26,7 @@ class PagesController < ApplicationController
     authorize Page, :rebuild?
 
     Page.find_each do |page|
-      page.sync_to_ipfs
-      page.history_ipfs_cid = Ipfs::NewContent.new(page.history.to_s).cid
-      page.save!
+      RebuildPageJob.perform_later page
     end
   end
 
