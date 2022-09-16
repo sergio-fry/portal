@@ -3,6 +3,8 @@
 require_relative "./ipfs/new_folder"
 
 class Sitemap
+  attr_reader :pages
+
   def initialize(pages: Pages.new)
     @pages = pages
   end

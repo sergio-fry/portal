@@ -14,6 +14,8 @@ class WithInjectedIpfsLink
   end
 
   def sitemap
-    Sitemap.new
+    CachedSitemap.new(
+      Sitemap.new
+    )
   end
 end
