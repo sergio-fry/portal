@@ -13,7 +13,7 @@ module Ipfs
 
     def url(filename: nil)
       result = ""
-      result += "https://ipfs.io/ipfs/#{@cid}"
+      result += "#{ENV.fetch("IPFS_PUBLIC_GATEWAY_URL", "https://ipfs.io/ipfs/")}#{@cid}"
       result = [result, URI.encode_www_form({filename:})].join("?") unless filename.nil?
 
       result
