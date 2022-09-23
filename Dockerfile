@@ -30,7 +30,7 @@ RUN bundle install -j $(nproc) && \
 
 
 COPY . /app/
-RUN bundle exec rake assets:precompile
+RUN RAILS_ENV=development bundle exec rake assets:precompile
 
 
 FROM dev AS runtime-gems
