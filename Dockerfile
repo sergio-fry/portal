@@ -14,11 +14,13 @@ RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | gpg --dearmor
 
 
 COPY Aptfile /tmp/Aptfile
+COPY Aptfile.dev /tmp/Aptfile
 RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get -yq dist-upgrade && \
   DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
     libpq-dev \
     postgresql-client \
     $(grep -Ev '^\s*#' /tmp/Aptfile | xargs) && \
+    $(grep -Ev '^\s*#' /tmp/Aptfile.dev | xargs) && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     truncate -s 0 /var/log/*log
