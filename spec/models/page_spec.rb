@@ -6,10 +6,10 @@ RSpec.describe Page do
   after { Dependencies.container.unstub :ipfs }
 
   describe "#ipfs" do
-    let(:page) { FactoryBot.build :page, content: }
-    let(:content) { "Text [[page]] " }
+    let(:page) { Page.new :main }
+    before { page.source_content = "Text [[page]] " }
 
-    subject { page.ipfs_content.cid }
+    subject { page.ipfs.cid }
     it { is_expected.to be_present }
   end
 

@@ -10,16 +10,21 @@ class Page
     update_backlinks new_slug
   end
 
+  def source_content
+    Boundaries::Database::Page.find_by(slug: @slug)&.content
+  end
+
   def source_content=(new_content)
     Boundaries::Database::Page.find_or_initialize_by(slug: @slug).tap do |page|
       page.content = new_content
       page.save!
     end
 
-    add_new_links
-    links.destroy removed_links
-    sync_to_ipfs
-    track_history
+    # TODO
+    # add_new_links
+    # links.destroy removed_links
+    # sync_to_ipfs
+    # track_history
   end
 
   def history
@@ -48,7 +53,11 @@ class Page
   end
 
   def content
-    Boundaries::Database::Page.find_or_initialize_by(slug: @slug).processed_content.to_s
+    processed_content.to_s
+  end
+
+  def processed_content
+    ProcessedContent.new(source_content)
   end
 
   def exists?
@@ -61,29 +70,22 @@ class Page
   # def incoming_links
   # def outgoing_links
 
-  def processed_content
-    ProcessedContent.new(self)
-  end
 
   def processed_content_with_layout
     PageLayout.new(
-      processed_content.to_s,
+      content,
       self
     ).to_s
   end
 
-  def ipfs_content
-    ipfs_cid.present? ? Ipfs::Content.new(ipfs_cid) : ipfs_new_content
-  end
-
-  def ipfs_new_content
+  def ipfs
     Ipfs::NewContent.new(
       processed_content_with_layout
     )
   end
 
   def sync_to_ipfs
-    self.ipfs_cid = ipfs_new_content.cid
+    self.ipfs_cid = ipfs.cid
   end
 
   def add_new_links
@@ -102,5 +104,13 @@ class Page
     back_links.each do |link|
       link.slug = new_slug
     end
+  end
+
+  def updated_at
+    Boundaries::Database::Page.find_by(slug: @slug)&.updated_at || Time.now
+  end
+
+  def versions
+    Boundaries::Database::Page.find_by(slug: @slug)&.versions || []
   end
 end

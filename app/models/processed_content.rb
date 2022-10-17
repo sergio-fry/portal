@@ -3,31 +3,25 @@
 require "kramdown"
 
 class ProcessedContent
-  def initialize(page)
-    @page = page
+  def initialize(content)
+    @content = content
   end
 
   def to_s
     converted_to_html(
       with_page_links(
-        page_content
+        @content
       )
     )
   end
 
-  def page_content
-    @page.content.to_s
-  end
-
   def page_links
-    PageLinkRegexp.new.scan(page_content).flatten.uniq.map do |markup|
+    PageLinkRegexp.new.scan(@content).flatten.uniq.map do |markup|
       HtmlLink.new(PageLinkFromMarkup.new(markup))
     end
   end
 
   private
-
-  attr_reader :page
 
   def converted_to_html(content)
     Kramdown::Document.new(content).to_html
