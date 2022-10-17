@@ -1,38 +1,20 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-require "spec/fake/ipfs/gateway"
 
 module Boundaries
   module Database
     RSpec.describe Page, type: :model do
-      before { Dependencies.container.stub(:ipfs, Fake::Ipfs::Gateway.new) }
-      after { Dependencies.container.unstub :ipfs }
+      let(:default_attrs) { { content: "content" } }
+
+      def new_page(attrs)
+        Page.new default_attrs.merge(attrs)
+      end
 
       describe "slug validation" do
-        it { expect(FactoryBot.build(:page, slug: "politics")).to be_valid }
-        it { expect(FactoryBot.build(:page, slug: "Politics")).not_to be_valid }
-        it { expect(FactoryBot.build(:page, slug: "история")).to be_valid }
-      end
-
-      describe "#ipfs" do
-        let(:page) { FactoryBot.build :page, content: }
-        let(:content) { "Text [[page]] " }
-
-        subject { page.ipfs_content.cid }
-        it { is_expected.to be_present }
-      end
-
-      describe "#linked_pages" do
-        let!(:page) { FactoryBot.create :page, slug: "politics" }
-        let!(:linked_page) { FactoryBot.create :page, content: "Here is some [[politics]]" }
-
-        it { expect(page.linked_pages.reload).to include linked_page }
-
-        context "when link removed" do
-          before { linked_page.update_attribute :content, "Here was some politics" }
-          it { expect(page.linked_pages.reload).not_to include linked_page }
-        end
+        it { expect(new_page(slug: "politics")).to be_valid }
+        it { expect(new_page(slug: "Politics")).not_to be_valid }
+        it { expect(new_page(slug: "история")).to be_valid }
       end
     end
   end

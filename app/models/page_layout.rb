@@ -33,7 +33,7 @@ class PageLayout
   end
 
   def updated_at
-    (@page.changed? ? Time.now : @page.updated_at).utc
+    @page.updated_at.utc
   end
 
   private

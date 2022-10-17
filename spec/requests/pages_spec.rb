@@ -7,7 +7,7 @@ RSpec.describe "Pages", type: :request do
   let!(:user) { FactoryBot.create :user, email: "admin@example.com", password: "secret123" }
 
   let!(:page) { Page.new :main }
-  before { page.content = "content" }
+  before { page.source_content = "content" }
 
   describe "GET pages/:id" do
     context "when guest" do
