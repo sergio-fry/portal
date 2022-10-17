@@ -10,7 +10,7 @@ RSpec.describe PagePolicy, type: :policy do
   subject { described_class }
   let(:user) { FactoryBot.build :user }
   let(:guest) { nil }
-  let(:page) { FactoryBot.build :page }
+  let(:page) { Page.new :main }
 
   permissions :show? do
     it { expect(subject).to permit(user, page) }

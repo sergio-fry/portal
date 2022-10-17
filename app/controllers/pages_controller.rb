@@ -6,10 +6,10 @@ class PagesController < ApplicationController
 
   # GET /pages or /pages.json
   def index
-    @page = Page.find_or_initialize_by slug: ENV.fetch("HOME_TITLE", "home")
+    @page = Page.new ENV.fetch("HOME_TITLE", "home")
     authorize @page, :show?
 
-    if @page.persisted?
+    if @page.exists?
       redirect_to @page
     else
       redirect_to edit_page_url(@page) unless @page.persisted?
@@ -32,7 +32,7 @@ class PagesController < ApplicationController
 
   # GET /pages/1 or /pages/1.json
   def show
-    if @page.persisted?
+    if @page.exists?
       render inline:
         WithInjectedIpfsLink.new(
           @page.processed_content_with_layout, @page
@@ -96,7 +96,7 @@ class PagesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_page
-    @page = Page.find_or_initialize_by(slug: params[:id])
+    @page = Page.new params[:id]
     authorize @page
   end
 
