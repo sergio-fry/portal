@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get "healthcheck", to: "healthcheck#index"
   get "admin", to: "admin#index"
 
-  devise_for :users
+  devise_for :users, class_name: "Boundaries::Database::User"
   resources :pages, except: %i[new create] do
     collection do
       post :rebuild

@@ -3,7 +3,7 @@
 class PageLinkFromMarkup
   attr_reader :markup
 
-  def initialize(markup, regexp: PageLinkRegexp.new, pages: Pages.new)
+  def initialize(markup, regexp: PageLinkRegexp.new, pages: Boundaries::Database::Pages.new)
     @markup = markup
     @regexp = regexp
     @pages = pages
