@@ -4,11 +4,13 @@ module Boundaries
   module Database
     class Pages
       def find_by_slug(slug)
-        Page.find_by slug:
+        ::Page.new slug
       end
 
       def each(&block)
-        Page.find_each(&block)
+        Page.select(:slug).find_each do |record|
+          yield ::Page.new(record.slug)
+        end
       end
 
       def updated_at

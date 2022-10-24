@@ -12,10 +12,10 @@ module Boundaries
       validates :slug, presence: true
 
       def refresh_back_link
-        page.processed_content.page_links.find_all { |link| link.slug == slug_previously_was }.each do |link|
+        ::Page.new(page.slug).processed_content.page_links.find_all { |link| link.slug == slug_previously_was }.each do |link|
           page.content = page.content.gsub link.markup, link.moved_to(slug).markup
         end
-        page.save
+        page.save!
       end
     end
   end

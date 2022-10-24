@@ -15,6 +15,7 @@ RSpec.describe Page do
 
   describe "#linked_pages" do
     let!(:page) { Page.new :politics }
+    before { page.source_content = "politics here" }
     let!(:linked_page) { Page.new :main }
     before { linked_page.source_content = "Here is some [[politics]]" }
 
