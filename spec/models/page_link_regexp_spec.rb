@@ -6,7 +6,6 @@ RSpec.describe PageLinkRegexp do
   subject(:regexp) { described_class.new }
 
   describe "#match" do
-    it { expect(dsjnjs).to eq 1 }
     it { expect(regexp.match("foo")).to be_falsey }
     it { expect(regexp.match("[[foo]]")).to be_truthy }
     it { expect(regexp.match("[[foo|Bar]]")).to be_truthy }
