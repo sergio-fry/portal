@@ -5,6 +5,8 @@ class Page
     @slug = slug
   end
 
+  alias title slug
+
   def ==(another)
     another.slug.to_s == slug.to_s
   end
@@ -15,7 +17,7 @@ class Page
   end
 
   def source_content
-    record.content
+    record.content.to_s
   end
 
   def source_content=(new_content)
@@ -36,7 +38,7 @@ class Page
   end
 
   def history_ipfs_content
-    history_ipfs_cid.present? ? Ipfs::Content.new(history_ipfs_cid) : Ipfs::NewContent.new(history.to_s)
+    Ipfs::NewContent.new(history.to_s)
   end
 
   def track_history

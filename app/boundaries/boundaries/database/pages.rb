@@ -14,7 +14,7 @@ module Boundaries
       end
 
       def each(&block)
-        Page.select(:slug).find_each do |record|
+        Page.select(:id, :slug).find_each do |record|
           yield ::Page.new(record.slug)
         end
       end
