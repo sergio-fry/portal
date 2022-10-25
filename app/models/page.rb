@@ -1,3 +1,5 @@
+require_relative "./processed_content"
+
 class Page
   attr_reader :slug
 

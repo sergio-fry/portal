@@ -29,6 +29,6 @@ class Sitemap
   end
 
   def home
-    Page.new ENV.fetch("HOME_TITLE", "home")
+    pages.find_by_slug ENV.fetch("HOME_TITLE", "home")
   end
 end

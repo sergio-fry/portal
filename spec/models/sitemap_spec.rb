@@ -31,8 +31,8 @@ module SitemapTest
     let(:pages) { FakePages.new }
 
     let(:home) do
-      double(:home, slug: "home", ipfs_content: Ipfs::NewContent.new("Hello"),
-        history_ipfs_content: Ipfs::NewContent.new("Some hist"))
+      double(:home, slug: "home", ipfs: Ipfs::NewContent.new("Hello"),
+        history_ipfs_content: Ipfs::NewContent.new("Some hist"), exists?: true)
     end
     before { pages << home }
 

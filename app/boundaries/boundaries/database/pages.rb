@@ -4,8 +4,6 @@ module Boundaries
   module Database
     class Pages
       def find_by_slug(slug)
-        raise "Not found page with slug '#{slug}'" unless exists?(slug)
-
         ::Page.new slug
       end
 
