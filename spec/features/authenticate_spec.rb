@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.feature "Authenticates", type: :feature do
   let!(:user) { FactoryBot.create :user, email: "admin@example.com", password: "secret123" }
 
-  before { FactoryBot.create :page, slug: :main }
+  before { Page.new :main }
   # before { Capybara.current_driver = :selenium_chrome_headless }
   # after { Capybara.use_default_driver }
 

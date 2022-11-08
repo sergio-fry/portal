@@ -6,13 +6,13 @@ class PagesController < ApplicationController
 
   # GET /pages or /pages.json
   def index
-    @page = Page.new ENV.fetch("HOME_TITLE", "home")
+    @page = Page.new(::Page.new(ENV.fetch("HOME_TITLE", "home")))
     authorize @page, :show?
 
     if @page.exists?
-      redirect_to @page
+      redirect_to page_url(@page.slug)
     else
-      redirect_to edit_page_url(@page) unless @page.persisted?
+      redirect_to edit_page_url(@page)
     end
   end
 
@@ -25,6 +25,7 @@ class PagesController < ApplicationController
   def rebuild
     authorize Page, :rebuild?
 
+    # FIXME boundaries
     Page.find_each do |page|
       RebuildPageJob.perform_later page
     end
@@ -44,7 +45,7 @@ class PagesController < ApplicationController
 
   # GET /pages/new
   def new
-    @page = Page.new
+    @page = NewPage.new
   end
 
   # GET /pages/1/edit
@@ -54,7 +55,7 @@ class PagesController < ApplicationController
 
   # POST /pages or /pages.json
   def create
-    @page = Page.new(page_params)
+    @page = NewPage.new(page_params)
 
     respond_to do |format|
       if @page.save
@@ -96,7 +97,9 @@ class PagesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_page
-    @page = Page.new params[:id]
+    @page = Page.new ::Page.new(params[:id])
+    puts @page.inspect
+
     authorize @page
   end
 
