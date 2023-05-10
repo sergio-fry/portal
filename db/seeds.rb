@@ -8,7 +8,7 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-admin = User.find_or_initialize_by(email: "#{ENV.fetch("ADMIN_USERNAME", "admin")}@example.com")
+admin = Boundaries::Database::User.find_or_initialize_by(email: "#{ENV.fetch("ADMIN_USERNAME", "admin")}@example.com")
 
 admin.password = admin.password_confirmation = ENV.fetch("ADMIN_PASSWORD", "admin123") if admin.new_record?
 

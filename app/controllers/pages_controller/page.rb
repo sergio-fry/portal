@@ -10,18 +10,33 @@ class PagesController
     end
 
     def exists? = @page.exists?
-    alias persisted? exists?
 
-    def human = name
-    def i18n_key = name
-    def model_name = self
-    def name = "page"
-    def param_key = @page.slug
+    class Model
+      def initialize(page)
+        @page = page
+      end
+
+      def model_name = ModelName.new(@page)
+      def persisted? = @page.exists?
+    end
+
+    class ModelName
+      def initialize(page)
+        @page = page
+      end
+
+      def param_key = "page"
+      def i18n_key = "page"
+      def human = "page"
+      def name = "page"
+      def singular_route_key = name
+    end
+
+
     def policy_class = PagePolicy
     def processed_content_with_layout = @page.processed_content_with_layout
     def slug = @page.slug
-    def to_model = self
-    def singular_route_key = name
+    def to_model = Model.new(self)
 
     def assign_attributes(new_attrs)
       @new_attrs = new_attrs

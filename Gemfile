@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ruby "3.1.2"
+ruby "3.1.4"
 
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
@@ -72,6 +72,7 @@ group :development do
   # gem "spring"
 
   gem "standard"
+  gem "solargraph"
 end
 
 group :test do
@@ -98,3 +99,4 @@ gem "kramdown"
 gem "pundit", "~> 2.2"
 gem "opal"
 gem "dry-auto_inject"
+gem "dry-container"

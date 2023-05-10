@@ -1,4 +1,4 @@
-FROM ruby:3.1.2 as dev
+FROM ruby:3.1.4 as dev
 ENV NODE_MAJOR 16
 ENV YARN_VERSION 1.22.17-1
 
@@ -40,7 +40,7 @@ RUN bundle install --frozen -j $(nproc) --without test development
 RUN bundle clean --force
 
 
-FROM ruby:3.1.2-slim
+FROM ruby:3.1.4-slim
 WORKDIR /app
 
 COPY Aptfile /tmp/Aptfile

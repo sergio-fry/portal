@@ -8,6 +8,8 @@ module Boundaries
       has_many :linking_to_pages, through: :links, source: :target_page, class_name: "Page"
       has_many :links, dependent: :destroy
       has_many :versions, class_name: "Boundaries::Database::PageVersion", autosave: true
+
+      validates :slug, uniqueness: true
     end
   end
 end

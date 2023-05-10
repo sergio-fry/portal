@@ -98,7 +98,6 @@ class PagesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_page
     @page = Page.new ::Page.new(params[:id])
-    puts @page.inspect
 
     authorize @page
   end
