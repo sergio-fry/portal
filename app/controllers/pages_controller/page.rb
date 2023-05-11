@@ -38,6 +38,7 @@ class PagesController
     def slug = @page.slug
     def to_model = Model.new(self)
     def to_s = slug
+    def history = @page.history
 
     def assign_attributes(new_attrs)
       @new_attrs = new_attrs
