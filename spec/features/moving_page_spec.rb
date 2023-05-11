@@ -8,16 +8,14 @@ RSpec.feature "Moving page", type: :feature do
   let!(:user) { FactoryBot.create :user, email: "admin@example.com", password: "secret123" }
   before { sign_in user }
 
-  let!(:moscow) { FactoryBot.create :page, slug: "moscow", content: "Here is Moscow" }
-  let!(:main) { FactoryBot.create :page, slug: "main" }
+  let!(:moscow) { Page.new("moscow") }
+  before { moscow.source_content = "Here is Moscow" }
 
-  before { main.update_attribute :content, "Link to [[moscow|Moscow]]" }
-  # before { Capybara.current_driver = :selenium_chrome_headless }
-  # after { Capybara.use_default_driver }
+  let!(:main) { Page.new("main") }
+  before { main.source_content = "Link to [[moscow|Moscow]]" }
 
   context "when target page is moved" do
-    before { moscow.reload }
-    before { moscow.update_attribute :slug, "moscow_city" }
+    before { moscow.move "moscow_city" }
 
     it "links to moscow" do
       visit "/pages/main"

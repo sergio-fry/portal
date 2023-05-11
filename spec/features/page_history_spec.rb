@@ -8,7 +8,8 @@ RSpec.feature "Page history", type: :feature do
   let!(:user) { FactoryBot.create :user, email: "admin@example.com", password: "secret123" }
   before { sign_in user }
 
-  let!(:moscow) { FactoryBot.create :page, slug: "article", content: "I like Beatles" }
+  let!(:moscow) { Page.new("article") }
+  before { moscow.source_content = "I like Beatles" }
 
   it "links to moscow" do
     visit "/pages/article"

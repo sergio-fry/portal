@@ -37,6 +37,7 @@ class PagesController
     def processed_content_with_layout = @page.processed_content_with_layout
     def slug = @page.slug
     def to_model = Model.new(self)
+    def to_s = slug
 
     def assign_attributes(new_attrs)
       @new_attrs = new_attrs
