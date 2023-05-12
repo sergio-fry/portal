@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PagesController
   class Page
     include ActiveModel::Validations
@@ -25,13 +27,12 @@ class PagesController
         @page = page
       end
 
-      def param_key = "page"
-      def i18n_key = "page"
-      def human = "page"
-      def name = "page"
+      def param_key = 'page'
+      def i18n_key = 'page'
+      def human = 'page'
+      def name = 'page'
       def singular_route_key = name
     end
-
 
     def policy_class = PagePolicy
     def processed_content_with_layout = @page.processed_content_with_layout

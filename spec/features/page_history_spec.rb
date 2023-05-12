@@ -1,35 +1,37 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.feature "Page history", type: :feature do
+RSpec.describe 'Page history' do
   include Devise::Test::IntegrationHelpers
 
-  let!(:user) { FactoryBot.create :user, email: "admin@example.com", password: "secret123" }
-  before { sign_in user }
+  let!(:user) { create(:user, email: 'admin@example.com', password: 'secret123') }
+  let!(:moscow) { Page.new('article') }
 
-  let!(:moscow) { Page.new("article") }
-  before { moscow.source_content = "I like Beatles" }
+  before do
+    sign_in user
+    moscow.source_content = 'I like Beatles'
+  end
 
-  it "links to moscow" do
-    visit "/pages/article"
+  it 'links to moscow' do
+    visit '/pages/article'
 
-    expect(page).to have_content "I like Beatles"
+    expect(page).to have_content 'I like Beatles'
 
-    # NOTE click_on "edit" does not work because it uses
+    # NOTE: click_on "edit" does not work because it uses
     # CanonicalLink to generate link with domain
-    visit "/pages/article/edit"
-    fill_in "Content", with: "I like Queen"
-    click_on "Update"
+    visit '/pages/article/edit'
+    fill_in 'Content', with: 'I like Queen'
+    click_on 'Update'
 
-    expect(page).not_to have_content "I like Beatles"
+    expect(page).not_to have_content 'I like Beatles'
 
-    click_link_or_button "History"
+    click_link_or_button 'History'
 
     skip do
-      click_link_or_button "Version 1"
+      click_link_or_button 'Version 1'
 
-      expect(page).to have_content "I like Beatles"
+      expect(page).to have_content 'I like Beatles'
     end
   end
 end

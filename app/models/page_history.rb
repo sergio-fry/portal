@@ -7,7 +7,7 @@ class PageHistory
 
   def to_s
     page = @page
-    Layout.new(title: "History").wrap do |html|
+    Layout.new(title: 'History').wrap do |html|
       html.h1 do
         "History of #{page.title}"
       end
@@ -23,7 +23,7 @@ class PageHistory
   end
 
   def versions
-    @page.versions.sort_by { |version| version.created_at || Time.now }.each_with_index.map do |version, index|
+    @page.versions.sort_by { |version| version.created_at || Time.zone.now }.each_with_index.map do |version, index|
       Version.new(@page, version, number: index + 1)
     end.reverse
   end

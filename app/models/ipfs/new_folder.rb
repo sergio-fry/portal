@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require_relative "./folder"
+require_relative './folder'
 
 module Ipfs
   class NewFolder
     def initialize(files_map: {})
       @files_map = files_map
-      @gateway = DependenciesContainer.resolve("ipfs")
+      @gateway = DependenciesContainer.resolve('ipfs')
     end
 
     def with_file(path, content)
@@ -15,9 +15,7 @@ module Ipfs
       )
     end
 
-    def file(path)
-      folder.file(path)
-    end
+    delegate :file, to: :folder
 
     def cid
       cid_v1 = @gateway.dag_put dag
@@ -36,14 +34,14 @@ module Ipfs
     def dag
       {
         Data: {
-          "/": {
-            bytes: "CAE"
+          '/': {
+            bytes: 'CAE'
           }
         },
         Links: @files_map.map do |path, content|
           {
             Hash: {
-              "/": content.cid
+              '/': content.cid
             },
             Name: path,
             Tsize: 14

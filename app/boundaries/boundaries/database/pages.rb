@@ -8,10 +8,10 @@ module Boundaries
       end
 
       def exists?(slug)
-        Page.where(slug: slug).exists?
+        Page.exists?(slug:)
       end
 
-      def each(&block)
+      def each
         Page.select(:id, :slug).find_each do |record|
           yield ::Page.new(record.slug)
         end

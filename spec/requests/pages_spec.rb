@@ -1,23 +1,28 @@
 # frozen_string_literal: true
 
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe "Pages", type: :request do
+RSpec.describe 'Pages' do
   include Devise::Test::IntegrationHelpers
-  let!(:user) { FactoryBot.create :user, email: "admin@example.com", password: "secret123" }
+  let!(:user) { create(:user, email: 'admin@example.com', password: 'secret123') }
 
   let!(:page) { Page.new :main }
-  before { page.source_content = "content" }
 
-  describe "GET pages/:id" do
-    context "when guest" do
-      before { get "/pages/main" }
+  before { page.source_content = 'content' }
+
+  describe 'GET pages/:id' do
+    context 'when guest' do
+      before { get '/pages/main' }
+
       it { expect(response).to have_http_status(:success) }
     end
 
-    context "when admin" do
-      before { sign_in user }
-      before { get "/pages/main" }
+    context 'when admin' do
+      before do
+        sign_in user
+        get '/pages/main'
+      end
+
       it { expect(response).to have_http_status(:success) }
     end
   end

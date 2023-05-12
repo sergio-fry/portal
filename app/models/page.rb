@@ -1,4 +1,6 @@
-require_relative "./processed_content"
+# frozen_string_literal: true
+
+require_relative './processed_content'
 
 class Page
   attr_reader :slug
@@ -9,12 +11,15 @@ class Page
 
   alias title slug
 
-  def ==(another)
-    another.slug.to_s == slug.to_s
+  def ==(other)
+    other.slug.to_s == slug.to_s
   end
 
   def move(new_slug)
-    # TODO
+    record.tap do |page|
+      page.slug = new_slug
+      page.save!
+    end
     update_backlinks new_slug
   end
 
@@ -44,10 +49,9 @@ class Page
   end
 
   def track_history
-    versions.build ipfs_cid: ipfs_cid
+    versions.build(ipfs_cid:)
     self.history_ipfs_cid = Ipfs::NewContent.new(history.to_s).cid
   end
-
 
   def content
     processed_content.to_s
@@ -58,9 +62,8 @@ class Page
   end
 
   def exists?
-    content != ""
+    content != ''
   end
-
 
   # def ipfs
   # def history
@@ -84,15 +87,18 @@ class Page
     self.ipfs_cid = ipfs.cid
   end
 
-
   def update_backlinks(new_slug)
     back_links.each do |link|
       link.slug = new_slug
     end
   end
 
+  def back_links
+    record.back_links.map { |record| Link.new(from: self, to: Page.new(record.page.slug)) }
+  end
+
   def updated_at
-    record.updated_at || Time.now
+    record.updated_at || Time.zone.now
   end
 
   def versions

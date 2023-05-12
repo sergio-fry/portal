@@ -3,6 +3,6 @@
 class HealthcheckController < ApplicationController
   def index
     authorize :healthcheck, :check?
-    render inline: "OK"
+    render inline: 'OK'
   end
 end

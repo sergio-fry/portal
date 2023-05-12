@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
-require "rails_helper"
-require "pundit/rspec"
-require "spec/fake/ipfs/gateway"
+require 'rails_helper'
+require 'pundit/rspec'
+require 'spec/fake/ipfs/gateway'
 
 RSpec.describe PagePolicy, type: :policy do
+  subject { described_class }
+
   before { Dependencies.container.stub(:ipfs, Fake::Ipfs::Gateway.new) }
   after { Dependencies.container.unstub :ipfs }
-  subject { described_class }
-  let(:user) { FactoryBot.build :user }
+
+  let(:user) { build(:user) }
   let(:guest) { nil }
   let(:page) { Page.new :main }
 
@@ -29,6 +31,6 @@ RSpec.describe PagePolicy, type: :policy do
     it { expect(subject).not_to permit(guest, page) }
   end
 
-  permissions ".scope" do
+  permissions '.scope' do
   end
 end

@@ -7,7 +7,7 @@ module Ipfs
     def initialize(data)
       @data = data
 
-      @gateway = DependenciesContainer.resolve("ipfs")
+      @gateway = DependenciesContainer.resolve('ipfs')
     end
 
     def cid

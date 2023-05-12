@@ -6,7 +6,7 @@ class PagesController < ApplicationController
 
   # GET /pages or /pages.json
   def index
-    @page = Page.new(::Page.new(ENV.fetch("HOME_TITLE", "home")))
+    @page = Page.new(::Page.new(ENV.fetch('HOME_TITLE', 'home')))
     authorize @page, :show?
 
     if @page.exists?
@@ -25,7 +25,7 @@ class PagesController < ApplicationController
   def rebuild
     authorize Page, :rebuild?
 
-    # FIXME boundaries
+    # FIXME: boundaries
     Page.find_each do |page|
       RebuildPageJob.perform_later page
     end
@@ -50,7 +50,7 @@ class PagesController < ApplicationController
 
   # GET /pages/1/edit
   def edit
-    render layout: "admin"
+    render layout: 'admin'
   end
 
   # POST /pages or /pages.json

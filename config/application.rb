@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-require_relative "boot"
+require_relative 'boot'
 
-require "rails"
+require 'rails'
 
 [
-  "active_record/railtie",
-  "active_storage/engine",
-  "action_controller/railtie",
-  "action_view/railtie",
-  "action_mailer/railtie",
-  "active_job/railtie",
-  "action_cable/engine",
-  "action_mailbox/engine",
-  "action_text/engine"
+  'active_record/railtie',
+  'active_storage/engine',
+  'action_controller/railtie',
+  'action_view/railtie',
+  'action_mailer/railtie',
+  'active_job/railtie',
+  'action_cable/engine',
+  'action_mailbox/engine',
+  'action_text/engine'
   # "rails/test_unit/railtie",
 ].each do |railtie|
   require railtie
@@ -40,9 +40,9 @@ module Portal
     config.generators do |g|
       g.hidden_namespaces << :test_unit
       g.test_framework :rspec
-      g.factory_bot dir: "spec/factories"
+      g.factory_bot dir: 'spec/factories'
     end
   end
 end
 
-require_relative "dependencies"
+require_relative 'dependencies'

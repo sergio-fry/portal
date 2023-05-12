@@ -13,17 +13,17 @@ class PageLayout
 
     Layout.new(title: page.slug).wrap do |html|
       html.article do
-        p class: "post-meta" do
+        Rails.logger.debug class: 'post-meta' do
           strong "#{page.slug}.html"
-          span "/"
-          a "Sergei O. Udalov", href: "./#{ENV.fetch("HOME_TITLE", "home")}.html", class: "title"
+          span '/'
+          a 'Sergei O. Udalov', href: "./#{ENV.fetch('HOME_TITLE', 'home')}.html", class: 'title'
           br
           span updated_at.to_s
           br
-          span "ver. "
-          a version, datetime: updated_at, title: "History", href: "#{page.slug}/history.html"
+          span 'ver. '
+          a version, datetime: updated_at, title: 'History', href: "#{page.slug}/history.html"
           br
-          a "edit", title: "Edit", href: "#{page_canonical_link}/edit", class: "admin-tools"
+          a 'edit', title: 'Edit', href: "#{page_canonical_link}/edit", class: 'admin-tools'
         end
         div do
           raw(content)
