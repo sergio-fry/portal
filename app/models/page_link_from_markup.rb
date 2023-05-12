@@ -40,7 +40,7 @@ class PageLinkFromMarkup
   def page
     return unless @pages.exists?(slug)
 
-    @pages.find_by slug:
+    @pages.find_by_slug slug
   end
 
   def matched_data

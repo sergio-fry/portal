@@ -11,21 +11,19 @@ class Page
 
   alias title slug
 
-  def ==(other)
-    other.slug.to_s == slug.to_s
-  end
+  def ==(other) = other.slug.to_s == slug.to_s
 
   def move(new_slug)
+    @slug_before_moving = @slug
     record.tap do |page|
       page.slug = new_slug
       page.save!
     end
+    @slug = new_slug
     update_backlinks new_slug
   end
 
-  def source_content
-    record.content.to_s
-  end
+  def source_content = record.content.to_s
 
   def source_content=(new_content)
     record.tap do |page|
@@ -40,30 +38,19 @@ class Page
     # track_history
   end
 
-  def history
-    PageHistory.new self
-  end
-
-  def history_ipfs_content
-    Ipfs::NewContent.new(history.to_s)
-  end
+  def history = PageHistory.new self
+  def history_ipfs_content = Ipfs::NewContent.new(history.to_s)
 
   def track_history
     versions.build(ipfs_cid:)
     self.history_ipfs_cid = Ipfs::NewContent.new(history.to_s).cid
   end
 
-  def content
-    processed_content.to_s
-  end
+  def content = processed_content.to_s
 
-  def processed_content
-    ProcessedContent.new(source_content)
-  end
+  def processed_content = ProcessedContent.new(source_content)
 
-  def exists?
-    content != ''
-  end
+  def exists? = content != ''
 
   # def ipfs
   # def history

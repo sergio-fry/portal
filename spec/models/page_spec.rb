@@ -18,20 +18,26 @@ RSpec.describe Page do
   end
 
   describe '#linked_pages' do
-    let!(:page) { described_class.new :politics }
-    let!(:linked_page) { described_class.new :main }
+    let!(:politics) { described_class.new :politics }
+    let!(:main) { described_class.new :main }
 
     before do
-      page.source_content = 'politics here'
-      linked_page.source_content = 'Here is some [[politics]]'
+      politics.source_content = 'politics here'
+      main.source_content = 'Find politics here: [[politics]]'
     end
 
-    it { expect(page.linked_pages).to include linked_page }
+    it { expect(politics.linked_pages).to include main }
 
     context 'when link removed' do
-      before { linked_page.source_content = 'Here was some politics' }
+      before { main.source_content = 'Find politics by yourself!' }
 
-      it { expect(page.linked_pages).not_to include linked_page }
+      it { expect(politics.linked_pages).not_to include main }
+    end
+
+    context 'when target page moved' do
+      before { politics.move :news }
+
+      it { expect(politics.linked_pages).to include main }
     end
   end
 end
