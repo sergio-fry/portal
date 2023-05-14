@@ -76,12 +76,12 @@ class Page
 
   def update_backlinks(new_slug)
     back_links.each do |link|
-      link.slug = new_slug
+      link.refresh
     end
   end
 
   def back_links
-    record.back_links.map { |record| Link.new(from: self, to: Page.new(record.page.slug)) }
+    record.back_links.map { |record| Link.new(page: Page.new(record.page.slug), target_page: self) }
   end
 
   def updated_at
@@ -103,6 +103,7 @@ class Page
   private
 
   def update_links
+    # TODO: use Link model (not boundaries AR)
     active_links = processed_content.page_links.find_all(&:target_exists?)
     same_links = record.links.find_all { |rec| active_links.map(&:slug).include? rec.slug }
     new_links = active_links.reject { |link| same_links.map(&:slug).include? link.slug }.map do |link|

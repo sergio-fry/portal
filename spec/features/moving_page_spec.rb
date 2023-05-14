@@ -24,7 +24,7 @@ RSpec.describe 'Moving page' do
       click_on 'Moscow'
 
       expect(page).to have_content 'Here is Moscow'
-      expect(moscow.reload.linked_pages).to include main
+      expect(moscow.linked_pages).to include main
     end
   end
 end
