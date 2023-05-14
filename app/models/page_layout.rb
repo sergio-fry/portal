@@ -13,7 +13,7 @@ class PageLayout
 
     Layout.new(title: page.slug).wrap do |html|
       html.article do
-        Rails.logger.debug class: 'post-meta' do
+        div class: 'post-meta' do
           strong "#{page.slug}.html"
           span '/'
           a 'Sergei O. Udalov', href: "./#{ENV.fetch('HOME_TITLE', 'home')}.html", class: 'title'
