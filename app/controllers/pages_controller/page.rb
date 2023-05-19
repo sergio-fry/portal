@@ -4,7 +4,7 @@ class PagesController
   class Page
     include ActiveModel::Validations
 
-    validates :content, presence: true
+    validates :content, :slug, presence: true
 
     def initialize(page)
       @page = page
@@ -51,11 +51,16 @@ class PagesController
     def save
       if valid?
         @page.source_content = content
+        @page.move(@new_attrs[:slug]) if slug_changed?
 
         true
       else
         false
       end
+    end
+
+    def slug_changed?
+      @new_attrs[:slug] != @page.slug
     end
   end
 end

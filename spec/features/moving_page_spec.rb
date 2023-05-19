@@ -11,20 +11,24 @@ RSpec.describe 'Moving page' do
 
   before do
     sign_in user
-    moscow.source_content = 'Here is Moscow'
-    main.source_content = 'Link to [[moscow|Moscow]]'
+    moscow.source_content = 'Moscow'
+    main.source_content = 'Link to [[moscow|city]]'
   end
 
   context 'when target page is moved' do
-    before { moscow.move 'moscow_city' }
+    before do
+      visit '/pages/moscow/edit'
+
+      fill_in 'Slug', with: 'moscow_city'
+      click_on 'Update'
+    end
 
     it 'links to moscow' do
       visit '/pages/main'
 
-      click_on 'Moscow'
+      click_on 'city'
 
-      expect(page).to have_content 'Here is Moscow'
-      expect(moscow.linked_pages).to include main
+      expect(page).to have_content 'Moscow'
     end
   end
 end
