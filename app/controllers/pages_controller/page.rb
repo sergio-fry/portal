@@ -20,6 +20,7 @@ class PagesController
 
       def model_name = ModelName.new(@page)
       def persisted? = @page.exists?
+      def to_s = @page.slug
     end
 
     class ModelName
