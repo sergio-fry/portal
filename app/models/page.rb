@@ -64,10 +64,10 @@ class Page
     ).to_s
   end
 
-  def ipfs = Ipfs::NewContent.new(processed_content_with_layout)
+  def ipfs = Ipfs::Content.new(record.ipfs_cid)
 
   def sync_to_ipfs
-    record.update! ipfs_cid: ipfs.cid
+    record.update! ipfs_cid: Ipfs::NewContent.new(processed_content_with_layout).cid
   end
 
   def update_backlinks(_new_slug)

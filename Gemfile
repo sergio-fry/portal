@@ -67,10 +67,12 @@ group :development do
   gem 'memory_profiler'
   # For call-stack profiling flamegraphs
   gem 'stackprof'
+  gem 'ruby-prof'
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 
+  gem 'ffaker'
   gem 'rubocop'
   gem 'rubocop-capybara'
   gem 'rubocop-rails'
