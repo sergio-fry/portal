@@ -3,7 +3,7 @@
 require_relative './ipfs/new_folder'
 
 class Sitemap
-  include Dependencies['pages']
+  include Dependencies['pages', 'features']
 
   delegate :url, to: :ifps_folder
 
@@ -18,9 +18,11 @@ class Sitemap
 
     @pages.each do |page|
       folder = folder.with_file("#{page.slug}.html", page.ipfs)
-      history = Ipfs::NewFolder.new.with_file('history.html', page.history_ipfs_content)
 
-      folder = folder.with_file(page.slug, history)
+      if features.enabled?(:history)
+        history = Ipfs::NewFolder.new.with_file('history.html', page.history_ipfs_content)
+        folder = folder.with_file(page.slug, history)
+      end
     end
 
     folder

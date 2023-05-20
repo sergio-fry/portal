@@ -13,6 +13,11 @@ class DependenciesContainer
   register 'pages' do
     Boundaries::Database::Pages.new
   end
+
+  register 'features' do
+    require_relative 'features'
+    Configuration::Features.new
+  end
 end
 
 Dependencies = Dry::AutoInject(DependenciesContainer)
