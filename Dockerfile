@@ -1,4 +1,6 @@
-FROM ruby:3.1.4 as dev
+ARG RUBY_VERSION=3.2.2
+
+FROM ruby:$RUBY_VERSION as dev
 ENV NODE_MAJOR 16
 ENV YARN_VERSION 1.22.17-1
 
@@ -40,7 +42,8 @@ RUN bundle install --frozen -j $(nproc) --without test development
 RUN bundle clean --force
 
 
-FROM ruby:3.1.4-slim
+FROM ruby:$RUBY_VERSION-slim
+ENV RUBY_YJIT_ENABLE true
 WORKDIR /app
 
 COPY Aptfile /tmp/Aptfile
