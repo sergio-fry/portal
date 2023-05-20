@@ -7,11 +7,15 @@ RSpec.describe 'Page history' do
 
   let!(:user) { create(:user, email: 'admin@example.com', password: 'secret123') }
   let!(:moscow) { Page.new('article') }
+  let(:features) { double(:features, history_enabled?: true) }
 
   before do
     sign_in user
     moscow.source_content = 'I like Beatles'
+    Dependencies.container.stub(:features, features)
   end
+
+  after { Dependencies.container.unstub :features }
 
   it 'links to moscow' do
     visit '/pages/article'

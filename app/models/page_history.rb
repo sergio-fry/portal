@@ -58,11 +58,7 @@ class PageHistory
     def meta_title = "Version #{@number}"
 
     def current?
-      if @page.changed?
-        @version.created_at.nil?
-      else
-        @page.versions.max_by(&:created_at) == @version
-      end
+      @page.versions.max_by(&:created_at) == @version
     end
   end
 end

@@ -23,3 +23,6 @@ RSpec/MultipleExpectations:
 RSpec/RepeatedExample:
   Exclude:
     - spec/policies/**
+
+RSpec/VerifiedDoubles:
+  Enabled: False

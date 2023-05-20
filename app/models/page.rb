@@ -26,24 +26,29 @@ class Page
   def source_content = record.content.to_s
 
   def source_content=(new_content)
-    record.tap do |page|
-      page.content = new_content
-      page.save!
+    record.transaction do
+      record.tap do |page|
+        page.content = new_content
+        page.save!
+      end
+
+      update_links
+
+      sync_to_ipfs
+      track_history
     end
-
-    update_links
-
-    # TODO
-    # sync_to_ipfs
-    # track_history
   end
 
   def history = PageHistory.new self
   def history_ipfs_content = Ipfs::NewContent.new(history.to_s)
 
   def track_history
-    versions.build(ipfs_cid:)
-    self.history_ipfs_cid = Ipfs::NewContent.new(history.to_s).cid
+    record.tap do |record|
+      record.versions.build(ipfs_cid: ipfs.cid)
+      record.history_ipfs_cid = Ipfs::NewContent.new(history.to_s).cid
+
+      record.save!
+    end
   end
 
   def content = processed_content.to_s
@@ -52,11 +57,6 @@ class Page
 
   def exists? = content != ''
 
-  # def ipfs
-  # def history
-  # def incoming_links
-  # def outgoing_links
-
   def processed_content_with_layout
     PageLayout.new(
       content,
@@ -64,14 +64,10 @@ class Page
     ).to_s
   end
 
-  def ipfs
-    Ipfs::NewContent.new(
-      processed_content_with_layout
-    )
-  end
+  def ipfs = Ipfs::NewContent.new(processed_content_with_layout)
 
   def sync_to_ipfs
-    self.ipfs_cid = ipfs.cid
+    record.update! ipfs_cid: ipfs.cid
   end
 
   def update_backlinks(_new_slug)
