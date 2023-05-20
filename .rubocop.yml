@@ -9,3 +9,17 @@ AllCops:
 
 Style/Documentation:
   Enabled: False
+
+Rails/DynamicFindBy:
+  Enabled: False
+
+Rails/RenderInline:
+  Enabled: False
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - spec/features/**
+
+RSpec/RepeatedExample:
+  Exclude:
+    - spec/policies/**
