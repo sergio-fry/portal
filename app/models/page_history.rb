@@ -16,6 +16,10 @@ class PageHistory
         versions.each do |version|
           li do
             a version.title, href: version.url, title: version.meta_title
+
+            if version.current?
+              a 'Current', href: version.url
+            end
           end
         end
       end
@@ -45,13 +49,7 @@ class PageHistory
       end
     end
 
-    def title
-      if current?
-        "#{time} - Current"
-      else
-        time
-      end
-    end
+    def title = time
 
     def time = @version.created_at || Time.now.utc
 
