@@ -94,6 +94,7 @@ class Page
     record.linked_pages.map { |rec| self.class.new(rec.slug) }
   end
 
+  # TODO: do not autocreate. Otherwise anybody can create any page by typing sny URL
   def record
     Boundaries::Database::Page.find_or_initialize_by(slug: @slug)
   end
