@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Link
   def initialize(page:, target_page:)
     @page = page

@@ -18,8 +18,6 @@ RSpec.describe 'Page history' do
 
     expect(page).to have_content 'I like Beatles'
 
-    # NOTE: click_on "edit" does not work because it uses
-    # CanonicalLink to generate link with domain
     visit '/pages/article/edit'
     fill_in 'Content', with: 'I like Queen'
     click_on 'Update'
@@ -28,10 +26,8 @@ RSpec.describe 'Page history' do
 
     click_link_or_button 'History'
 
-    skip do
-      click_link_or_button 'Version 1'
+    click_link_or_button 'Version 1'
 
-      expect(page).to have_content 'I like Beatles'
-    end
+    expect(page).to have_content 'I like Beatles'
   end
 end

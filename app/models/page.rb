@@ -74,10 +74,8 @@ class Page
     self.ipfs_cid = ipfs.cid
   end
 
-  def update_backlinks(new_slug)
-    back_links.each do |link|
-      link.refresh
-    end
+  def update_backlinks(_new_slug)
+    back_links.each(&:refresh)
   end
 
   def back_links
