@@ -2,15 +2,16 @@
 
 # This code is used inside IPFS pages
 
-#require 'English'
 require 'native'
 
+# rubocop:disable Style/SpecialGlobalVars
+
 class JQuery
-  def onload
+  def onload(&block) # rubocop:disable Lint/UnusedMethodArgument, Naming/BlockForwarding
     `jQuery(document).ready(block)`
   end
 
-  def [](_selector)
+  def [](selector) # rubocop:disable Lint/UnusedMethodArgument
     Native::Array.new `jQuery(selector)`
   end
 end
@@ -61,7 +62,6 @@ class Link
   end
 
   def target_available?
-    Rails.logger.debug @state.inspect
     # TODO: update state with request
     @state.dig(:remote_links, link) == 'available'
   end
@@ -89,7 +89,7 @@ class Page
 
   def links
     @jquery['.link'].map do |el|
-      Link.new el: $PROCESS_ID.jQuery(el), state: @state
+      Link.new el: $$.jQuery(el), state: @state
     end
   end
 
@@ -102,11 +102,11 @@ class Page
   end
 
   def hide_admin_tools
-    $PROCESS_ID.jQuery('.admin-tools').css(opacity: 0.1)
+    $$.jQuery('.admin-tools').css(opacity: 0.1)
   end
 
   def disaply_admin_tools
-    $PROCESS_ID.jQuery('.admin-tools').css(opacity: 1)
+    $$.jQuery('.admin-tools').css(opacity: 1)
   end
 
   def admin?
@@ -116,11 +116,11 @@ class Page
   def update_url
     return unless @state.dig(:remote_links, ipfs_page_url) == 'available'
 
-    $PROCESS_ID.window.location.href = ipfs_page_url
+    $$.window.location.href = ipfs_page_url
   end
 
   def ipfs_page_url
-    $PROCESS_ID.jQuery('.ipfs-page').data('ipfs-url')
+    $$.jQuery('.ipfs-page').data('ipfs-url')
   end
 
   def ipfs_links
@@ -182,3 +182,5 @@ jquery.onload do
 
   RemoteLinks.new(Page.new(store.state).ipfs_links, store:).update
 end
+
+# rubocop:enable Style/SpecialGlobalVars
