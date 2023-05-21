@@ -12,6 +12,8 @@ ENV:
 * REDIS_URL
 * IPFS_PUBLIC_GATEWAY_URL (default: https://ipfs.io/ipfs/)
 
-TODO:
-* build sitemap
-* list missing pages
+## HOWTO
+
+### Update Opal
+
+
