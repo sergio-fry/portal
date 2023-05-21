@@ -26,7 +26,6 @@ class Layout
           end
           script type: 'text/javascript', src: js_from_vendor('jquery-3.6.1.min.js')
           script type: 'text/javascript', src: js_from_vendor('opal/runtime.js')
-          script type: 'text/javascript', src: js_from_vendor('opal/native.min.js')
           script type: 'text/javascript', src: embed_js_url
         end
       end.to_s

@@ -8,7 +8,7 @@ namespace :opal do
 
     Tempfile.create('runtime') do |runtime|
       Tempfile.create('prog') do |prog|
-        `opal --compile #{prog.path} > #{runtime.path}`
+        `opal --require native --compile #{prog.path} > #{runtime.path}`
       end
 
       `mkdir -p #{target_dir}`

@@ -2,7 +2,7 @@
 
 # This code is used inside IPFS pages
 
-require 'English'
+#require 'English'
 require 'native'
 
 class JQuery
