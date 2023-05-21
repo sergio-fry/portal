@@ -16,4 +16,5 @@ ENV:
 
 ### Update Opal
 
+`rails opal:update_runtime`
 
