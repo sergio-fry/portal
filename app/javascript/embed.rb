@@ -48,22 +48,13 @@ class Store
 end
 
 class Link
-  def initialize(el:, state:)
-    @el = el
+  def initialize(element, state:)
+    @element = element
     @state = state
   end
 
   def render
-    if target_available?
-      @el.attr(:href, link)
-    else
-      @el.attr(:href, canonical_link)
-    end
-  end
-
-  def target_available?
-    # TODO: update state with request
-    @state.dig(:remote_links, link) == 'available'
+    # no op
   end
 
   def link
@@ -89,7 +80,7 @@ class Page
 
   def links
     @jquery['.link'].map do |el|
-      Link.new el: $$.jQuery(el), state: @state
+      Link.new $$.jQuery(el), state: @state
     end
   end
 
