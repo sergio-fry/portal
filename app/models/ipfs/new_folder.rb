@@ -15,7 +15,7 @@ module Ipfs
       )
     end
 
-    delegate :file, to: :folder
+    def file = folder.file
 
     def cid
       cid_v1 = @gateway.dag_put dag

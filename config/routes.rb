@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'ipfs/:cid(.:format)', to: 'ipfs#show'
+  get 'ipfs/:cid/:filename(.:format)', to: 'ipfs#folder'
   get 'healthcheck', to: 'healthcheck#index'
   get 'admin', to: 'admin#index'
 
