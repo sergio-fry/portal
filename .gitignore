@@ -41,3 +41,4 @@
 /.DS_Store
 /.exrc
 /.env.*.local
+/.env.local
