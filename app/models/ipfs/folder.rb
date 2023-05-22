@@ -12,7 +12,7 @@ module Ipfs
     end
 
     def dag
-      cid_v1 = @gateway.cid_format(@cid, v: 1)
+      cid_v1 = @gateway.cid_format(@cid, ver: 1)
       @gateway.dag_get(cid_v1)
     end
 

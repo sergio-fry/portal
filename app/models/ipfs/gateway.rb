@@ -64,8 +64,8 @@ module Ipfs
       call_method('/api/v0/dag/get', params: { arg: cid })
     end
 
-    def cid_format(cid, v:)
-      call_method('/api/v0/cid/format', params: { arg: cid, v: })['Formatted']
+    def cid_format(cid, ver:)
+      call_method('/api/v0/cid/format', params: { arg: cid, v: ver })['Formatted']
     end
 
     def cat(cid)

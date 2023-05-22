@@ -27,7 +27,7 @@ module Fake
         JSON.parse cat(cid)
       end
 
-      def cid_format(cid, v:)
+      def cid_format(cid, ver:)
         # no conversion
         cid
       end

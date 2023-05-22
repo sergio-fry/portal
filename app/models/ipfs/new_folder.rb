@@ -20,7 +20,7 @@ module Ipfs
     def cid
       cid_v1 = @gateway.dag_put dag
 
-      @gateway.cid_format cid_v1, v: 0
+      @gateway.cid_format cid_v1, ver: 0
     end
 
     def folder
