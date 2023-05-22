@@ -33,7 +33,6 @@ class Page
       end
 
       update_links
-
       sync_to_ipfs
       track_history
     end
@@ -95,8 +94,6 @@ class Page
   def record
     @record ||= Boundaries::Database::Page.find_or_initialize_by(slug: @slug)
   end
-
-  private
 
   def update_links
     # TODO: use Link model (not boundaries AR)

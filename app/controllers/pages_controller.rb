@@ -23,12 +23,13 @@ class PagesController < ApplicationController
   end
 
   def rebuild
-    authorize Page, :rebuild?
+    authorize :page, :rebuild?
 
-    # FIXME: boundaries
-    Page.find_each do |page|
-      RebuildPageJob.perform_later page
+    Dependencies.container.resolve(:pages).each do |page|
+      RebuildPageJob.perform_later page.slug
     end
+
+    redirect_to :admin
   end
 
   # GET /pages/1 or /pages/1.json

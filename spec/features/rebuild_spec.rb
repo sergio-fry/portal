@@ -4,20 +4,21 @@ require 'rails_helper'
 
 RSpec.describe 'Rebuild' do
   include Devise::Test::IntegrationHelpers
+  include ActiveJob::TestHelper
 
   let!(:user) { create(:user, email: 'admin@example.com', password: 'secret123') }
-  let!(:page) { Page.new('foo') }
 
   before do
     sign_in user
+    Page.new(:foo).source_content = 'content'
   end
 
-  context 'when target page is moved' do
-    it 'links to moscow' do
-      visit '/admin'
+  it 'can rebuild pages' do
+    visit '/admin'
 
-      click_on 'Rebuild'
-      expect(page).to have_content 'Moscow'
-    end
+    assert_enqueued_jobs 0
+    click_on 'Rebuild'
+    assert_enqueued_jobs 1
+    perform_enqueued_jobs
   end
 end
