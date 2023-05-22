@@ -14,6 +14,10 @@ class JQuery
   def [](selector) # rubocop:disable Lint/UnusedMethodArgument
     Native::Array.new `jQuery(selector)`
   end
+
+  def find(selector)
+    `$(#{selector})`
+  end
 end
 
 class Store
@@ -76,6 +80,18 @@ class Page
     links.each(&:render)
     render_admin_tools
     update_url
+    render_content
+  end
+
+  def render_content
+    case @state[:page_mode]
+    when :content
+      `$('.page_content').show()`
+      `$('.page_history').hide()`
+    when :history
+      `$('.page_content').hide()`
+      `$('.page_history').show()`
+    end
   end
 
   def links
@@ -161,7 +177,8 @@ end
 
 jquery = JQuery.new
 store = Store.new(
-  remote_links: {}
+  remote_links: {},
+  page_mode: :content
 )
 
 store.subscribe lambda { |state|
@@ -172,6 +189,14 @@ jquery.onload do
   store.dispatch(->(state) { state })
 
   RemoteLinks.new(Page.new(store.state).ipfs_links, store:).update
+
+  Native(`$('.history_link')`).on('click', lambda {
+    store.dispatch lambda { |state|
+      state[:page_mode] = :history
+
+      state
+    }
+  })
 end
 
 # rubocop:enable Style/SpecialGlobalVars

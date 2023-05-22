@@ -18,11 +18,6 @@ class Sitemap
 
     @pages.each do |page|
       folder = folder.with_file("#{page.slug}.html", page.ipfs)
-
-      if features.history_enabled?
-        history = Ipfs::NewFolder.new.with_file('history.html', page.history_ipfs_content)
-        folder = folder.with_file(page.slug, history)
-      end
     end
 
     folder

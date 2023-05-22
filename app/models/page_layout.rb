@@ -21,12 +21,15 @@ class PageLayout
           span updated_at.to_s
           br
           span 'ver. '
-          a version, datetime: updated_at, title: 'History', href: "#{page.slug}/history.html"
+          a version, datetime: updated_at, title: 'History', href: '#', class: :history_link
           br
           a 'edit', title: 'Edit', href: "#{page_canonical_link}/edit", class: 'admin-tools'
         end
-        div do
+        div class: :page_content do
           raw(content)
+        end
+        div class: :page_history do
+          raw(history)
         end
       end
     end
@@ -34,6 +37,10 @@ class PageLayout
 
   def updated_at
     @page.updated_at.utc
+  end
+
+  def history
+    @page.history.to_s
   end
 
   private
@@ -46,14 +53,5 @@ class PageLayout
 
   def page_canonical_link
     CanonicalLink.new(@page.slug).link
-  end
-
-  def wrapped_to_html(content)
-    <<~HTML
-      <!DOCTYPE html>
-      <html>
-        #{content}
-      </html>
-    HTML
   end
 end
