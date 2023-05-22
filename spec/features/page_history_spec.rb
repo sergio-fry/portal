@@ -10,12 +10,16 @@ RSpec.describe 'Page history' do
   let(:features) { double(:features, history_enabled?: true) }
 
   before do
+    Capybara.current_driver = :selenium_headless
     sign_in user
     moscow.source_content = 'I like Beatles'
     Dependencies.container.stub(:features, features)
   end
 
-  after { Dependencies.container.unstub :features }
+  after do
+    Dependencies.container.unstub :features
+    Capybara.use_default_driver
+  end
 
   context 'when page updated' do
     before do
