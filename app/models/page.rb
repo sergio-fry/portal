@@ -39,12 +39,10 @@ class Page
   end
 
   def history = PageHistory.new self
-  def history_ipfs_content = Ipfs::NewContent.new(history.to_s)
 
   def track_history
     record.tap do |record|
       record.versions.build(ipfs_cid: ipfs.cid)
-      record.history_ipfs_cid = Ipfs::NewContent.new(history.to_s).cid
 
       record.save!
     end

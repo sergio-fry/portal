@@ -36,7 +36,7 @@ module SitemapTest
 
     let(:home) do
       double(:home, slug: 'home', ipfs: Ipfs::NewContent.new('Hello'),
-                    history_ipfs_content: Ipfs::NewContent.new('Some hist'), exists?: true)
+                    exists?: true)
     end
 
     it { expect(sitemap.ifps_folder.file('index.html').data).to include 'Hello' }
