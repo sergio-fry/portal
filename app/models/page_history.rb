@@ -17,9 +17,7 @@ class PageHistory
           li do
             a version.title, href: version.url, title: version.meta_title
 
-            if version.current?
-              a 'Current', href: version.url
-            end
+            a 'Current', href: version.url if version.current?
           end
         end
       end

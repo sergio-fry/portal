@@ -31,6 +31,6 @@ RSpec.describe PagePolicy, type: :policy do
     it { is_expected.not_to permit(guest, page) }
   end
 
-  permissions '.scope' do
-  end
+  # permissions '.scope' do
+  # end
 end

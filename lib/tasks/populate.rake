@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 namespace :populate do
-  desc "Populate all"
+  desc 'Populate all'
   task all: :environment do
     require 'ffaker'
 

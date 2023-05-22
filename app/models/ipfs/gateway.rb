@@ -7,6 +7,7 @@ module Ipfs
   class Gateway
     class Error < StandardError
       def initialize(code, body)
+        super
         @code = code
         @body = body
       end

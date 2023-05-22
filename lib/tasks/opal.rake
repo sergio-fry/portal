@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :opal do
   desc 'Update Opal runtime'
   task update_runtime: :environment do
