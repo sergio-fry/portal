@@ -1,27 +1,31 @@
 # frozen_string_literal: true
 
 class PageHistory
+  include Hanami::Helpers
+
   def initialize(page)
     @page = page
   end
 
   def to_s
     page = @page
-    Layout.new(title: 'History').wrap do |html|
-      html.h1 do
-        "History of #{page.title}"
-      end
+    html do
+      html.div do |dov|
+        div.h1 do
+          "History of #{page.title}"
+        end
 
-      html.ol reversed: :reversed do
-        versions.each do |version|
-          li do
-            a version.title, href: version.url, title: version.meta_title
+        div.ol reversed: :reversed do
+          versions.each do |version|
+            li do
+              a version.title, href: version.url, title: version.meta_title
 
-            a 'Current', href: version.url if version.current?
+              a 'Current', href: version.url if version.current?
+            end
           end
         end
       end
-    end
+    end.to_s
   end
 
   def versions

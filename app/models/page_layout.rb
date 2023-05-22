@@ -23,12 +23,12 @@ class PageLayout
           span 'ver. '
           a version, datetime: updated_at, title: 'History', href: '#', class: :history_link
           br
-          a 'edit', title: 'Edit', href: "#{page_canonical_link}/edit", class: 'admin-tools'
+          a 'edit', title: 'Edit', href: "#{page_canonical_link}/edit", class: 'admin-tools', style: 'opacity: 0'
         end
         div class: :page_content do
           raw(content)
         end
-        div class: :page_history do
+        div class: :page_history, style: 'display: none' do
           raw(history)
         end
       end

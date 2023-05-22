@@ -192,10 +192,12 @@ jquery.onload do
 
   Native(`$('.history_link')`).on('click', lambda {
     store.dispatch lambda { |state|
-      state[:page_mode] = :history
+      state[:page_mode] = state[:page_mode] == :content ? :history : :content
 
       state
     }
+
+    `return false`
   })
 end
 
