@@ -15,7 +15,7 @@ module Ipfs
       )
     end
 
-    def file = folder.file
+    def file(*args) = folder.file(*args)
 
     def cid
       cid_v1 = @gateway.dag_put dag
