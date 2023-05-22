@@ -17,21 +17,17 @@ RSpec.describe 'Page history' do
 
   after { Dependencies.container.unstub :features }
 
-  it 'links to moscow' do
-    visit '/pages/article'
+  context 'when page updated' do
+    before do
+      visit '/pages/article/edit'
+      fill_in 'Content', with: 'I like Queen'
+      click_on 'Update'
+    end
 
-    expect(page).to have_content 'I like Beatles'
+    it 'links to moscow' do
+      expect(page).not_to have_content 'I like Beatles'
 
-    visit '/pages/article/edit'
-    fill_in 'Content', with: 'I like Queen'
-    click_on 'Update'
-
-    expect(page).not_to have_content 'I like Beatles'
-
-    click_link_or_button 'History'
-
-    # FIXME: can't access IPFS addresses
-    skip do
+      click_link_or_button 'History'
       click_link_or_button 'Version 1'
 
       expect(page).to have_content 'I like Beatles'
