@@ -18,8 +18,12 @@ class IpfsController < ApplicationController
   def folder
     authorize :ipfs
 
-    render inline: Ipfs::Folder.new(params[:cid]).file("#{params[:filename]}.#{params[:format]}").data,
-           content_type:
+    if features.ipfs_pages_enabled?
+      render inline: Ipfs::Folder.new(params[:cid]).file("#{params[:filename]}.#{params[:format]}").data,
+             content_type:
+    else
+      render inline: 'not found', status: :not_found
+    end
   end
 
   def content_type
@@ -32,4 +36,6 @@ class IpfsController < ApplicationController
       'text/html'
     end
   end
+
+  def features = DependenciesContainer.resolve :features
 end
