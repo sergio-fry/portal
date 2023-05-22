@@ -3,26 +3,31 @@
 require 'rails_helper'
 
 RSpec.describe 'Authenticates' do
-  let!(:user) { create(:user, email: 'admin@example.com', password: 'secret123') }
+  before do
+    create(:user, email: 'admin@example.com', password: 'secret123')
+    Page.new :main
+  end
 
-  before { Page.new :main }
-  # before { Capybara.current_driver = :selenium_chrome_headless }
-  # after { Capybara.use_default_driver }
+  context 'when not authenticated' do
+    it 'prompts credentials' do
+      visit '/pages/main/edit'
+      expect(current_url).to match 'users/sign_in'
+    end
+  end
 
-  it 'requires auth to edit page' do
-    visit '/pages/main/edit'
+  context 'when authenticated' do
+    before do
+      visit '/users/sign_in'
+      fill_in 'Email', with: 'admin@example.com'
+      fill_in 'Password', with: 'secret123'
+      click_on 'Log in'
+    end
 
-    expect(current_url).to match 'users/sign_in'
-
-    fill_in 'Email', with: 'admin@example.com'
-    fill_in 'Password', with: 'secret123'
-    click_on 'Log in'
-
-    visit '/pages/main/edit'
-    fill_in 'Content', with: 'some content'
-    click_on 'Update'
-
-    visit '/pages/main'
-    expect(page).to have_content 'some content'
+    it 'updates page' do
+      visit '/pages/main/edit'
+      fill_in 'Content', with: 'some content'
+      click_on 'Update'
+      expect(page).to have_content 'some content'
+    end
   end
 end

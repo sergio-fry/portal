@@ -20,7 +20,7 @@ RSpec.describe PageLinkRegexp do
   describe '#scan' do
     subject { regexp.scan(text).to_a }
 
-    context do
+    context 'when slug with number' do
       let(:text) { 'Text with link [[page1]].' }
 
       it { is_expected.to include '[[page1]]' }
