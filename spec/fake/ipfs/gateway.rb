@@ -27,7 +27,7 @@ module Fake
         JSON.parse cat(cid)
       end
 
-      def cid_format(cid, ver:)
+      def cid_format(cid, ver:) # rubocop:disable Lint/UnusedMethodArgument
         # no conversion
         cid
       end

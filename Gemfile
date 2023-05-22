@@ -76,6 +76,7 @@ group :development do
   gem 'ffaker'
   gem 'rubocop'
   gem 'rubocop-capybara'
+  gem 'rubocop-factory_bot'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
   gem 'solargraph'
