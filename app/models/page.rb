@@ -5,13 +5,13 @@ require_relative './processed_content'
 class Page
   include Dependencies[db: 'db.pages', pages: 'pages']
 
-  attr_reader :slug, :versions
+  attr_reader :slug, :history
 
-  def initialize(slug, pages:, db:, versions: pages.versions(self))
+  def initialize(slug, pages:, db:, history: PageHistory.new(self))
     @slug = slug
     @pages = pages
     @db = db
-    @versions = versions
+    @history = history
   end
 
   alias title slug
@@ -43,7 +43,7 @@ class Page
     end
   end
 
-  def history = PageHistory.new self
+  def versions = history.versions
 
   def track_history
     # TODO: history.track!

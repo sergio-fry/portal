@@ -3,8 +3,12 @@
 class PageHistory
   include Hanami::Helpers
 
-  def initialize(page)
+  include Dependencies[pages: 'pages']
+
+  def initialize(page, pages:, versions: pages.versions(page))
     @page = page
+    @pages = pages
+    @versions = versions
   end
 
   def to_s
@@ -29,7 +33,7 @@ class PageHistory
   end
 
   def versions
-    @page.versions.sort_by { |version| version.created_at || Time.zone.now }.each_with_index.map do |version, index|
+    @versions.sort_by { |version| version.created_at || Time.zone.now }.each_with_index.map do |version, index|
       Version.new(@page, version, number: index + 1)
     end.reverse
   end
@@ -60,5 +64,7 @@ class PageHistory
     def current?
       @page.versions.map(&:created_at).compact.max == @version
     end
+
+    def created_at = @version.created_at
   end
 end
