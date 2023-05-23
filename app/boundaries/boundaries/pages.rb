@@ -32,7 +32,7 @@ module Boundaries
       DynamicCollection.new do
         record = db.find_or_initialize_by_slug(page.slug)
         (record.versions || []).sort_by { |version| version.created_at || Time.zone.now }.each_with_index.map do |version, index|
-          Version.new(page, version, number: index + 1)
+          Version.new(page, cid: version.ipfs_cid, created_at: version.created_at, number: index + 1)
         end.reverse
       end
     end

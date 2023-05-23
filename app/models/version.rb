@@ -2,12 +2,12 @@
 
 class Version
   include Dependencies['ipfs.ipfs']
-  attr_reader :number
+  attr_reader :number, :created_at
 
-  # TODO: avoid pass version record
-  def initialize(page, version, number:, ipfs:)
+  def initialize(page, cid:, created_at:, number:, ipfs:)
     @page = page
-    @version = version
+    @cid = cid
+    @created_at = created_at
     @number = number
     @ipfs = ipfs
   end
@@ -16,19 +16,17 @@ class Version
     if current?
       "../#{@page.slug}.html"
     else
-      ipfs.content(@version.ipfs_cid).url
+      ipfs.content(@cid).url
     end
   end
 
   def title = time
 
-  def time = @version.created_at || Time.now.utc
+  def time = @created_at || Time.now.utc
 
   def meta_title = "Version #{@number}"
 
   def current?
     @page.history.current_version == self
   end
-
-  def created_at = @version.created_at
 end
