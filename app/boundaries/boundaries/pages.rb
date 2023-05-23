@@ -6,14 +6,12 @@ module Boundaries
       ::Page.new slug
     end
 
-    def exists?(slug) = db.exists?(slug)
+    delegate :exists?, to: :db
 
-    def each
-      db.each do |page|
-        yield page
-      end
+    def each(&)
+      db.each(&)
     end
 
-    def updated_at = db.updated_at
+    delegate :updated_at, to: :db
   end
 end

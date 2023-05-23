@@ -10,7 +10,7 @@ class PageHistory
   def to_s
     page = @page
     html do
-      html.div do |dov|
+      html.div do
         div.h1 do
           "History of #{page.title}"
         end
