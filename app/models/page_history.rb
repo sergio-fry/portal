@@ -39,4 +39,12 @@ class PageHistory
   def current_version
     versions.max_by(&:created_at)
   end
+
+  def track
+    @page.record.tap do |record|
+      record.versions.build(ipfs_cid: @page.ipfs.cid)
+
+      record.save!
+    end
+  end
 end

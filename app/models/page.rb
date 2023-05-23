@@ -43,16 +43,7 @@ class Page
     end
   end
 
-  def versions = history.versions
-
-  def track_history
-    # TODO: history.track!
-    record.tap do |record|
-      record.versions.build(ipfs_cid: ipfs.cid)
-
-      record.save!
-    end
-  end
+  def track_history = history.track
 
   def content = processed_content.to_s
 
