@@ -5,12 +5,13 @@ require_relative './processed_content'
 class Page
   include Dependencies[db: 'db.pages', pages: 'pages']
 
-  attr_reader :slug
+  attr_reader :slug, :versions
 
-  def initialize(slug, pages:, db:)
+  def initialize(slug, pages:, db:, versions: pages.versions(self))
     @slug = slug
     @pages = pages
     @db = db
+    @versions = versions
   end
 
   alias title slug
@@ -45,6 +46,7 @@ class Page
   def history = PageHistory.new self
 
   def track_history
+    # TODO: history.track!
     record.tap do |record|
       record.versions.build(ipfs_cid: ipfs.cid)
 
@@ -82,10 +84,6 @@ class Page
 
   def updated_at
     record.updated_at || Time.zone.now
-  end
-
-  def versions
-    record.versions || []
   end
 
   # TODO: do not autocreate. Otherwise anybody can create any page by typing sny URL
