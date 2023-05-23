@@ -88,9 +88,7 @@ class Page
     record.versions || []
   end
 
-  def linked_pages
-    record.linked_pages.map { |rec| self.class.new(rec.slug) }
-  end
+  def linked_pages = pages.linked_pages(self)
 
   # TODO: do not autocreate. Otherwise anybody can create any page by typing sny URL
   def record
