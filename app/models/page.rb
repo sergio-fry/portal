@@ -97,17 +97,7 @@ class Page
     @record ||= @db.find_or_initialize_by_slug @slug
   end
 
-  def update_links
-    # TODO: use Link model (not boundaries AR)
-    active_links = processed_content.page_links.find_all(&:target_exists?)
-    same_links = record.links.find_all { |rec| active_links.map(&:slug).include? rec.slug }
-    new_links = active_links.reject { |link| same_links.map(&:slug).include? link.slug }.map do |link|
-      record.links.build(slug: link.slug, target_page: link.page.record)
-    end
+  def links = processed_content.page_links
 
-    record.tap do |record|
-      record.links = same_links + new_links
-      record.save!
-    end
-  end
+  def update_links = pages.update_links(self)
 end
