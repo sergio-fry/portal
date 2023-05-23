@@ -11,7 +11,13 @@ class DependenciesContainer
   end
 
   register 'pages' do
-    Boundaries::Database::Pages.new
+    Boundaries::Pages.new
+  end
+
+  namespace 'db' do
+    register 'pages' do
+      Boundaries::Database::Pages.new
+    end
   end
 
   register 'features' do

@@ -7,6 +7,10 @@ module Boundaries
         ::Page.new slug
       end
 
+      def find_or_initialize_by_slug(slug)
+        Page.find_or_initialize_by slug:
+      end
+
       def exists?(slug)
         Page.exists?(slug:)
       end

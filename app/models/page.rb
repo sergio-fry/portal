@@ -3,10 +3,14 @@
 require_relative './processed_content'
 
 class Page
+  include Dependencies[db: 'db.pages', pages: 'pages']
+
   attr_reader :slug
 
-  def initialize(slug)
+  def initialize(slug, pages:, db:)
     @slug = slug
+    @pages = pages
+    @db = db
   end
 
   alias title slug
@@ -90,7 +94,7 @@ class Page
 
   # TODO: do not autocreate. Otherwise anybody can create any page by typing sny URL
   def record
-    @record ||= Boundaries::Database::Page.find_or_initialize_by(slug: @slug)
+    @record ||= @db.find_or_initialize_by_slug @slug
   end
 
   def update_links
