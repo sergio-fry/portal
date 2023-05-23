@@ -31,7 +31,9 @@ module Boundaries
     def versions(page)
       DynamicCollection.new do
         record = db.find_or_initialize_by_slug(page.slug)
-        record.versions || []
+        (record.versions || []).sort_by { |version| version.created_at || Time.zone.now }.each_with_index.map do |version, index|
+          Version.new(page, version, number: index + 1)
+        end.reverse
       end
     end
 

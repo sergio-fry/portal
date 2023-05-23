@@ -33,38 +33,10 @@ class PageHistory
   end
 
   def versions
-    @versions.sort_by { |version| version.created_at || Time.zone.now }.each_with_index.map do |version, index|
-      Version.new(@page, version, number: index + 1)
-    end.reverse
+    @versions.sort_by(&:created_at).reverse
   end
 
-  class Version
-    attr_reader :number
-
-    def initialize(page, version, number:)
-      @page = page
-      @version = version
-      @number = number
-    end
-
-    def url
-      if current?
-        "../#{@page.slug}.html"
-      else
-        Ipfs::Content.new(@version.ipfs_cid).url
-      end
-    end
-
-    def title = time
-
-    def time = @version.created_at || Time.now.utc
-
-    def meta_title = "Version #{@number}"
-
-    def current?
-      @page.versions.map(&:created_at).compact.max == @version
-    end
-
-    def created_at = @version.created_at
+  def current_version
+    versions.max_by(&:created_at)
   end
 end
