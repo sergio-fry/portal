@@ -88,8 +88,6 @@ class Page
     record.versions || []
   end
 
-  def linked_pages = pages.linked_pages(self)
-
   # TODO: do not autocreate. Otherwise anybody can create any page by typing sny URL
   def record
     @record ||= @db.find_or_initialize_by_slug @slug

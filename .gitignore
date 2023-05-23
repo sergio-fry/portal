@@ -42,3 +42,4 @@
 /.exrc
 /.env.*.local
 /.env.local
+/coverage

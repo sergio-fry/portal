@@ -25,11 +25,5 @@ module Boundaries
       record.links = same_links + new_links
       record.save!
     end
-
-    def linked_pages(page)
-      record = db.find_or_initialize_by_slug(page.slug)
-
-      record.linked_pages.map { |rec| ::Page.new(rec.slug) }
-    end
   end
 end
