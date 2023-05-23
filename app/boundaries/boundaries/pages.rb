@@ -8,9 +8,7 @@ module Boundaries
 
     delegate :exists?, to: :db
 
-    def each(&)
-      db.each(&)
-    end
+    def each(&) = db.each(&)
 
     delegate :updated_at, to: :db
 
