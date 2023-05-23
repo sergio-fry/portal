@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-require_relative './ipfs/new_folder'
-
 class Sitemap
-  include Dependencies['pages', 'features']
+  include Dependencies['pages', 'features', ipfs: 'ipfs.ipfs']
 
   delegate :url, to: :ifps_folder
 
@@ -12,12 +10,12 @@ class Sitemap
   end
 
   def ifps_folder
-    folder = Ipfs::NewFolder.new
+    folder = ipfs.new_folder
 
-    folder = folder.with_file('index.html', home.ipfs) if home.exists?
+    folder = folder.with_file('index.html', home.ipfs_content) if home.exists?
 
     @pages.each do |page|
-      folder = folder.with_file("#{page.slug}.html", page.ipfs)
+      folder = folder.with_file("#{page.slug}.html", page.ipfs_content)
     end
 
     folder

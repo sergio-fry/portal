@@ -7,11 +7,11 @@ class IpfsController < ApplicationController
     authorize :ipfs
 
     if params[:filename]
-      send_data Ipfs::Content.new(params[:cid]).data,
+      send_data ipfs.content(params[:cid]).data,
                 filename: params[:filename],
                 type: content_type
     else
-      render inline: Ipfs::Content.new(params[:cid]).data
+      render inline: ipfs.content(params[:cid]).data
     end
   end
 
@@ -19,7 +19,7 @@ class IpfsController < ApplicationController
     authorize :ipfs
 
     if features.ipfs_pages_enabled?
-      render inline: Ipfs::Folder.new(params[:cid]).file("#{params[:filename]}.#{params[:format]}").data,
+      render inline: ipfs.folder(params[:cid]).file("#{params[:filename]}.#{params[:format]}").data,
              content_type:
     else
       render inline: 'not found', status: :not_found
@@ -38,4 +38,6 @@ class IpfsController < ApplicationController
   end
 
   def features = DependenciesContainer.resolve :features
+
+  def ipfs = DependenciesContainer.resolve 'ipfs.ipfs'
 end

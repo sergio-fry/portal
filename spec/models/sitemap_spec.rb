@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'app/models/sitemap'
-require 'app/models/ipfs/new_content'
+require 'rails_helper'
+
 require 'spec/fake/ipfs/gateway'
 
 module SitemapTest
@@ -25,17 +25,18 @@ module SitemapTest
 
   RSpec.describe Sitemap do
     before do
-      Dependencies.container.stub(:ipfs, Fake::Ipfs::Gateway.new)
+      Dependencies.container.stub('ipfs.gateway', Fake::Ipfs::Gateway.new)
       pages << home
     end
+    let(:ipfs) { DependenciesContainer.resolve('ipfs.ipfs') }
 
-    after { Dependencies.container.unstub :ipfs }
+    after { Dependencies.container.unstub 'ipfs.gateway' }
 
     subject(:sitemap) { described_class.new pages: }
     let(:pages) { FakePages.new }
 
     let(:home) do
-      double(:home, slug: 'home', ipfs: Ipfs::NewContent.new('Hello'),
+      double(:home, slug: 'home', ipfs_content: ipfs.new_content('Hello'),
                     exists?: true)
     end
 

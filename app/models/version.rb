@@ -1,19 +1,22 @@
 # frozen_string_literal: true
 
 class Version
+  include Dependencies['ipfs.ipfs']
   attr_reader :number
 
-  def initialize(page, version, number:)
+  # TODO: avoid pass version record
+  def initialize(page, version, number:, ipfs:)
     @page = page
     @version = version
     @number = number
+    @ipfs = ipfs
   end
 
   def url
     if current?
       "../#{@page.slug}.html"
     else
-      Ipfs::Content.new(@version.ipfs_cid).url
+      ipfs.content(@version.ipfs_cid).url
     end
   end
 

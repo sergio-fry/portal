@@ -6,8 +6,14 @@ require 'dry-auto_inject'
 class DependenciesContainer
   extend Dry::Container::Mixin
 
-  register 'ipfs' do
-    Ipfs::Gateway.new
+  namespace 'ipfs' do
+    register 'ipfs' do
+      Boundaries::Ipfs::Ipfs.new
+    end
+
+    register 'gateway' do
+      Boundaries::Ipfs::Gateway.new
+    end
   end
 
   register 'pages' do

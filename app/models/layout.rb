@@ -3,8 +3,11 @@
 class Layout
   include Hanami::Helpers
 
-  def initialize(title:)
+  include Dependencies['ipfs.ipfs']
+
+  def initialize(title:, ipfs:)
     @title = title
+    @ipfs = ipfs
   end
 
   def wrap
@@ -35,13 +38,13 @@ class Layout
   private
 
   def js_from_vendor(name)
-    Ipfs::NewContent.new(
+    ipfs.new_content(
       Rails.root.join('vendor/javascript', name).read
     ).content.url(filename: 'script.js')
   end
 
   def embed_js_url
-    Ipfs::NewContent.new(
+    ipfs.new_content(
       Opal.compile(
         Rails.root.join('app/javascript/embed.rb').read
       )
@@ -49,7 +52,7 @@ class Layout
   end
 
   def theme_styles
-    Ipfs::NewContent.new(
+    ipfs.new_content(
       Rails.root.join('app/assets/stylesheets/monospace.css').read
     ).content.url(filename: 'style.css')
   end

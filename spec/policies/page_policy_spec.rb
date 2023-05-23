@@ -7,8 +7,8 @@ require 'spec/fake/ipfs/gateway'
 RSpec.describe PagePolicy, type: :policy do
   subject(:policy) { described_class }
 
-  before { Dependencies.container.stub(:ipfs, Fake::Ipfs::Gateway.new) }
-  after { Dependencies.container.unstub :ipfs }
+  before { Dependencies.container.stub('ipfs.gateway', Fake::Ipfs::Gateway.new) }
+  after { Dependencies.container.unstub 'ipfs.gateway' }
 
   let(:user) { build(:user) }
   let(:guest) { nil }

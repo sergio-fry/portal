@@ -3,15 +3,16 @@
 require_relative './processed_content'
 
 class Page
-  include Dependencies[db: 'db.pages', pages: 'pages']
+  include Dependencies[db: 'db.pages', pages: 'pages', ipfs: 'ipfs.ipfs']
 
   attr_reader :slug, :history
 
-  def initialize(slug, pages:, db:, history: PageHistory.new(self))
+  def initialize(slug, pages:, db:, history: PageHistory.new(self), ipfs:)
     @slug = slug
     @pages = pages
     @db = db
     @history = history
+    @ipfs = ipfs
   end
 
   alias title slug
@@ -58,11 +59,11 @@ class Page
     ).to_s
   end
 
-  def ipfs = record.ipfs_cid.present? ? Ipfs::Content.new(record.ipfs_cid) : new_ipfs
-  def new_ipfs = Ipfs::NewContent.new(processed_content_with_layout)
+  def ipfs_content = record.ipfs_cid.present? ? ipfs.content(record.ipfs_cid) : new_ipfs_content
+  def new_ipfs_content = ipfs.new_content(processed_content_with_layout)
 
   def sync_to_ipfs
-    record.update! ipfs_cid: new_ipfs.cid
+    record.update! ipfs_cid: new_ipfs_content.cid
   end
 
   def update_backlinks = back_links.each(&:refresh)

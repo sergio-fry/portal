@@ -42,7 +42,7 @@ class PageHistory
 
   def track
     @page.record.tap do |record|
-      record.versions.build(ipfs_cid: @page.ipfs.cid)
+      record.versions.build(ipfs_cid: @page.ipfs_content.cid)
 
       record.save!
     end
