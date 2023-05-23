@@ -25,7 +25,7 @@ class Page
       page.save!
     end
     @slug = new_slug
-    update_backlinks new_slug
+    update_backlinks
   end
 
   def source_content = record.content.to_s
@@ -65,22 +65,17 @@ class Page
     record.update! ipfs_cid: new_ipfs.cid
   end
 
-  def update_backlinks(_new_slug)
-    back_links.each(&:refresh)
-  end
+  def update_backlinks = back_links.each(&:refresh)
 
   def back_links
     record.back_links.map { |record| Link.new(page: Page.new(record.page.slug), target_page: self) }
   end
 
-  def updated_at
-    record.updated_at || Time.zone.now
-  end
+  def updated_at = record.updated_at || Time.zone.now
 
   # TODO: do not autocreate. Otherwise anybody can create any page by typing sny URL
-  def record
-    @record ||= @db.find_or_initialize_by_slug @slug
-  end
+  # TODO: do not refer record directly from model
+  def record = @record ||= @db.find_or_initialize_by_slug(@slug)
 
   def links = processed_content.page_links
 
