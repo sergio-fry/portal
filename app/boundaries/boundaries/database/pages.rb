@@ -3,6 +3,10 @@
 module Boundaries
   module Database
     class Pages
+      def create(attrs)
+        Page.create! attrs
+      end
+
       def find_by_slug(slug)
         Page.find_or_initialize_by slug:
       end

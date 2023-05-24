@@ -15,6 +15,8 @@ module Boundaries
       )
     end
 
+    def create(slug) = db.create(slug: slug)
+
     def find_by_slug(slug)
       ::Page.new slug
     end

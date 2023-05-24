@@ -29,6 +29,7 @@ class PagesController
       end
 
       def param_key = 'page'
+      def route_key = 'page'
       def i18n_key = 'page'
       def human = 'page'
       def name = 'page'

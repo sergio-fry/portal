@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Authenticates' do
   before do
     create(:user, email: 'admin@example.com', password: 'secret123')
-    Page.new :main
+    DependenciesContainer.resolve(:pages).create :main
   end
 
   context 'when not authenticated' do
