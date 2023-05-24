@@ -9,9 +9,9 @@ module Boundaries
 
       PageAggregate.new(
         id: record.id,
-        slug: slug,
+        slug:,
         updated_at: record.updated_at,
-        source_content: record.content,
+        source_content: record.content
       )
     end
 
@@ -21,8 +21,8 @@ module Boundaries
       record.slug = page.slug
       record.content = page.source_content
 
-      update_links_new(page)
-      page.linked_pages.each { |page| save_aggregate(page) }
+      update_links_new(page, record)
+      page.linked_pages.each { |linked_page| save_aggregate(linked_page) }
 
       record.save!
     end
@@ -37,7 +37,7 @@ module Boundaries
       end
     end
 
-    def create(slug) = db.create(slug: slug)
+    def create(slug) = db.create(slug:)
 
     def find_by_slug(slug)
       ::Page.new slug
@@ -61,6 +61,20 @@ module Boundaries
         record.links = same_links + new_links
         record.save!
       end
+    end
+
+    def update_links_new(page, record)
+      record
+        .links
+        .reject { |link| page.linked_page_ids.include? link.target_page.id }
+        .each(&:destroy)
+
+      page
+        .linked_pages
+        .filter { |linked_page| record.linked_page_ids.exclude? linked_page.id }
+        .each do |linked_page|
+          record.links.build(slug: linked_page.slug, page: record, target_page: db.find(linked_page.id))
+        end
     end
 
     def versions(page)

@@ -41,7 +41,7 @@ class PageLinkFromMarkup
   def page
     return unless pages.exists?(slug)
 
-    pages.find_by_slug slug
+    pages.find_aggregate slug
   end
 
   alias target_page page
