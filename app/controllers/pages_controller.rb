@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  before_action :set_page, only: %i[edit update destroy]
+  before_action :set_page, only: %i[edit update]
   before_action :set_page_aggregate, only: %i[show]
   include PagesHelper
 
@@ -76,16 +76,6 @@ class PagesController < ApplicationController
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @page.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /pages/1 or /pages/1.json
-  def destroy
-    @page.destroy
-
-    respond_to do |format|
-      format.html { redirect_to pages_url }
-      format.json { head :no_content }
     end
   end
 

@@ -15,8 +15,6 @@ class PagePolicy < ApplicationPolicy
 
   def edit? = update?
 
-  def destroy? = update?
-
   class Scope < Scope
     def resolve
       Page.all

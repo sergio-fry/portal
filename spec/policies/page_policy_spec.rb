@@ -22,10 +22,6 @@ RSpec.describe PagePolicy, type: :policy do
     it { is_expected.to permit(user, page) }
     it { is_expected.not_to permit(guest, page) }
   end
-  permissions :destroy? do
-    it { is_expected.to permit(user, page) }
-    it { is_expected.not_to permit(guest, page) }
-  end
   permissions :update? do
     it { is_expected.to permit(user, page) }
     it { is_expected.not_to permit(guest, page) }
