@@ -16,7 +16,7 @@ class PageAggregate
   end
 
   def exists? = @id.present?
-  attr_reader :slug, :updated_at, :history
+  attr_reader :slug, :updated_at, :history, :source_content
   alias title slug
 
   def processed_content = ProcessedContent.new(@source_content)

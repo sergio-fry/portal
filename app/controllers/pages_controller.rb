@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  before_action :set_page, only: %i[edit update]
-  before_action :set_page_aggregate, only: %i[show]
+  before_action :set_page, only: %i[update]
+  before_action :set_page_aggregate, only: %i[show edit]
   include PagesHelper
 
   # GET /pages or /pages.json
