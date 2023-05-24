@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  before_action :set_page, only: %i[edit update destroy history]
+  before_action :set_page, only: %i[edit update destroy]
   before_action :set_page_aggregate, only: %i[show]
   include PagesHelper
 
