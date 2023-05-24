@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  before_action :set_page, only: %i[update]
-  before_action :set_page_aggregate, only: %i[show edit]
+  before_action :set_page, only: %i[show edit update]
   include PagesHelper
 
   # GET /pages or /pages.json
@@ -83,12 +82,6 @@ class PagesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_page
-    @page = Page.new ::Page.new(params[:id])
-
-    authorize @page
-  end
-
-  def set_page_aggregate
     @page = Page.new(DependenciesContainer.resolve(:pages).find_aggregate(params[:id]))
     authorize @page
   end

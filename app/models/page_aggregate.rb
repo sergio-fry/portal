@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class PageAggregate
+  attr_reader :id, :slug, :updated_at, :history
+  attr_accessor :source_content
+
   def initialize(
     id:,
     slug:,
@@ -16,7 +19,6 @@ class PageAggregate
   end
 
   def exists? = @id.present?
-  attr_reader :slug, :updated_at, :history, :source_content
   alias title slug
 
   def processed_content = ProcessedContent.new(@source_content)

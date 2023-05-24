@@ -3,12 +3,14 @@
 class PagesController
   class Page
     include ActiveModel::Validations
+    include Dependencies[:pages]
 
     validates :content, :slug, presence: true
 
-    def initialize(page)
+    def initialize(page, pages:)
       @page = page
       @new_attrs = {}
+      @pages = pages
     end
 
     def exists? = @page.exists?
@@ -53,6 +55,8 @@ class PagesController
       if valid?
         @page.source_content = content
         @page.move(@new_attrs[:slug]) if slug_changed?
+
+        pages.save_aggregate @page
 
         true
       else

@@ -5,7 +5,7 @@ module Boundaries
     include Dependencies[db: 'db.pages']
 
     def find_aggregate(slug)
-      record = db.find_by_slug slug
+      record = db.find_or_initialize_by_slug slug
 
       PageAggregate.new(
         id: record.id,
@@ -13,6 +13,14 @@ module Boundaries
         updated_at: record.updated_at,
         source_content: record.content,
       )
+    end
+
+    def save_aggregate(page)
+      record = page.exists? ? db.find(page.id) : db.find_or_initialize_by_slug(page.slug)
+
+      record.slug = page.slug
+      record.content = page.source_content
+      record.save!
     end
 
     def create(slug) = db.create(slug: slug)
