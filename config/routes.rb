@@ -11,9 +11,6 @@ Rails.application.routes.draw do
     collection do
       post :rebuild
     end
-    member do
-      get :history
-    end
   end
 
   root 'pages#index'

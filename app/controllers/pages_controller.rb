@@ -17,12 +17,6 @@ class PagesController < ApplicationController
     end
   end
 
-  def history
-    authorize @page, :history?
-
-    render inline: @page.history.to_s
-  end
-
   def rebuild
     authorize :page, :rebuild?
 
