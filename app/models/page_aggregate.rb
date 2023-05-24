@@ -31,4 +31,16 @@ class PageAggregate
   end
 
   def content = processed_content.to_s
+
+  def slug=(new_slug)
+    return if @slug == new_slug
+
+    @slug_before_moving = @slug
+    @slug = new_slug
+    update_backlinks
+  end
+
+  def update_backlinks
+
+  end
 end

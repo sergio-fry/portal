@@ -5,30 +5,41 @@ require 'rails_helper'
 RSpec.describe 'Moving page' do
   include Devise::Test::IntegrationHelpers
 
-  let!(:user) { create(:user, email: 'admin@example.com', password: 'secret123') }
-  let!(:moscow) { Page.new('moscow') }
-  let!(:main) { Page.new('main') }
+  let(:pages) { DependenciesContainer.resolve(:pages) }
+  let(:moscow) { pages.find_aggregate('moscow') }
+  let(:main) { pages.find_aggregate('main') }
+  let(:user) { create(:user, email: 'admin@example.com', password: 'secret123') }
 
   before do
-    sign_in user
-    moscow.source_content = 'Moscow'
-    main.source_content = 'Link to [[moscow|city]]'
+    pages.create('moscow')
+    pages.create('main')
   end
 
-  context 'when target page is moved' do
+  context 'when pages linked' do
     before do
-      visit '/pages/moscow/edit'
+      sign_in user
 
-      fill_in 'Slug', with: 'moscow_city'
-      click_on 'Update'
+      moscow.source_content = 'Moscow'
+      pages.save_aggregate moscow
+      main.source_content = 'Link to [[moscow|city]]'
+      pages.save_aggregate main
     end
 
-    it 'links to moscow' do
-      visit '/pages/main'
+    context 'when target page is moved' do
+      before do
+        visit '/pages/moscow/edit'
 
-      click_on 'city'
+        fill_in 'Slug', with: 'moscow_city'
+        click_on 'Update'
+      end
 
-      expect(page).to have_content 'Moscow'
+      it 'links to moscow' do
+        visit '/pages/main'
+
+        click_on 'city'
+
+        expect(page).to have_content 'Moscow'
+      end
     end
   end
 end

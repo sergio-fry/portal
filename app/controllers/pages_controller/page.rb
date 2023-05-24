@@ -53,8 +53,8 @@ class PagesController
 
     def save
       if valid?
-        @page.source_content = content
-        @page.move(@new_attrs[:slug]) if slug_changed?
+        @page.source_content = @new_attrs[:content]
+        @page.slug = @new_attrs[:slug]
 
         pages.save_aggregate @page
 
@@ -62,10 +62,6 @@ class PagesController
       else
         false
       end
-    end
-
-    def slug_changed?
-      @new_attrs[:slug] != @page.slug
     end
   end
 end
