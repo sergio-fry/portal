@@ -16,7 +16,6 @@ class Page
   end
 
   alias title slug
-
   def ==(other) = other.slug.to_s == slug.to_s
 
   def move(new_slug)

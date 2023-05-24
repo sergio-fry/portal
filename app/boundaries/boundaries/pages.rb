@@ -20,7 +20,21 @@ module Boundaries
 
       record.slug = page.slug
       record.content = page.source_content
+
+      update_links_new(page)
+      page.linked_pages.each { |page| save_aggregate(page) }
+
       record.save!
+    end
+
+    def linked_pages(page)
+      DynamicCollection.new do
+        if page.exists?
+          db.linked_pages(page.id).map { |rec| find_aggregate(rec.slug) }
+        else
+          []
+        end
+      end
     end
 
     def create(slug) = db.create(slug: slug)

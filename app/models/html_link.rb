@@ -13,5 +13,5 @@ class HtmlLink
     result
   end
 
-  delegate :markup, :page, :target_exists?, :slug, :moved_to, to: :@link
+  delegate :markup, :page, :target_exists?, :slug, :moved_to, :target_page, to: :@link
 end
