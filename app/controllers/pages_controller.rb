@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  before_action :set_page, only: %i[show edit update destroy history]
+  before_action :set_page, only: %i[edit update destroy history]
+  before_action :set_page_aggregate, only: %i[show]
   include PagesHelper
 
   # GET /pages or /pages.json
@@ -100,6 +101,11 @@ class PagesController < ApplicationController
   def set_page
     @page = Page.new ::Page.new(params[:id])
 
+    authorize @page
+  end
+
+  def set_page_aggregate
+    @page = Page.new(DependenciesContainer.resolve(:pages).find_aggregate(params[:id]))
     authorize @page
   end
 

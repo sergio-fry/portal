@@ -4,7 +4,7 @@ module Boundaries
   module Database
     class Pages
       def find_by_slug(slug)
-        ::Page.new slug
+        Page.find_or_initialize_by slug:
       end
 
       def find_or_initialize_by_slug(slug)

@@ -4,6 +4,17 @@ module Boundaries
   class Pages
     include Dependencies[db: 'db.pages']
 
+    def find_aggregate(slug)
+      record = db.find_by_slug slug
+
+      PageAggregate.new(
+        id: record.id,
+        slug: slug,
+        updated_at: record.updated_at,
+        source_content: record.content,
+      )
+    end
+
     def find_by_slug(slug)
       ::Page.new slug
     end
@@ -20,7 +31,7 @@ module Boundaries
 
         same_links = record.links.find_all { |rec| active_links.map(&:slug).include? rec.slug }
         new_links = active_links.reject { |link| same_links.map(&:slug).include? link.slug }.map do |link|
-          record.links.build(slug: link.slug, target_page: link.page.record)
+          record.links.build(slug: link.slug, target_page: link.page)
         end
 
         record.links = same_links + new_links
