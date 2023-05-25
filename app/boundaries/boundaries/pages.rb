@@ -37,6 +37,16 @@ module Boundaries
       end
     end
 
+    def referenced_pages(page)
+      DynamicCollection.new do
+        if page.exists?
+          db.referenced_pages(page.id).map { |rec| find_aggregate(rec.slug) }
+        else
+          []
+        end
+      end
+    end
+
     def create(slug) = db.create(slug:)
 
     def find_by_slug(slug)
@@ -66,12 +76,12 @@ module Boundaries
     def update_links_new(page, record)
       record
         .links
-        .reject { |link| page.linked_page_ids.include? link.target_page.id }
+        .filter { |link| page.linked_pages.map(&:id).exclude? link.target_page_id }
         .each(&:destroy)
 
       page
-        .linked_pages
-        .filter { |linked_page| record.linked_page_ids.exclude? linked_page.id }
+        .referenced_pages
+        .filter { |linked_page| record.linking_to_page_ids.exclude? linked_page.id }
         .each do |linked_page|
           record.links.build(slug: linked_page.slug, page: record, target_page: db.find(linked_page.id))
         end

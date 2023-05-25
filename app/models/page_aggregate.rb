@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PageAggregate
-  attr_reader :id, :slug, :updated_at, :history, :source_content, :linked_pages
+  attr_reader :id, :slug, :updated_at, :history, :source_content, :linked_pages, :referenced_pages
 
   include Dependencies[:pages]
 
@@ -13,6 +13,7 @@ class PageAggregate
 
     history: PageHistory.new(self),
     linked_pages: pages.linked_pages(self),
+    referenced_pages: pages.referenced_pages(self),
     source_content: ''
   )
     @id = id
@@ -22,6 +23,7 @@ class PageAggregate
 
     @history = history
     @linked_pages = linked_pages
+    @referenced_pages = referenced_pages
     @source_content = source_content
   end
 
@@ -44,14 +46,24 @@ class PageAggregate
   def slug=(new_slug)
     return if @slug == new_slug
 
-    @linked_pages.each { |page| page.change_link_slug(@slug, new_slug) }
+    @linked_pages.each do |page|
+      page.change_link_slug(@slug, new_slug)
+    end
     @slug = new_slug
   end
 
   def source_content=(new_value)
     @source_content = new_value
-    update_linked_pages
+    update_referenced_pages
   end
 
-  def update_linked_pages = @linked_pages = processed_content.page_links.map(&:target_page)
+  def update_referenced_pages = @referenced_pages = processed_content.page_links.map(&:target_page).compact
+
+  def change_link_slug(old_slug, new_slug)
+    processed_content.page_links.find_all do |link|
+      link.slug == old_slug
+    end.each do |link|
+      self.source_content = source_content.gsub link.markup, link.moved_to(slug).markup
+    end
+  end
 end

@@ -10,6 +10,7 @@ module Boundaries
       def find_or_initialize_by_slug(slug) = Page.find_or_initialize_by(slug:)
       def updated_at = Page.maximum(:updated_at)
       def linked_pages(id) = Page.find(id).linked_pages
+      def referenced_pages(id) = Page.find(id).linking_to_pages
 
       def each
         Page.select(:id, :slug).find_each do |record|
