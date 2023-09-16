@@ -2,6 +2,8 @@
 
 require_relative './processed_content'
 
+# @deprecated: use PageAggregate insteed
+# TODO: remove this class
 class Page
   include Dependencies[db: 'db.pages', pages: 'pages', ipfs: 'ipfs.ipfs']
 
