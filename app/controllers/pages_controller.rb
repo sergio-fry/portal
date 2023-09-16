@@ -41,6 +41,8 @@ class PagesController < ApplicationController
   # GET /pages/new
   def new
     @page = NewPage.new
+    authorize @page, :new?, policy_class: PagePolicy
+    render layout: 'admin'
   end
 
   # GET /pages/1/edit

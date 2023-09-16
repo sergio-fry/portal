@@ -1,19 +1,12 @@
 # frozen_string_literal: true
 
 class PagePolicy < ApplicationPolicy
-  def show?
-    true
-  end
-
-  def update?
-    authenticated?
-  end
-
-  def rebuild?
-    authenticated?
-  end
-
+  def show? = true
+  def update? = authenticated?
+  def rebuild? = authenticated?
   def edit? = update?
+  def create? = authenticated?
+  def new? = authenticated?
 
   class Scope < Scope
     def resolve

@@ -24,9 +24,10 @@ RSpec.describe 'Authenticates' do
     end
 
     it 'updates page' do
-      visit '/pages/main/edit'
+      visit '/pages/new'
+      fill_in 'Slug', with: 'new_page'
       fill_in 'Content', with: 'some content'
-      click_on 'Update'
+      click_on 'Create'
       expect(page).to have_content 'some content'
     end
   end
