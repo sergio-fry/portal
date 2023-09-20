@@ -64,6 +64,7 @@ module Boundaries
 
     delegate :updated_at, to: :db
 
+    # TODO: remove deprecated
     def update_links(page)
       with_record(page) do |record|
         active_links = page.links.find_all(&:target_exists?)

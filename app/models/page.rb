@@ -10,6 +10,7 @@ class Page
   attr_reader :slug, :history
 
   def initialize(slug, pages:, db:, history: PageHistory.new(self), ipfs:)
+    raise 'deprecated'
     @slug = slug
     @pages = pages
     @db = db
