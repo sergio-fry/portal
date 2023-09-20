@@ -7,7 +7,9 @@ RSpec.describe PagesController::Page do
   include ActionController::UrlFor
   include Rails.application.routes.url_helpers
 
-  subject(:page) { described_class.new page_object }
+  subject(:page) { described_class.new page_object, context: }
+
+  let(:context) { double(:context) }
 
   let(:page_object) { Page.new 'main' }
 
