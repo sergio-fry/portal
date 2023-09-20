@@ -2,10 +2,10 @@
 
 module Boundaries
   class Pages
-    include Dependencies[db: 'db.pages']
+    include Dependencies[db: 'db.pages', ipfs: 'ipfs.ipfs']
 
     def find_aggregate(slug)
-      record = db.find_or_initialize_by_slug slug
+      record = db.find_by_slug slug
 
       PageAggregate.new(
         id: record.id,
@@ -21,7 +21,12 @@ module Boundaries
       record.slug = page.slug
       record.content = page.source_content
 
+      record.versions.build(ipfs_cid: record.ipfs_cid) if record.ipfs_cid.present?
+      record.ipfs_cid = ipfs.new_content(page.processed_content_with_layout).cid
+
       update_links_new(page, record)
+
+      # TODO: protect from cyclic dependencies
       page.linked_pages.each { |linked_page| save_aggregate(linked_page) }
 
       record.save!

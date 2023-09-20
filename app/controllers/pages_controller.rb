@@ -40,7 +40,7 @@ class PagesController < ApplicationController
 
   # GET /pages/new
   def new
-    @page = NewPage.new
+    @page = NewPage.new context: self
     authorize @page, :new?, policy_class: PagePolicy
     render layout: 'admin'
   end
@@ -52,7 +52,8 @@ class PagesController < ApplicationController
 
   # POST /pages or /pages.json
   def create
-    @page = NewPage.new(page_params)
+    @page = NewPage.new(params: page_params, context: self)
+    authorize @page
 
     respond_to do |format|
       if @page.save
@@ -84,7 +85,7 @@ class PagesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_page
-    @page = Page.new(DependenciesContainer.resolve(:pages).find_aggregate(params[:id]))
+    @page = Page.new(DependenciesContainer.resolve(:pages).find_aggregate(params[:id]), context: self)
     authorize @page
   end
 

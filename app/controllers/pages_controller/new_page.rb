@@ -4,10 +4,14 @@ class PagesController
   class NewPage
     include ActiveModel::Validations
     validates :slug, format: { with: /\A[a-zа-я0-9\-_]+\z/ }, presence: true
-    validates :content, presence: true
+    validates :source_content, presence: true
 
-    def initialize(params: {})
+    include Dependencies[:pages]
+
+    def initialize(params: {}, context:, pages:)
       @params = params
+      @context = context
+      @pages = pages
     end
 
     def exists? = false
@@ -38,18 +42,32 @@ class PagesController
     def policy_class = PagePolicy
     delegate :processed_content_with_layout, to: :page
     def slug = @params[:slug]
+    def source_content = @params[:content]
     def to_model = Model.new(self)
     def to_s = slug
     delegate :history, to: :page
 
     def page
-      PageAggregate.new(
+      @page ||= PageAggregate.new(
         id: nil,
         pages: DependenciesContainer.resolve(:pages),
         slug:,
-        updated_at: nil,
-        source_content: @params[:content]
+        updated_at: Time.now,
+        source_content:
       )
+    end
+
+    def save_url = @context.pages_url
+    def save_method = :post
+
+    def save
+      if valid?
+        pages.save_aggregate page
+
+        true
+      else
+        false
+      end
     end
   end
 end
