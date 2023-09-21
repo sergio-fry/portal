@@ -16,20 +16,22 @@ module Boundaries
     end
 
     def save_aggregate(page)
-      record = page.exists? ? db.find(page.id) : db.find_or_initialize_by_slug(page.slug)
+      db.transaction do
+        record = page.exists? ? db.find(page.id) : db.find_or_initialize_by_slug(page.slug)
 
-      record.slug = page.slug
-      record.content = page.source_content
+        record.slug = page.slug
+        record.content = page.source_content
 
-      record.versions.build(ipfs_cid: record.ipfs_cid) if record.ipfs_cid.present?
-      record.ipfs_cid = ipfs.new_content(page.processed_content_with_layout).cid
+        record.versions.build(ipfs_cid: record.ipfs_cid) if record.ipfs_cid.present?
+        record.ipfs_cid = ipfs.new_content(page.processed_content_with_layout).cid
 
-      update_links_new(page, record)
+        update_links_new(page, record)
 
-      # TODO: protect from cyclic dependencies
-      page.linked_pages.each { |linked_page| save_aggregate(linked_page) }
+        # TODO: protect from cyclic dependencies
+        page.linked_pages.each { |linked_page| save_aggregate(linked_page) }
 
-      record.save!
+        record.save!
+      end
     end
 
     def linked_pages(page)

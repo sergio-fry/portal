@@ -14,6 +14,8 @@ module Boundaries
       def referenced_pages(id) = Page.find(id).linking_to_pages
 
       def each(&) = Page.find_each(&)
+
+      def transaction(&) = ApplicationRecord.transaction(&)
     end
   end
 end
