@@ -60,7 +60,16 @@ module Boundaries
 
     delegate :exists?, to: :db
 
-    def each(&) = db.each(&)
+    def each
+      db.each do |record|
+        yield PageAggregate.new(
+          id: record.id,
+          slug: record.slug,
+          updated_at: record.updated_at,
+          source_content: record.content
+        )
+      end
+    end
 
     delegate :updated_at, to: :db
 
@@ -96,7 +105,9 @@ module Boundaries
     def versions(page)
       DynamicCollection.new do
         record = db.find_or_initialize_by_slug(page.slug)
-        (record.versions || []).sort_by { |version| version.created_at || Time.zone.now }.each_with_index.map do |version, index|
+        (record.versions || []).sort_by do |version|
+          version.created_at || Time.zone.now
+        end.each_with_index.map do |version, index|
           Version.new(page, cid: version.ipfs_cid, created_at: version.created_at, number: index + 1)
         end.reverse
       end

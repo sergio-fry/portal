@@ -3,6 +3,7 @@
 class IpfsController < ApplicationController
   skip_forgery_protection
 
+  # TODO: http caching
   def show
     authorize :ipfs
 
@@ -15,6 +16,7 @@ class IpfsController < ApplicationController
     end
   end
 
+  # TODO: http caching
   def folder
     authorize :ipfs
 

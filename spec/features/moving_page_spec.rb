@@ -8,7 +8,7 @@ RSpec.describe 'Moving page' do
   let(:pages) { DependenciesContainer.resolve(:pages) }
   let(:moscow) { pages.find_aggregate('moscow') }
   let(:main) { pages.find_aggregate('main') }
-  let(:user) { create(:user, email: 'admin@example.com', password: 'secret123') }
+  let(:user) { create(:user) }
 
   before do
     pages.create('moscow')

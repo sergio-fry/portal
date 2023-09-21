@@ -13,11 +13,7 @@ module Boundaries
       def linked_pages(id) = Page.find(id).linked_pages
       def referenced_pages(id) = Page.find(id).linking_to_pages
 
-      def each
-        Page.select(:id, :slug).find_each do |record|
-          yield ::Page.new(record.slug)
-        end
-      end
+      def each(&) = Page.find_each(&)
     end
   end
 end
