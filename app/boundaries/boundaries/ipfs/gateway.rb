@@ -8,7 +8,7 @@ module Boundaries
     class Gateway
       class Error < StandardError
         def initialize(code, body)
-          super
+          super(body)
           @code = code
           @body = body
         end

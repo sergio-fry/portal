@@ -9,10 +9,14 @@ class Sitemap
     "#{url}/#{page.slug}.html"
   end
 
+  # FIXME: typo ipfs
   def ifps_folder
     folder = ipfs.new_folder
 
-    folder = folder.with_file('index.html', home.ipfs_content) if home.exists?
+    if home.exists?
+      folder = folder.with_file('index.html', home.ipfs_content)
+      folder = folder.with_file("#{home.slug}.html", home.ipfs_content)
+    end
 
     @pages.each do |page|
       folder = folder.with_file("#{page.slug}.html", page.ipfs_content)
@@ -21,7 +25,5 @@ class Sitemap
     folder
   end
 
-  def home
-    pages.find_by_slug ENV.fetch('HOME_TITLE', 'home')
-  end
+  def home = pages.find_by_slug ENV.fetch('HOME_TITLE', 'home')
 end
