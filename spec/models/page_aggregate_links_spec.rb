@@ -25,7 +25,7 @@ module PageAggregateTesting
   end
 end
 
-RSpec.describe PageAggregate, 'links' do
+RSpec.describe PageAggregate, 'links', :focus do
   def next_id
     @next_id ||= 0
     @next_id += 1
@@ -34,7 +34,6 @@ RSpec.describe PageAggregate, 'links' do
   let(:fake_pages) { PageAggregateTesting::FakePages.new }
 
   def page(slug, source_content, linked_pages)
-
     new_page = PageAggregate.new(
       id: next_id,
       slug: 'page',
@@ -58,5 +57,8 @@ RSpec.describe PageAggregate, 'links' do
     root = page('root', '', [linked])
 
     root.slug = 'home'
+
+
+    expect(linked.processed_content.page_links[0].slug).to eq 'home'
   end
 end
