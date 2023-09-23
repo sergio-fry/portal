@@ -39,7 +39,7 @@ module SitemapTest
     subject(:sitemap) { described_class.new pages: }
     let(:pages) { FakePages.new }
 
-    let(:home) { build :page, slug: 'home', source_content: 'Hello' }
+    let(:home) { build :page, :persisted, slug: 'home', source_content: 'Hello' }
 
     it { expect(sitemap.ifps_folder.file('index.html').data).to include 'Hello' }
   end
