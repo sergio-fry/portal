@@ -12,7 +12,7 @@ RSpec.describe PagePolicy, type: :policy do
 
   let(:user) { build(:user) }
   let(:guest) { nil }
-  let(:page) { Page.new :main }
+  let(:page) { build :page, slug: :main }
 
   permissions :show? do
     it { is_expected.to permit(user, page) }
