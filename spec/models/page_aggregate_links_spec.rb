@@ -18,14 +18,13 @@ module PageAggregateTesting
       @linked_pages[page]
     end
 
-    def referenced_pages(page)
+    def referenced_pages(_page)
       []
     end
-
   end
 end
 
-RSpec.describe PageAggregate, 'links', :focus do
+RSpec.describe PageAggregate, 'links' do
   def next_id
     @next_id ||= 0
     @next_id += 1
@@ -33,7 +32,7 @@ RSpec.describe PageAggregate, 'links', :focus do
 
   let(:fake_pages) { PageAggregateTesting::FakePages.new }
 
-  def page(slug, source_content, linked_pages)
+  def page(_slug, source_content, linked_pages)
     new_page = PageAggregate.new(
       id: next_id,
       slug: 'page',
@@ -50,14 +49,11 @@ RSpec.describe PageAggregate, 'links', :focus do
   before { DependenciesContainer.stub(:pages, fake_pages) }
   after { DependenciesContainer.unstub(:pages) }
 
-
-
   it 'track links between pages' do
     linked = page('page1', '[[root]]', [])
     root = page('root', '', [linked])
 
     root.slug = 'home'
-
 
     expect(linked.processed_content.page_links[0].slug).to eq 'home'
   end
