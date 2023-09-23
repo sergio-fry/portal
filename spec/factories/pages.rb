@@ -1,14 +1,19 @@
 FactoryBot.define do
   factory :page, class: 'PageAggregate' do
-    sequence(:id) { |id| id }
     sequence(:slug) { |n| "slug#{n}" }
     updated_at { Time.now }
 
     initialize_with do
       new(
-        id:,
+        id: nil,
         slug:,
         updated_at:
+      )
+    end
+
+    to_create do |instance|
+      DependenciesContainer.resolve(:pages).save_aggregate(
+        instance
       )
     end
   end

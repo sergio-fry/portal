@@ -56,11 +56,6 @@ module Boundaries
 
     def create(slug) = db.create(slug:)
 
-    def find_by_slug(slug)
-      # TODO: use aggregate
-      ::Page.new slug
-    end
-
     delegate :exists?, to: :db
 
     def each
