@@ -11,7 +11,7 @@ RSpec.describe PagesController::Page do
 
   let(:context) { double(:context) }
 
-  let(:page_object) { build(:page, slug: 'main') }
+  let(:page_object) { build(:page, :persisted, slug: 'main') }
 
   it { expect(page.policy_class).to eq PagePolicy }
 

@@ -31,6 +31,7 @@ module Boundaries
         page.linked_pages.each { |linked_page| save_aggregate(linked_page) }
 
         record.save!
+        page.instance_variable_set("@id", record.id)
       end
     end
 
