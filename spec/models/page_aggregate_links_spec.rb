@@ -8,14 +8,28 @@ module PageAggregateTesting
   class FakePages
     def initialize
       @linked_pages = Hash.new([])
+      @pages = []
+    end
+
+    def <<(page)
+      @pages << page
+    end
+
+
+    def exists?(slug)
+      @pages.any? { |page| page.slug == slug }
     end
 
     def link_pages(page, linked_pages)
-      @linked_pages[page] = linked_pages
+      @linked_pages[page.slug.to_s] = linked_pages
     end
 
     def linked_pages(page)
-      @linked_pages[page]
+      Enumerator.new do |y|
+        @linked_pages[page.slug.to_s].each do |page|
+          y << page
+        end
+      end
     end
 
     def referenced_pages(_page)
@@ -32,10 +46,10 @@ RSpec.describe PageAggregate, 'links' do
 
   let(:fake_pages) { PageAggregateTesting::FakePages.new }
 
-  def page(_slug, source_content, linked_pages)
+  def page(slug, source_content, linked_pages)
     new_page = PageAggregate.new(
       id: next_id,
-      slug: 'page',
+      slug: slug,
       history: double,
       updated_at: Time.now,
       source_content:
@@ -50,11 +64,11 @@ RSpec.describe PageAggregate, 'links' do
   after { DependenciesContainer.unstub(:pages) }
 
   it 'track links between pages' do
-    linked = page('page1', '[[root]]', [])
-    root = page('root', '', [linked])
+    linked = page('linked', '[[referenced]]', [])
+    referenced = page('referenced', '', [linked])
 
-    root.slug = 'home'
+    referenced.slug = 'new_slug'
 
-    expect(linked.processed_content.page_links[0].slug).to eq 'home'
+    expect(linked.processed_content.page_links[0].slug).to eq 'new_slug'
   end
 end

@@ -63,7 +63,7 @@ class PageAggregate
     processed_content.page_links.find_all do |link|
       link.slug == old_slug
     end.each do |link|
-      self.source_content = source_content.gsub link.markup, link.moved_to(slug).markup
+      self.source_content = source_content.gsub link.markup, link.moved_to(new_slug).markup
     end
   end
 end
