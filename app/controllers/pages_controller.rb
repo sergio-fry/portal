@@ -6,7 +6,11 @@ class PagesController < ApplicationController
 
   # GET /pages or /pages.json
   def index
-    @page = Page.new(DependenciesContainer.resolve(:pages).find_aggregate(ENV.fetch('HOME_TITLE', 'home')))
+    @page = Page.new(
+      DependenciesContainer.resolve(:pages).find_aggregate(ENV.fetch('HOME_TITLE', 'home')),
+      context: self
+    )
+
     authorize @page, :show?
 
     if @page.exists?

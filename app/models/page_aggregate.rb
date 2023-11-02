@@ -24,7 +24,7 @@ class PageAggregate
     @history = history
     @linked_pages = linked_pages
     @referenced_pages = referenced_pages
-    @source_content = source_content
+    @source_content = source_content || ''
   end
 
   def exists? = @id.present?

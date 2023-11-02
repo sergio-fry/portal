@@ -3,12 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Authenticates' do
+  let(:pages) { DependenciesContainer.resolve(:pages) }
   before do
     create(:user, email: 'admin@example.com', password: 'secret123')
-    DependenciesContainer.resolve(:pages).create :main
+    pages.create :home
   end
 
   context 'when not authenticated' do
+    
+    before { pages.create :main }
     it 'prompts credentials' do
       visit '/pages/main/edit'
       expect(current_url).to match 'users/sign_in'
