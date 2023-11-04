@@ -9,9 +9,11 @@ module Boundaries
     end
 
     def each
-      @block.call.each do |item|
+      cached_items.each do |item|
         yield item
       end
     end
+
+    def cached_items = @cached_items ||= @block.call
   end
 end

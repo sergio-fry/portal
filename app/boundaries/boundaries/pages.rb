@@ -72,21 +72,6 @@ module Boundaries
 
     delegate :updated_at, to: :db
 
-    # TODO: remove deprecated
-    def update_links(page)
-      with_record(page) do |record|
-        active_links = page.links.find_all(&:target_exists?)
-
-        same_links = record.links.find_all { |rec| active_links.map(&:slug).include? rec.slug }
-        new_links = active_links.reject { |link| same_links.map(&:slug).include? link.slug }.map do |link|
-          record.links.build(slug: link.slug, target_page: link.page)
-        end
-
-        record.links = same_links + new_links
-        record.save!
-      end
-    end
-
     def update_links_new(page, record)
       record
         .links

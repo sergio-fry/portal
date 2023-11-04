@@ -11,6 +11,7 @@ RSpec.describe 'Moving page' do
   let(:user) { create(:user) }
 
   before do
+    pages.create('home')
     pages.create('moscow')
     pages.create('main')
   end
