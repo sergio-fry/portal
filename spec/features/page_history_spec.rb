@@ -6,13 +6,14 @@ RSpec.describe 'Page history' do
   include Devise::Test::IntegrationHelpers
 
   let!(:user) { create(:user, email: 'admin@example.com', password: 'secret123') }
-  let!(:moscow) { Page.new('article') }
   let(:features) { double(:features, history_enabled?: true) }
 
+  let(:pages) { DependenciesContainer.resolve(:pages) }
+
   before do
+    pages.create('home')
     Capybara.current_driver = :selenium_headless
     sign_in user
-    moscow.source_content = 'I like Beatles'
     Dependencies.container.stub(:features, features)
   end
 
@@ -23,16 +24,24 @@ RSpec.describe 'Page history' do
 
   context 'when page updated' do
     before do
+      visit '/pages/new'
+      fill_in 'Slug', with: 'article'
+      fill_in 'Content', with: 'I like Beatles'
+      click_on 'Create'
+
       visit '/pages/article/edit'
       fill_in 'Content', with: 'I like Queen'
       click_on 'Update'
     end
 
-    it 'links to moscow' do
+    example 'prev version could be found' do
       expect(page).not_to have_content 'I like Beatles'
 
       click_link_or_button 'History'
-      click_link_or_button 'Version 1'
+
+      within '.page_history' do
+        click_link_or_button 'Version 1'
+      end
 
       expect(page).to have_content 'I like Beatles'
     end

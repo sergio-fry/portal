@@ -7,9 +7,11 @@ RSpec.describe PagesController::Page do
   include ActionController::UrlFor
   include Rails.application.routes.url_helpers
 
-  subject(:page) { described_class.new page_object }
+  subject(:page) { described_class.new page_object, context: }
 
-  let(:page_object) { Page.new 'main' }
+  let(:context) { double(:context) }
+
+  let(:page_object) { build(:page, :persisted, slug: 'main') }
 
   it { expect(page.policy_class).to eq PagePolicy }
 

@@ -2,12 +2,15 @@
 
 require_relative './processed_content'
 
+# @deprecated: use PageAggregate insteed
+# TODO: remove this class
 class Page
   include Dependencies[db: 'db.pages', pages: 'pages', ipfs: 'ipfs.ipfs']
 
   attr_reader :slug, :history
 
   def initialize(slug, pages:, db:, history: PageHistory.new(self), ipfs:)
+    raise 'deprecated'
     @slug = slug
     @pages = pages
     @db = db
@@ -16,7 +19,6 @@ class Page
   end
 
   alias title slug
-
   def ==(other) = other.slug.to_s == slug.to_s
 
   def move(new_slug)

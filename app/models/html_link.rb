@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
-class HtmlLink
-  def initialize(link)
-    @link = link
-  end
+require 'delegate'
 
+class HtmlLink < SimpleDelegator
   def html
     result = ''
 
-    result += "<a href='#{@link.link}' class='#{@link.css_classes}' data-link='#{@link.link}' data-canonical-link='#{@link.canonical}'>#{@link.name}</a>"
+    result += <<~HTML
+      <a href='#{__getobj__.link}'
+        class='#{__getobj__.css_classes}'
+        data-link='#{__getobj__.link}'
+        data-canonical-link='#{__getobj__.canonical}'>#{__getobj__.name}
+      </a>
+    HTML
 
     result
   end
-
-  delegate :markup, :page, :target_exists?, :slug, :moved_to, to: :@link
 end

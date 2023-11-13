@@ -12,17 +12,13 @@ RSpec.describe PagePolicy, type: :policy do
 
   let(:user) { build(:user) }
   let(:guest) { nil }
-  let(:page) { Page.new :main }
+  let(:page) { build :page, slug: :main }
 
   permissions :show? do
     it { is_expected.to permit(user, page) }
     it { is_expected.to permit(guest, page) }
   end
   permissions :edit? do
-    it { is_expected.to permit(user, page) }
-    it { is_expected.not_to permit(guest, page) }
-  end
-  permissions :destroy? do
     it { is_expected.to permit(user, page) }
     it { is_expected.not_to permit(guest, page) }
   end

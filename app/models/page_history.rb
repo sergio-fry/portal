@@ -40,6 +40,7 @@ class PageHistory
     versions.max_by(&:created_at)
   end
 
+  # TODO: it should add version entity without db save
   def track
     @page.record.tap do |record|
       record.versions.build(ipfs_cid: @page.ipfs_content.cid)

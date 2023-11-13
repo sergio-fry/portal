@@ -7,12 +7,9 @@ Rails.application.routes.draw do
   get 'admin', to: 'admin#index'
 
   devise_for :users, class_name: 'Boundaries::Database::User'
-  resources :pages, except: %i[new create] do
+  resources :pages do
     collection do
       post :rebuild
-    end
-    member do
-      get :history
     end
   end
 

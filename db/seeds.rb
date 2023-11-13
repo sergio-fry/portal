@@ -9,7 +9,18 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 admin = Boundaries::Database::User.find_or_initialize_by(email: "#{ENV.fetch('ADMIN_USERNAME', 'admin')}@example.com")
-
 admin.password = admin.password_confirmation = ENV.fetch('ADMIN_PASSWORD', 'admin123') if admin.new_record?
-
 admin.save!
+
+pages = DependenciesContainer.resolve(:pages)
+unless pages.exists?(ENV.fetch('HOME_TITLE', 'home'))
+  home = PageAggregate.new(
+    id: nil,
+    pages:,
+    slug: ENV.fetch('HOME_TITLE', 'home'),
+    updated_at: Time.zone.now,
+    source_content: 'Hello world!'
+  )
+
+  pages.save_aggregate home
+end

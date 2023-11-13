@@ -46,7 +46,7 @@ class PageLayout
   private
 
   def version
-    @page.history.versions.map(&:number).max
+    @page.history.current_version&.meta_title
   end
 
   attr_reader :content

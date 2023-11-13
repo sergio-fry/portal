@@ -3,12 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe 'Authenticates' do
+  let(:pages) { DependenciesContainer.resolve(:pages) }
   before do
     create(:user, email: 'admin@example.com', password: 'secret123')
-    Page.new :main
+    pages.create :home
   end
 
   context 'when not authenticated' do
+    
+    before { pages.create :main }
     it 'prompts credentials' do
       visit '/pages/main/edit'
       expect(current_url).to match 'users/sign_in'
@@ -24,9 +27,10 @@ RSpec.describe 'Authenticates' do
     end
 
     it 'updates page' do
-      visit '/pages/main/edit'
+      visit '/pages/new'
+      fill_in 'Slug', with: 'new_page'
       fill_in 'Content', with: 'some content'
-      click_on 'Update'
+      click_on 'Create'
       expect(page).to have_content 'some content'
     end
   end

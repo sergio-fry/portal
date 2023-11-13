@@ -8,6 +8,6 @@ RSpec.describe ProcessedContent do
   context 'when content has link' do
     let(:content) { 'Text with link to [[page1]]' }
 
-    it { expect(processed_content.to_s).to match(%r{Text with link to <a.*>page1</a>}) }
+    it { expect(processed_content.to_s).to match(%r{Text with link to <a.*>\s*page1\s*</a>}) }
   end
 end

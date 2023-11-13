@@ -1,12 +1,16 @@
 # frozen_string_literal: true
 
 class PagesController < ApplicationController
-  before_action :set_page, only: %i[show edit update destroy history]
+  before_action :set_page, only: %i[show edit update]
   include PagesHelper
 
   # GET /pages or /pages.json
   def index
-    @page = Page.new(::Page.new(ENV.fetch('HOME_TITLE', 'home')))
+    @page = Page.new(
+      DependenciesContainer.resolve(:pages).find_aggregate(ENV.fetch('HOME_TITLE', 'home')),
+      context: self
+    )
+
     authorize @page, :show?
 
     if @page.exists?
@@ -14,12 +18,6 @@ class PagesController < ApplicationController
     else
       redirect_to edit_page_url(@page)
     end
-  end
-
-  def history
-    authorize @page, :history?
-
-    render inline: @page.history.to_s
   end
 
   def rebuild
@@ -46,7 +44,9 @@ class PagesController < ApplicationController
 
   # GET /pages/new
   def new
-    @page = NewPage.new
+    @page = NewPage.new context: self
+    authorize @page, :new?, policy_class: PagePolicy
+    render layout: 'admin'
   end
 
   # GET /pages/1/edit
@@ -56,7 +56,8 @@ class PagesController < ApplicationController
 
   # POST /pages or /pages.json
   def create
-    @page = NewPage.new(page_params)
+    @page = NewPage.new(params: page_params, context: self)
+    authorize @page
 
     respond_to do |format|
       if @page.save
@@ -84,22 +85,11 @@ class PagesController < ApplicationController
     end
   end
 
-  # DELETE /pages/1 or /pages/1.json
-  def destroy
-    @page.destroy
-
-    respond_to do |format|
-      format.html { redirect_to pages_url }
-      format.json { head :no_content }
-    end
-  end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_page
-    @page = Page.new ::Page.new(params[:id])
-
+    @page = Page.new(DependenciesContainer.resolve(:pages).find_aggregate(params[:id]), context: self)
     authorize @page
   end
 

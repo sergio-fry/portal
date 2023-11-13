@@ -2,8 +2,9 @@
 
 class PageLinkFromMarkup
   attr_reader :markup
+  include Dependencies[:pages]
 
-  def initialize(markup, regexp: PageLinkRegexp.new, pages: Boundaries::Database::Pages.new)
+  def initialize(markup, regexp: PageLinkRegexp.new, pages:)
     @markup = markup
     @regexp = regexp
     @pages = pages
@@ -38,10 +39,12 @@ class PageLinkFromMarkup
   end
 
   def page
-    return unless @pages.exists?(slug)
+    return unless pages.exists?(slug)
 
-    @pages.find_by_slug slug
+    pages.find_aggregate slug
   end
+
+  alias target_page page
 
   def matched_data
     m = @regexp.match(@markup)
@@ -55,7 +58,7 @@ class PageLinkFromMarkup
     self.class.new(
       "[[#{slug}|#{name}]]",
       regexp: @regexp,
-      pages: @pages
+      pages: pages
     )
   end
 end

@@ -7,10 +7,12 @@ RSpec.describe 'Rebuild' do
   include ActiveJob::TestHelper
 
   let!(:user) { create(:user, email: 'admin@example.com', password: 'secret123') }
+  let(:pages) { DependenciesContainer.resolve(:pages) }
 
   before do
     sign_in user
-    Page.new(:foo).source_content = 'content'
+    page = create(:page, slug: :foo)
+    pages.save_aggregate page
   end
 
   it 'can rebuild pages' do
