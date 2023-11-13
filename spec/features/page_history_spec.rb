@@ -8,7 +8,10 @@ RSpec.describe 'Page history' do
   let!(:user) { create(:user, email: 'admin@example.com', password: 'secret123') }
   let(:features) { double(:features, history_enabled?: true) }
 
+  let(:pages) { DependenciesContainer.resolve(:pages) }
+
   before do
+    pages.create('home')
     Capybara.current_driver = :selenium_headless
     sign_in user
     Dependencies.container.stub(:features, features)
@@ -35,7 +38,10 @@ RSpec.describe 'Page history' do
       expect(page).not_to have_content 'I like Beatles'
 
       click_link_or_button 'History'
-      click_link_or_button 'Version 1'
+
+      within '.page_history' do
+        click_link_or_button 'Version 1'
+      end
 
       expect(page).to have_content 'I like Beatles'
     end

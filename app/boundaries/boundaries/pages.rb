@@ -22,8 +22,8 @@ module Boundaries
         record.slug = page.slug
         record.content = page.source_content
 
-        record.versions.build(ipfs_cid: record.ipfs_cid) if record.ipfs_cid.present?
         record.ipfs_cid = ipfs.new_content(page.processed_content_with_layout).cid
+        record.versions.build(ipfs_cid: record.ipfs_cid)
 
         update_links_new(page, record)
 

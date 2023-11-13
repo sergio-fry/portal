@@ -14,7 +14,7 @@ class Version
 
   def url
     if current?
-      "../#{@page.slug}.html"
+      "./#{@page.slug}.html"
     else
       ipfs.content(@cid).url
     end
