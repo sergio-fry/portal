@@ -107,3 +107,4 @@ gem 'ipfs-api'
 gem 'kramdown'
 gem 'opal'
 gem 'pundit'
+gem 'silencer', require: false
