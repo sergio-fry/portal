@@ -1,56 +1,46 @@
 # frozen_string_literal: true
 
+require 'platform85/repo/dynamic_collection'
+require 'platform85/repo/changes_repository'
+
 module Boundaries
   class Pages
     include Dependencies[db: 'db.pages', ipfs: 'ipfs.ipfs']
 
-    class ChangesRepository
-      def initialize
-        @changes = {}
-      end
-
-      def for(object)
-        @changes[object.id] ||= Changes.new(object)
-      end
-    end
-
-    class Changes
-      def initialize(object)
-        @object = object
-      end
-
-      def changed?(attr)
-        true
-      end
-    end
-
     def initialize(db:, ipfs:)
       super
-      @changes = ChangesRepository.new
+      @changes = Platform85::Repo::ChangesRepository.new(attrs: [:slug])
     end
 
     def find_aggregate(slug)
       record = db.find_by_slug slug
 
-      Page.new(
+      found = Page.new(
         id: record.id,
         slug:,
         updated_at: record.updated_at,
         source_content: record.content
       )
+
+      changes_for(found).commit
+
+      found
     end
 
-    def changes(page) = @changes.for(page)
+    def changes_for(page) = @changes.for(page)
 
     def save_aggregate(page)
       db.transaction do
         record = page.exists? ? db.find(page.id) : db.find_or_initialize_by_slug(page.slug)
 
-        record.slug = page.slug if changes(page).changed?(:slug)
-        record.content = page.source_content
+        record.slug = page.slug if changes_for(page).changed?(:slug)
 
-        record.ipfs_cid = ipfs.new_content(page.processed_content_with_layout).cid
-        record.versions.build(ipfs_cid: record.ipfs_cid)
+        if changes_for(page).changed?(:source_content)
+          record.content = page.source_content
+
+          record.ipfs_cid = ipfs.new_content(page.processed_content_with_layout).cid
+          record.versions.build(ipfs_cid: record.ipfs_cid)
+        end
 
         update_links_new(page, record)
 
@@ -58,12 +48,12 @@ module Boundaries
         page.linked_pages.each { |linked_page| save_aggregate(linked_page) }
 
         record.save!
-        page.instance_variable_set("@id", record.id)
+        page.instance_variable_set('@id', record.id)
       end
     end
 
     def linked_pages(page)
-      DynamicCollection.new do
+      Platform85::Repo::DynamicCollection.new do
         if page.exists?
           db.linked_pages(page.id).map { |rec| find_aggregate(rec.slug) }
         else
@@ -73,7 +63,7 @@ module Boundaries
     end
 
     def referenced_pages(page)
-      DynamicCollection.new do
+      Platform85::Repo::DynamicCollection.new do
         if page.exists?
           db.referenced_pages(page.id).map { |rec| find_aggregate(rec.slug) }
         else
@@ -114,7 +104,7 @@ module Boundaries
     end
 
     def versions(page)
-      DynamicCollection.new do
+      Platform85::Repo::DynamicCollection.new do
         record = db.find_or_initialize_by_slug(page.slug)
         (record.versions || []).sort_by do |version|
           version.created_at || Time.zone.now
