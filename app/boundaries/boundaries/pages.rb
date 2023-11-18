@@ -4,6 +4,31 @@ module Boundaries
   class Pages
     include Dependencies[db: 'db.pages', ipfs: 'ipfs.ipfs']
 
+    class ChangesRepository
+      def initialize
+        @changes = {}
+      end
+
+      def for(object)
+        @changes[object.id] ||= Changes.new(object)
+      end
+    end
+
+    class Changes
+      def initialize(object)
+        @object = object
+      end
+
+      def changed?(attr)
+        true
+      end
+    end
+
+    def initialize(db:, ipfs:)
+      super
+      @changes = ChangesRepository.new
+    end
+
     def find_aggregate(slug)
       record = db.find_by_slug slug
 
@@ -15,11 +40,13 @@ module Boundaries
       )
     end
 
+    def changes(page) = @changes.for(page)
+
     def save_aggregate(page)
       db.transaction do
         record = page.exists? ? db.find(page.id) : db.find_or_initialize_by_slug(page.slug)
 
-        record.slug = page.slug
+        record.slug = page.slug if changes(page).changed?(:slug)
         record.content = page.source_content
 
         record.ipfs_cid = ipfs.new_content(page.processed_content_with_layout).cid
