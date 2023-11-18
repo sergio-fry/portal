@@ -1,5 +1,3 @@
-require 'app/models/page'
-
 RSpec.describe 'Hierarchy' do
   let(:page_a) { Page.new(:a) }
   let(:page_b) { Page.new(:b) }
