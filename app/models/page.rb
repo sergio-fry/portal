@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class PageAggregate
+class Page
   attr_reader :id, :slug, :updated_at, :history, :source_content, :linked_pages, :referenced_pages
 
   include Dependencies[:pages]

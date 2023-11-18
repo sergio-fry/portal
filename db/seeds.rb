@@ -14,7 +14,7 @@ admin.save!
 
 pages = DependenciesContainer.resolve(:pages)
 unless pages.exists?(ENV.fetch('HOME_TITLE', 'home'))
-  home = PageAggregate.new(
+  home = Page.new(
     id: nil,
     pages:,
     slug: ENV.fetch('HOME_TITLE', 'home'),

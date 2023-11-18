@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :page, class: 'PageAggregate' do
+  factory :page, class: 'Page' do
     id { nil }
     sequence(:slug) { |n| "slug#{n}" }
     updated_at { Time.now }

@@ -7,7 +7,7 @@ module Boundaries
     def find_aggregate(slug)
       record = db.find_by_slug slug
 
-      PageAggregate.new(
+      Page.new(
         id: record.id,
         slug:,
         updated_at: record.updated_at,
@@ -61,7 +61,7 @@ module Boundaries
 
     def each
       db.each do |record|
-        yield PageAggregate.new(
+        yield Page.new(
           id: record.id,
           slug: record.slug,
           updated_at: record.updated_at,

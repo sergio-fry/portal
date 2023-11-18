@@ -1,4 +1,4 @@
-require 'app/models/page_aggregate'
+require 'app/models/page'
 require 'app/models/processed_content'
 require 'app/models/page_link_regexp'
 require 'app/models/html_link'
@@ -38,7 +38,7 @@ module PageAggregateTesting
   end
 end
 
-RSpec.describe PageAggregate, 'links' do
+RSpec.describe Page, 'links' do
   def next_id
     @next_id ||= 0
     @next_id += 1
@@ -47,7 +47,7 @@ RSpec.describe PageAggregate, 'links' do
   let(:fake_pages) { PageAggregateTesting::FakePages.new }
 
   def page(slug, source_content, linked_pages)
-    new_page = PageAggregate.new(
+    new_page = Page.new(
       id: next_id,
       slug: slug,
       history: double,

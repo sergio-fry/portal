@@ -48,7 +48,7 @@ class PagesController
     delegate :history, to: :page
 
     def page
-      @page ||= PageAggregate.new(
+      @page ||= ::Page.new(
         id: nil,
         pages: DependenciesContainer.resolve(:pages),
         slug:,
