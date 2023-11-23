@@ -19,12 +19,14 @@ class PageLinkFromMarkup
   end
 
   def link
-    "#{slug}.html"
+    if target_exists?
+      "#{canonical.link}.html"
+    else
+      canonical.edit_link
+    end
   end
 
-  def canonical
-    CanonicalLink.new(link).link
-  end
+  def canonical = CanonicalLink.new(slug)
 
   def target_exists?
     !page.nil?

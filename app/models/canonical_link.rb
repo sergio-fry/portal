@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
 class CanonicalLink
-  def initialize(link)
-    @link = link
+  def initialize(slug)
+    @slug = slug
   end
 
-  def link
-    URI.join(
-      ENV.fetch('ROOT_URL'),
-      '/pages/'
-    ).to_s + @link.to_s
-  end
+  def link = "#{ENV.fetch('ROOT_URL')}/pages/#{@slug}"
+
+  def edit_link = "#{link}/edit"
 end

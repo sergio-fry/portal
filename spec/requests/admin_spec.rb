@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Admins' do
   include Devise::Test::IntegrationHelpers
-  let!(:user) { create(:user, email: 'admin@example.com', password: 'secret123') }
+  let!(:user) { create(:user, email: 'user@example.com', password: 'secret123') }
 
   describe 'GET /admin' do
     context 'when guest' do

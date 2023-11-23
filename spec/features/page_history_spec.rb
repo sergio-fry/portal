@@ -5,13 +5,12 @@ require 'rails_helper'
 RSpec.describe 'Page history' do
   include Devise::Test::IntegrationHelpers
 
-  let!(:user) { create(:user, email: 'admin@example.com', password: 'secret123') }
+  let!(:user) { create(:user, email: 'user@example.com', password: 'secret123') }
   let(:features) { double(:features, history_enabled?: true) }
 
   let(:pages) { DependenciesContainer.resolve(:pages) }
 
   before do
-    pages.create('home')
     Capybara.current_driver = :selenium_headless
     sign_in user
     Dependencies.container.stub(:features, features)

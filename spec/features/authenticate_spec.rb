@@ -5,8 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Authenticates' do
   let(:pages) { DependenciesContainer.resolve(:pages) }
   before do
-    create(:user, email: 'admin@example.com', password: 'secret123')
-    pages.create :home
+    create(:user, email: 'user@example.com', password: 'secret123')
   end
 
   context 'when not authenticated' do
@@ -20,7 +19,7 @@ RSpec.describe 'Authenticates' do
   context 'when authenticated' do
     before do
       visit '/users/sign_in'
-      fill_in 'Email', with: 'admin@example.com'
+      fill_in 'Email', with: 'user@example.com'
       fill_in 'Password', with: 'secret123'
       click_on 'Log in'
     end

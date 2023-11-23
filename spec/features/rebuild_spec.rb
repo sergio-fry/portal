@@ -6,7 +6,7 @@ RSpec.describe 'Rebuild' do
   include Devise::Test::IntegrationHelpers
   include ActiveJob::TestHelper
 
-  let!(:user) { create(:user, email: 'admin@example.com', password: 'secret123') }
+  let!(:user) { create(:user, email: 'user@example.com', password: 'secret123') }
   let(:pages) { DependenciesContainer.resolve(:pages) }
 
   before do
@@ -18,9 +18,10 @@ RSpec.describe 'Rebuild' do
   it 'can rebuild pages' do
     visit '/admin'
 
-    assert_enqueued_jobs 0
-    click_on 'Rebuild'
-    assert_enqueued_jobs 1
+    assert_enqueued_with(job: RebuildPageJob) do
+      click_on 'Rebuild'
+    end
+
     perform_enqueued_jobs
   end
 end

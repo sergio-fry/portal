@@ -11,9 +11,9 @@ module Boundaries
         Page.new default_attrs.merge(attrs)
       end
 
-      before { new_page(slug: 'foo').save! }
+      def save_page = new_page(slug: 'foo').save!
 
-      it { expect(described_class.count).to eq 1 }
+      it { expect { save_page }.to change(described_class, :count).by(1) }
     end
   end
 end
