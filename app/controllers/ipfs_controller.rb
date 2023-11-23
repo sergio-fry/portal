@@ -7,12 +7,14 @@ class IpfsController < ApplicationController
   def show
     authorize :ipfs
 
-    if params[:filename]
-      send_data ipfs.content(params[:cid]).data,
-                filename: params[:filename],
-                type: content_type
-    else
-      render inline: ipfs.content(params[:cid]).data
+    http_cache_forever(public: true) do
+      if params[:filename]
+        send_data ipfs.content(params[:cid]).data,
+                  filename: params[:filename],
+                  type: content_type
+      else
+        render inline: ipfs.content(params[:cid]).data
+      end
     end
   end
 
