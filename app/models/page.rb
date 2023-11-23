@@ -3,7 +3,7 @@
 class Page
   attr_reader :id, :slug, :updated_at, :history, :source_content, :linked_pages, :referenced_pages
 
-  include Dependencies[:pages]
+  include Dependencies[:pages, 'ipfs.ipfs']
 
   def initialize(
     id:,
@@ -14,7 +14,8 @@ class Page
     history: PageHistory.new(self),
     linked_pages: pages.linked_pages(self),
     referenced_pages: pages.referenced_pages(self),
-    source_content: ''
+    source_content: '',
+    ipfs:
   )
     @id = id
     @pages = pages
@@ -25,6 +26,7 @@ class Page
     @linked_pages = linked_pages
     @referenced_pages = referenced_pages
     @source_content = source_content || ''
+    @ipfs = ipfs
   end
 
   def exists? = @id.present?
@@ -39,6 +41,8 @@ class Page
       self
     ).to_s
   end
+
+  def url = ipfs.new_content(processed_content_with_layout).url
 
   # TODO: extract Content class, content.source, content.processed
   def content = processed_content.to_s

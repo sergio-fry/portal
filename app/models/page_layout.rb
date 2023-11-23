@@ -2,10 +2,12 @@
 
 class PageLayout
   include Hanami::Helpers
+  include Dependencies[:pages]
 
-  def initialize(content, page)
+  def initialize(content, page, pages:)
     @content = content
     @page = page
+    @pages = pages
   end
 
   def to_s
@@ -16,7 +18,7 @@ class PageLayout
         div class: 'post-meta' do
           strong "#{page.slug}.html"
           span '/'
-          a 'Sergei O. Udalov', href: "./#{ENV.fetch('HOME_TITLE', 'home')}.html", class: 'title'
+          a 'Sergei O. Udalov', href: ENV.fetch('ROOT_URL'), class: 'title'
           br
           span updated_at.to_s
           br

@@ -12,13 +12,7 @@ class Version
     @ipfs = ipfs
   end
 
-  def url
-    if current?
-      "./#{@page.slug}.html"
-    else
-      ipfs.content(@cid).url
-    end
-  end
+  def url = ipfs.content(@cid).url
 
   def title = time
 

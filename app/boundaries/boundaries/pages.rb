@@ -27,6 +27,8 @@ module Boundaries
       found
     end
 
+    def home = find_aggregate(ENV.fetch('HOME_TITLE', 'home'))
+
     def changes_for(page) = @changes.for(page)
 
     def save_aggregate(page)

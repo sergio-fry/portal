@@ -10,7 +10,6 @@ RSpec.describe 'Authenticates' do
   end
 
   context 'when not authenticated' do
-    
     before { pages.create :main }
     it 'prompts credentials' do
       visit '/pages/main/edit'

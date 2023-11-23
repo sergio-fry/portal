@@ -9,7 +9,7 @@ class WithInjectedIpfsLink
   def to_s
     doc = Nokogiri::HTML(@html)
     article = doc.css('article')
-    article.attr('data-ipfs-url', sitemap.page_url(@page))
+    article.attr('data-ipfs-url', @page.url)
     article.attr('class', 'ipfs-page')
 
     doc.to_s
