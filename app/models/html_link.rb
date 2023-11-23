@@ -10,7 +10,7 @@ class HtmlLink < SimpleDelegator
       <a href='#{__getobj__.link}'
         class='#{__getobj__.css_classes}'
         data-link='#{__getobj__.link}'
-        data-canonical-link='#{__getobj__.canonical}'>#{__getobj__.name}
+        data-canonical-link='#{__getobj__.canonical.link}'>#{__getobj__.name}
       </a>
     HTML
 

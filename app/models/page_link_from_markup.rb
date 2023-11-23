@@ -22,7 +22,7 @@ class PageLinkFromMarkup
     if target_exists?
       "#{canonical.link}.html"
     else
-      canonical.edit_link
+      canonical.new_link
     end
   end
 

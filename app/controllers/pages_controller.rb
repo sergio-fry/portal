@@ -44,7 +44,7 @@ class PagesController < ApplicationController
 
   # GET /pages/new
   def new
-    @page = NewPage.new context: self
+    @page = NewPage.new context: self, params: params[:page]
     authorize @page, :new?, policy_class: PagePolicy
     render layout: 'admin'
   end

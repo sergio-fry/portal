@@ -8,4 +8,5 @@ class CanonicalLink
   def link = "#{ENV.fetch('ROOT_URL')}/pages/#{@slug}"
 
   def edit_link = "#{link}/edit"
+  def new_link = "#{ENV.fetch('ROOT_URL')}/pages/new?page[slug]=#{@slug}"
 end
