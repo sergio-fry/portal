@@ -14,10 +14,4 @@ class WithInjectedIpfsLink
 
     doc.to_s
   end
-
-  def sitemap
-    CachedSitemap.new(
-      Sitemap.new
-    )
-  end
 end
