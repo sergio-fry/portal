@@ -44,7 +44,7 @@ class PagesController < ApplicationController
 
   # GET /pages/new
   def new
-    @page = NewPage.new context: self, params: params[:page]
+    @page = NewPage.new context: self, params: page_params
     authorize @page, :new?, policy_class: PagePolicy
     render layout: 'admin'
   end
@@ -96,5 +96,7 @@ class PagesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def page_params
     params.require(:page).permit(:slug, :content)
+  rescue ActionController::ParameterMissing
+    {}
   end
 end
