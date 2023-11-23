@@ -3,7 +3,6 @@
 class IpfsController < ApplicationController
   skip_forgery_protection
 
-  # TODO: http caching
   def show
     authorize :ipfs
 
@@ -22,11 +21,9 @@ class IpfsController < ApplicationController
   def folder
     authorize :ipfs
 
-    if features.ipfs_pages_enabled?
+    http_cache_forever(public: true) do
       render inline: ipfs.folder(params[:cid]).file("#{params[:filename]}.#{params[:format]}").data,
              content_type:
-    else
-      render inline: 'not found', status: :not_found
     end
   end
 

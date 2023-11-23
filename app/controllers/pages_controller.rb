@@ -37,6 +37,8 @@ class PagesController < ApplicationController
     else
       redirect_to edit_page_url(@page)
     end
+
+    fresh_when(@page)
   end
 
   # GET /pages/new
