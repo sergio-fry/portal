@@ -33,10 +33,7 @@ class PagesController < ApplicationController
   # GET /pages/1 or /pages/1.json
   def show
     if @page.exists?
-      render inline:
-        WithInjectedIpfsLink.new(
-          @page.processed_content_with_layout, @page
-        )
+      redirect_to URI.parse(@page.url).path
     else
       redirect_to edit_page_url(@page)
     end
