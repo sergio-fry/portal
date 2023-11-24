@@ -36,7 +36,7 @@ class PagesController < ApplicationController
       # TODO: do not rebuild page content each time,
       # reuse CID
       # redirect_to ipfs_path(pages.page_cid(@page))
-      redirect_to URI.parse(@page.url).path
+      redirect_to Rails.cache.fetch("page:#{@page.slug}:#{@page.updated_at}:cid") { URI.parse(@page.url).path }
     else
       redirect_to edit_page_url(@page)
     end
