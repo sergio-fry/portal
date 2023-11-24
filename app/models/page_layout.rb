@@ -16,16 +16,18 @@ class PageLayout
     Layout.new(title: page.slug).wrap do |html|
       html.article do
         div class: 'post-meta' do
-          strong "#{page.slug}.html"
-          span '/'
-          a 'Sergei O. Udalov', href: ENV.fetch('ROOT_URL'), class: 'title'
+          strong do
+            a "#{page.slug}.html", href: canonical_link.link
+          end
+
+          span 'by'
+          a 'Sergei O. Udalov', href: root_link, class: 'title'
           br
-          span updated_at.to_s
-          br
-          span 'ver. '
-          a version, datetime: updated_at, title: 'History', href: '#', class: :history_link
-          br
-          a 'edit', title: 'Edit', href: "#{page_canonical_link}/edit", class: 'admin-tools', style: 'opacity: 0'
+          span 'at'
+          a updated_at.to_s, datetime: updated_at, title: 'History', href: '#', class: :history_link
+          a 'edit', title: 'Edit', href: canonical_link.edit_link, class: 'admin-tools', style: 'opacity: 0'
+          a 'new', title: 'New', href: new_page_link, class: 'admin-tools', style: 'opacity: 0'
+          a 'admin', title: 'Admin', href: admin_link, class: 'admin-tools', style: 'opacity: 0'
         end
         div class: :page_content do
           raw(content)
@@ -53,7 +55,11 @@ class PageLayout
 
   attr_reader :content
 
-  def page_canonical_link
-    CanonicalLink.new(@page.slug).link
+  def canonical_link
+    CanonicalLink.new(@page.slug)
   end
+
+  def root_link = ENV.fetch('ROOT_URL')
+  def new_page_link = URI.join(root_link, 'pages/new')
+  def admin_link = URI.join(root_link, 'admin')
 end

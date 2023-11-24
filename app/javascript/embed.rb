@@ -109,7 +109,7 @@ class Page
   end
 
   def hide_admin_tools
-    $$.jQuery('.admin-tools').css(opacity: 0.1)
+    $$.jQuery('.admin-tools').css(opacity: 0.0)
   end
 
   def disaply_admin_tools
