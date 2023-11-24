@@ -32,6 +32,10 @@ module Boundaries
 
     def changes_for(page) = @changes.for(page)
 
+    def page_cid(page)
+      db.find_by_slug(page.slug).ipfs_cid
+    end
+
     def save_aggregate(page)
       db.transaction do
         record = page.exists? ? db.find(page.id) : db.find_or_initialize_by_slug(page.slug)

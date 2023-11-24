@@ -43,6 +43,7 @@ class PagesController
 
     def policy_class = PagePolicy
     def processed_content_with_layout = page.processed_content_with_layout
+    def id = page.id
     def slug = page.slug
     def to_model = Model.new(self)
     def to_s = slug

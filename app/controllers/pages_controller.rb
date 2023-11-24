@@ -7,7 +7,7 @@ class PagesController < ApplicationController
   # GET /pages or /pages.json
   def index
     @page = Page.new(
-      DependenciesContainer.resolve(:pages).find_aggregate(ENV.fetch('HOME_TITLE', 'home')),
+      pages.find_aggregate(ENV.fetch('HOME_TITLE', 'home')),
       context: self
     )
 
@@ -23,7 +23,7 @@ class PagesController < ApplicationController
   def rebuild
     authorize :page, :rebuild?
 
-    Dependencies.container.resolve(:pages).each do |page|
+    pages.each do |page|
       RebuildPageJob.perform_later page.slug
     end
 
@@ -33,6 +33,9 @@ class PagesController < ApplicationController
   # GET /pages/1 or /pages/1.json
   def show
     if @page.exists?
+      # TODO: do not rebuild page content each time,
+      # reuse CID
+      # redirect_to ipfs_path(pages.page_cid(@page))
       redirect_to URI.parse(@page.url).path
     else
       redirect_to edit_page_url(@page)
@@ -98,4 +101,7 @@ class PagesController < ApplicationController
   rescue ActionController::ParameterMissing
     {}
   end
+
+  def pages = DependenciesContainer.resolve(:pages)
+  def ipfs = DependenciesContainer.resolve('ipfs.ipfs')
 end
