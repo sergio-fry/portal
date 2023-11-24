@@ -13,6 +13,6 @@ class HtmlLink < SimpleDelegator
         data-canonical-link='#{__getobj__.canonical.link}'>#{__getobj__.name}</a>
     HTML
 
-    result
+    result.strip
   end
 end
