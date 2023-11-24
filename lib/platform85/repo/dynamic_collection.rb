@@ -11,6 +11,8 @@ module Platform85
         cached_items.each(&)
       end
 
+      def size = entries.size
+
       def cached_items = @cached_items ||= @block.call
     end
   end

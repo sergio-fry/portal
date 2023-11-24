@@ -22,9 +22,9 @@ class PageHistory
         div.ol reversed: :reversed do
           versions.each do |version|
             li do
-              a version.title, href: version.url, title: version.meta_title
+              a version.title, href: version.url, title: version.meta_title, class: version_css_class(version)
 
-              a 'Current', href: version.url if version.current?
+              a 'Current', href: version.url, class: version_css_class(version) if version.current?
             end
           end
         end
@@ -32,11 +32,28 @@ class PageHistory
     end.to_s
   end
 
+  class CurrentVersion
+    include Dependencies['ipfs.ipfs']
+    def initialize(page, ipfs:, number:)
+      @page = page
+      @number = number
+
+      @ipfs = ipfs
+    end
+    
+    def title = @page.updated_at
+    def url = ""
+    def meta_title = "Version #{@number}"
+    def current? = true
+  end
+
   def versions
-    @versions.sort_by(&:created_at).reverse
+    [current_version] + @versions.sort_by(&:created_at).reverse
   end
 
   def current_version
-    versions.max_by(&:created_at)
+    CurrentVersion.new(@page, number: @versions.size + 1)
   end
+
+  def version_css_class(version) = version.current? ? 'version--current' : ''
 end

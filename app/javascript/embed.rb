@@ -190,7 +190,7 @@ jquery.onload do
 
   RemoteLinks.new(Page.new(store.state).ipfs_links, store:).update
 
-  Native(`$('.history_link')`).on('click', lambda {
+  Native(`$('.history_link,.version--current')`).on('click', lambda {
     store.dispatch lambda { |state|
       state[:page_mode] = state[:page_mode] == :content ? :history : :content
 

@@ -20,7 +20,5 @@ class Version
 
   def meta_title = "Version #{@number}"
 
-  def current?
-    @page.history.current_version == self
-  end
+  def current? = false
 end

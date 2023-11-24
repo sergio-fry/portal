@@ -38,10 +38,9 @@ module Boundaries
         record.slug = page.slug if changes_for(page).changed?(:slug)
 
         if changes_for(page).changed?(:source_content)
-          record.content = page.source_content
-
+          record.versions.build(ipfs_cid: record.ipfs_cid, created_at: record.updated_at) if record.persisted?
           record.ipfs_cid = ipfs.new_content(page.processed_content_with_layout).cid
-          record.versions.build(ipfs_cid: record.ipfs_cid)
+          record.content = page.source_content
         end
 
         update_links_new(page, record)
