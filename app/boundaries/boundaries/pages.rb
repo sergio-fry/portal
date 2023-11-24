@@ -6,6 +6,7 @@ require 'platform85/repo/changes_repository'
 module Boundaries
   class Pages
     include Dependencies[db: 'db.pages', ipfs: 'ipfs.ipfs']
+    include Enumerable
 
     def initialize(db:, ipfs:)
       super
