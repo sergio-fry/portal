@@ -18,6 +18,7 @@ class PageLayout
         div class: 'post-meta' do
           strong do
             a "#{page.slug}.html", href: canonical_link.link
+            link rel: :canonical, href: canonical_link.link
           end
 
           span 'by'
