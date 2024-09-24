@@ -8,11 +8,11 @@ class IpfsController < ApplicationController
 
     http_cache_forever(public: true) do
       if params[:filename]
-        send_data ipfs.content(params[:cid]).data,
+        send_data cached_ipfs_data(params[:cid]),
                   filename: params[:filename],
                   type: content_type
       else
-        render inline: ipfs.content(params[:cid]).data
+        render inline: cached_ipfs_data(params[:cid])
       end
     end
   end
@@ -41,4 +41,8 @@ class IpfsController < ApplicationController
   def features = DependenciesContainer.resolve :features
 
   def ipfs = DependenciesContainer.resolve 'ipfs.ipfs'
+
+  def cached_ipfs_data(cid)
+    Rails.cache.fetch("ipfs/#{cid}") { ipfs.content(cid).data }
+  end
 end
