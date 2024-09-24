@@ -313,11 +313,6 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sentry-rails (5.9.0)
-      railties (>= 5.0)
-      sentry-ruby (~> 5.9.0)
-    sentry-ruby (5.9.0)
-      concurrent-ruby (~> 1.0, >= 1.0.2)
     silencer (2.0.0)
     simplecov (0.22.0)
       docile (~> 1.1)
@@ -427,8 +422,6 @@ DEPENDENCIES
   rubocop-rspec
   ruby-prof
   selenium-webdriver
-  sentry-rails
-  sentry-ruby
   silencer
   simplecov
   solargraph
