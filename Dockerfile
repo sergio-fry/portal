@@ -67,4 +67,3 @@ COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/*
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["web"]
-HEALTHCHECK --start-period=30s --retries=10 --interval=30s --timeout=30s CMD curl --fail -L http://0.0.0.0:3000/healthcheck || exit 1  
