@@ -1,24 +1,2 @@
 {
-  "healthchecks": {
-   "web": [
-       {
-           "type":        "readiness",
-           "name":        "web check",
-           "description": "Checking if the app responds to the /healthcheck endpoint",
-           "path":        "/healthcheck",
-           "content": "OK",
-           "initDelay": 10,
-           "attempts": 3,
-           "wait": 3
-       },
-
-       {
-           "type":        "liveness",
-           "name":        "web check",
-           "description": "Checking if the app responds to the /healthcheck endpoint",
-           "path":        "/healthcheck",
-           "content": "OK"
-       }
-   ]
-  }
 }
