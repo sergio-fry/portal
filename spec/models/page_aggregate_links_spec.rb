@@ -15,7 +15,6 @@ module PageAggregateTesting
       @pages << page
     end
 
-
     def exists?(slug)
       @pages.any? { |page| page.slug == slug }
     end
@@ -49,7 +48,7 @@ RSpec.describe Page, 'links' do
   def page(slug, source_content, linked_pages)
     new_page = Page.new(
       id: next_id,
-      slug: slug,
+      slug:,
       history: double,
       updated_at: Time.now,
       source_content:

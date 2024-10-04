@@ -40,9 +40,9 @@ class PageHistory
 
       @ipfs = ipfs
     end
-    
+
     def title = @page.updated_at
-    def url = ""
+    def url = ''
     def meta_title = "Version #{@number}"
     def current? = true
   end

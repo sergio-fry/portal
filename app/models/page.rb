@@ -11,11 +11,10 @@ class Page
     slug:,
     updated_at:,
 
-    history: PageHistory.new(self),
+    ipfs:, history: PageHistory.new(self),
     linked_pages: pages.linked_pages(self),
     referenced_pages: pages.referenced_pages(self),
-    source_content: '',
-    ipfs:
+    source_content: ''
   )
     @id = id
     @pages = pages

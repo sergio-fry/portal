@@ -2,9 +2,10 @@
 
 class PageLinkFromMarkup
   attr_reader :markup
+
   include Dependencies[:pages]
 
-  def initialize(markup, regexp: PageLinkRegexp.new, pages:)
+  def initialize(markup, pages:, regexp: PageLinkRegexp.new)
     @markup = markup
     @regexp = regexp
     @pages = pages
@@ -60,7 +61,7 @@ class PageLinkFromMarkup
     self.class.new(
       "[[#{slug}|#{name}]]",
       regexp: @regexp,
-      pages: pages
+      pages:
     )
   end
 end

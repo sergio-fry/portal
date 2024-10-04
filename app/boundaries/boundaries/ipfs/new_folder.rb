@@ -7,7 +7,7 @@ module Boundaries
     class NewFolder
       include Dependencies['ipfs.gateway']
 
-      def initialize(files_map: {}, gateway:)
+      def initialize(gateway:, files_map: {})
         @files_map = files_map
         @gateway = gateway
       end

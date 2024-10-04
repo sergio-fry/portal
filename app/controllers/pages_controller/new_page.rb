@@ -8,7 +8,7 @@ class PagesController
 
     include Dependencies[:pages]
 
-    def initialize(params: {}, context:, pages:)
+    def initialize(context:, pages:, params: {})
       @params = params
       @context = context
       @pages = pages

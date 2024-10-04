@@ -32,14 +32,14 @@ module SitemapTest
       Dependencies.container.stub('ipfs.gateway', Fake::Ipfs::Gateway.new)
       pages << home
     end
+
     let(:ipfs) { DependenciesContainer.resolve('ipfs.ipfs') }
+    let(:pages) { FakePages.new }
+    let(:home) { build(:page, :persisted, slug: 'home', source_content: 'Hello') }
 
     after { Dependencies.container.unstub 'ipfs.gateway' }
 
     subject(:sitemap) { described_class.new pages: }
-    let(:pages) { FakePages.new }
-
-    let(:home) { build :page, :persisted, slug: 'home', source_content: 'Hello' }
 
     it { expect(sitemap.ifps_folder.file('index.html').data).to include 'Hello' }
   end

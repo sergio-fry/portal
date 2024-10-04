@@ -11,7 +11,7 @@ RSpec.describe 'Page history' do
   let(:pages) { DependenciesContainer.resolve(:pages) }
 
   before do
-    Capybara.current_driver = :selenium #_headless
+    Capybara.current_driver = :selenium # _headless
     sign_in user
     Dependencies.container.stub(:features, features)
   end
@@ -33,7 +33,7 @@ RSpec.describe 'Page history' do
       click_on 'Update'
     end
 
-    example 'prev version could be found', pending: "because of wrong ipfs host js cant be loaded" do
+    example 'prev version could be found', pending: 'because of wrong ipfs host js cant be loaded' do
       expect(page).not_to have_content 'I like Beatles'
 
       click_link_or_button 'History'

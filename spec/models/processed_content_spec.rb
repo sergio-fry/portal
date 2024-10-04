@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe ProcessedContent do
   let(:pages) { [] }
+
   def processed_content(content) = described_class.new(content, pages:).to_s
 
   context 'when content has link' do
@@ -21,7 +22,7 @@ RSpec.describe ProcessedContent do
     it {
       expect(
         processed_content('<sitemap />')
-      ).to match(/<a.*>moscow<\/a>/)
+      ).to match(%r{<a.*>moscow</a>})
     }
   end
 end

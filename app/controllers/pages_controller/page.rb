@@ -16,7 +16,7 @@ class PagesController
       @context = context
     end
 
-    def exists? = page.exists?
+    delegate :exists?, to: :page
 
     class Model
       def initialize(page)
@@ -42,14 +42,14 @@ class PagesController
     end
 
     def policy_class = PagePolicy
-    def processed_content_with_layout = page.processed_content_with_layout
-    def id = page.id
-    def slug = page.slug
+    delegate :processed_content_with_layout, to: :page
+    delegate :id, to: :page
+    delegate :slug, to: :page
     def to_model = Model.new(self)
     def to_s = slug
-    def history = page.history
-    def url = page.url
-    def updated_at = page.updated_at
+    delegate :history, to: :page
+    delegate :url, to: :page
+    delegate :updated_at, to: :page
 
     def assign_attributes(new_attrs)
       @new_attrs = new_attrs

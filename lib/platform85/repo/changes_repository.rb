@@ -1,8 +1,7 @@
-require "platform85/repo/changes"
+require 'platform85/repo/changes'
 
 module Platform85
   module Repo
-
     class ChangesRepository
       def initialize(attrs:)
         @changes = {}
@@ -15,4 +14,3 @@ module Platform85
     end
   end
 end
-

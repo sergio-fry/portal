@@ -58,7 +58,8 @@ module Boundaries
       end
 
       def dag_put(dag)
-        call_method_with_file('/api/v0/dag/put', params: { 'store-codec' => 'dag-pb' }, data: dag.to_json).dig('Cid', '/')
+        call_method_with_file('/api/v0/dag/put', params: { 'store-codec' => 'dag-pb' }, data: dag.to_json).dig('Cid',
+                                                                                                               '/')
       end
 
       def dag_get(cid)
