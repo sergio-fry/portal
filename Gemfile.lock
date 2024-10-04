@@ -78,10 +78,8 @@ GEM
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
-    backport (1.2.0)
     base64 (0.2.0)
     bcrypt (3.1.18)
-    benchmark (0.2.1)
     bigdecimal (3.1.8)
     bindex (0.8.1)
     bootsnap (1.16.0)
@@ -131,7 +129,6 @@ GEM
     dry-core (1.0.0)
       concurrent-ruby (~> 1.0)
       zeitwerk (~> 2.6)
-    e2mmap (0.1.0)
     erubi (1.13.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -170,15 +167,12 @@ GEM
     ipfs-api (0.4.0)
     irb (1.6.4)
       reline (>= 0.3.0)
-    jaro_winkler (1.5.4)
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     json (2.6.3)
     kramdown (2.4.0)
       rexml
-    kramdown-parser-gfm (1.1.0)
-      kramdown (~> 2.0)
     llhttp-ffi (0.4.0)
       ffi-compiler (~> 1.0)
       rake (~> 13.0)
@@ -192,7 +186,6 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
-    memory_profiler (1.0.1)
     mini_magick (4.12.0)
     mini_mime (1.1.5)
     minitest (5.25.1)
@@ -229,8 +222,6 @@ GEM
       activesupport (>= 3.0.0)
     racc (1.8.1)
     rack (3.1.7)
-    rack-mini-profiler (3.1.0)
-      rack (>= 1.2.0)
     rack-session (2.0.0)
       rack (>= 3.0.0)
     rack-test (2.1.0)
@@ -269,7 +260,6 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.2.1)
-    rbs (2.8.4)
     redis (5.0.6)
       redis-client (>= 0.9.0)
     redis-client (0.14.1)
@@ -280,8 +270,6 @@ GEM
     responders (3.1.0)
       actionpack (>= 5.2)
       railties (>= 5.2)
-    reverse_markdown (2.1.1)
-      nokogiri
     rexml (3.2.5)
     rspec-core (3.12.2)
       rspec-support (~> 3.12.0)
@@ -324,7 +312,6 @@ GEM
       rubocop (~> 1.33)
       rubocop-capybara (~> 2.17)
       rubocop-factory_bot (~> 2.22)
-    ruby-prof (1.6.3)
     ruby-progressbar (1.13.0)
     ruby-vips (2.1.4)
       ffi (~> 1.12)
@@ -340,22 +327,6 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    solargraph (0.49.0)
-      backport (~> 1.2)
-      benchmark
-      bundler (~> 2.0)
-      diff-lcs (~> 1.4)
-      e2mmap
-      jaro_winkler (~> 1.5)
-      kramdown (~> 2.3)
-      kramdown-parser-gfm (~> 1.1)
-      parser (~> 3.0)
-      rbs (~> 2.0)
-      reverse_markdown (~> 2.0)
-      rubocop (~> 1.38)
-      thor (~> 1.0)
-      tilt (~> 2.0)
-      yard (~> 0.9, >= 0.9.24)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -366,11 +337,9 @@ GEM
     sqlite3 (1.6.3-aarch64-linux)
     sqlite3 (1.6.3-arm64-darwin)
     sqlite3 (1.6.3-x86_64-linux)
-    stackprof (0.2.25)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
     thor (1.3.2)
-    tilt (2.1.0)
     timeout (0.4.1)
     transproc (1.1.1)
     turbo-rails (1.4.0)
@@ -401,7 +370,6 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    yard (0.9.34)
     zeitwerk (2.6.18)
 
 PLATFORMS
@@ -427,12 +395,10 @@ DEPENDENCIES
   ipfs-api
   jbuilder
   kramdown
-  memory_profiler
   opal
   pg
   puma
   pundit
-  rack-mini-profiler
   rails (~> 7.0)
   redis
   rspec-rails
@@ -441,14 +407,11 @@ DEPENDENCIES
   rubocop-factory_bot
   rubocop-rails
   rubocop-rspec
-  ruby-prof
   selenium-webdriver
   silencer
   simplecov
-  solargraph
   sprockets-rails
   sqlite3
-  stackprof
   stimulus-rails
   turbo-rails
   tzinfo-data

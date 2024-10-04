@@ -62,13 +62,13 @@ group :development do
   gem 'web-console'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-  gem 'rack-mini-profiler'
+  # gem 'rack-mini-profiler'
   # For memory profiling
-  gem 'memory_profiler'
+  # gem 'memory_profiler'
   # For call-stack profiling flamegraphs
-  gem 'stackprof'
+  # gem 'stackprof'
 
-  gem 'ruby-prof'
+  # gem 'ruby-prof'
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
@@ -79,7 +79,7 @@ group :development do
   gem 'rubocop-factory_bot'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
-  gem 'solargraph'
+  # gem 'solargraph'
 end
 
 group :test do
