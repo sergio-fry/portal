@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Pages', skip: true do
+RSpec.describe 'Pages', :skip do
   include Devise::Test::IntegrationHelpers
   let!(:user) { create(:user, email: 'admin@example.com', password: 'secret123') }
 

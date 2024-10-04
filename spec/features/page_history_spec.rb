@@ -34,7 +34,7 @@ RSpec.describe 'Page history' do
     end
 
     example 'prev version could be found', pending: 'because of wrong ipfs host js cant be loaded' do
-      expect(page).not_to have_content 'I like Beatles'
+      expect(page).to have_no_content 'I like Beatles'
 
       click_link_or_button 'History'
 

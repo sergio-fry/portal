@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './folder'
+require_relative 'folder'
 
 module Boundaries
   module Ipfs
